@@ -1,13 +1,16 @@
 package InfoStroyDmitriyGorobets;
 
+import InfoStroyDmitriyGorobets.MathUtils.MathUtils;
+
+import java.util.Arrays;
+
 /**
- * Hello world!
- *
+ * Created by Gorobets Dmitriy on 12/5/15.
  */
 public class App 
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+    public static void main( String[] args ) {
+        int ar[] = new MathUtils().getPrimeSeries(20);
+        System.out.println(Arrays.toString( ar));
     }
 }
