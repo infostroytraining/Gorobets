@@ -126,9 +126,9 @@ public class MathUtils {
      * @return array filled with prime numbers
      */
     public int[] getPrimeSeries(int length) {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis(); // this is only for text analyzer task :-) don't need to do it everywhere
         int array[] = new int[length];
-        MathUtils math = new MathUtils();
+        MathUtils math = new MathUtils(); // hi! you don't need to create a new object. You are in the same class. Just call isPrime() (Anya)
         int number = 1;
         for (int i = 0; i < length; i++) {
             while (!math.isPrime(number)) {//use method isPrime() for checking a prime number
