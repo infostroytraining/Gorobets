@@ -95,7 +95,8 @@ public class MathUtils {
     public int[] getFibonacciSeries(int length) {
         long startTime = System.currentTimeMillis();
         if (length <= 0) {
-            System.out.println("Wrong length of an array");
+            System.out.println("Wrong length of an array"); // use logger if you want to notice some info. If you want to say to user 
+                                                           // about wrong input, you shold throw IllegalArgumentException. 
             return new int[0];
         }
         int array[] = new int[length];
