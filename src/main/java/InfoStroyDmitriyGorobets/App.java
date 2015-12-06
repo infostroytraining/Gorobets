@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class App 
 {
     public static void main( String[] args ) {
-        int ar[] = new MathUtils().getPrimeSeries(20);
-        System.out.println(Arrays.toString( ar));
+        int res= new MathUtils().getGreatestCommonDivider(0,0);
+        System.out.println(res);
     }
 }

@@ -14,8 +14,18 @@ public class MathUtils {
      * @return greatest common divider of two numbers
      */
     public int getGreatestCommonDivider(int firstNumber, int secondNumber) {
-        // TODO the method body
-        return 0;
+        long startTime = System.currentTimeMillis();
+        int result = 0;
+        int counter = (firstNumber <= secondNumber) ? firstNumber : secondNumber;
+        for (int i = counter; i > 0; i--) {
+            if (firstNumber % i == 0 && secondNumber % i == 0) {
+                result = i;
+                break;
+            }
+        }
+        long spentTime = System.currentTimeMillis() - startTime;
+        System.out.println(spentTime);
+        return result;
     }
 
     /**
@@ -83,18 +93,30 @@ public class MathUtils {
      * @return array filled with Fibonacci series
      */
     public int[] getFibonacciSeries(int length) {
-        int array[] = new int[length];
-        for (int i = 0; i <length ; i++) {
-            if(length==1){
-                return new int[]{0};
-            }else if(length==2){
-                return  new int[]{0,1};
-                //TODO....
-            }
-
-
+        long startTime = System.currentTimeMillis();
+        if (length <= 0) {
+            System.out.println("Wrong length of an array");
+            return new int[0];
         }
-        return null;
+        int array[] = new int[length];
+        if (length == 1) {
+            return new int[]{0};
+        } else if (length == 2) {
+            return new int[]{0, 1};
+        }
+        for (int i = 0; i < length; i++) {
+
+            if (length > 2) {
+                array[0] = 0;
+                array[1] = 1;
+                for (int j = 2; j < length; j++) {
+                    array[j] = array[j - 1] + array[j - 2];
+                }
+            }
+        }
+        long spentTime = System.currentTimeMillis() - startTime;
+        System.out.println(spentTime);
+        return array;
     }
 
     /**
