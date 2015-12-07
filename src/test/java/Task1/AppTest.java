@@ -1,4 +1,4 @@
-package InfoStroyDmitriyGorobets;
+package Task1;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,4 +1,4 @@
-package InfoStroyDmitriyGorobets.TriangleUtils;
+package Task1.TriangleUtils;
 
 /**
  * Created by Gorobets Dmitriy on 12/5/15.
@@ -6,15 +6,21 @@ package InfoStroyDmitriyGorobets.TriangleUtils;
 public class TriangleUtils {
     /**
      * Задача о треугольнике
-     *
+     * <p>
      * Вам даны длинны трех отрезков: a, b, c. Нужно вернуть true, если они
      * могут быть сторонами треугольника и false, если не могут.
-     *
      */
 
     public boolean isTriangle(int a, int b, int c) throws IllegalArgumentException {
-        // TODO the method body
-        return true ;
+        if (a<0 || b<0 || c<0) {
+            throw new IllegalArgumentException();
+        }
+        if (a + b > c && a + c > b && c + b > a) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**
@@ -23,7 +29,13 @@ public class TriangleUtils {
      */
 
     public double getTriangleArea(int a, int b, int c) throws IllegalArgumentException {
-        // TODO the method body
-        return 0d;
+        if (isTriangle(a, b, c)) {
+            double semiPerimeter = (a + b + c) / 2;
+            return Math.sqrt(semiPerimeter * (semiPerimeter - a) * (semiPerimeter - b) * (semiPerimeter - c));
+
+        } else {
+            System.out.println("Illegal Arguments");
+            return 0d;
+        }
     }
 }

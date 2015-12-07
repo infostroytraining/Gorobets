@@ -1,4 +1,4 @@
-package InfoStroyDmitriyGorobets.MathUtils;
+package Task1.MathUtils;
 
 /**
  * Created by Gorobets Dmitriy on 12/5/15.
@@ -14,7 +14,6 @@ public class MathUtils {
      * @return greatest common divider of two numbers
      */
     public int getGreatestCommonDivider(int firstNumber, int secondNumber) {
-        long startTime = System.currentTimeMillis();
         int result = 0;
         int counter = (firstNumber <= secondNumber) ? firstNumber : secondNumber;
         for (int i = counter; i > 0; i--) {
@@ -23,8 +22,7 @@ public class MathUtils {
                 break;
             }
         }
-        long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println(spentTime);
+
         return result;
     }
 
@@ -35,13 +33,12 @@ public class MathUtils {
      * @return the sum of digits of the given number
      */
     public int getSumOfDigits(int number) {
-        long startTime = System.currentTimeMillis();
+
         int sum = 0;
         for (int i = number; i > 0; i /= 10) {
             sum += i % 10;
         }
-        long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println(spentTime);
+
         return sum;
     }
 
@@ -52,7 +49,7 @@ public class MathUtils {
      * @return true - if number is prime, if not return false
      */
     public boolean isPrime(int number) {
-        long startTime = System.currentTimeMillis();
+
         if (number < 2) {
             return false;
         }
@@ -61,8 +58,7 @@ public class MathUtils {
                 return false;
             }
         }
-        long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println(spentTime);
+
         return true;
     }
 
@@ -72,7 +68,7 @@ public class MathUtils {
      * @param n - positive number
      */
     public int getSumOfRow(int n) {
-        long startTime = System.currentTimeMillis();
+
         int result = 0;
         int fact = 1;
         int sign = 1;
@@ -81,8 +77,7 @@ public class MathUtils {
             result += fact;
             sign = -1;
         }
-        long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println(spentTime);
+
         return result;
     }
 
@@ -92,11 +87,10 @@ public class MathUtils {
      * @param length - the length of the Fibonacci series
      * @return array filled with Fibonacci series
      */
-    public int[] getFibonacciSeries(int length) {
-        long startTime = System.currentTimeMillis();
+    public int[] getFibonacciSeries(int length) throws IllegalArgumentException {
+
         if (length <= 0) {
-            System.out.println("Wrong length of an array");
-            return new int[0];
+            throw new IllegalArgumentException();
         }
         int array[] = new int[length];
         if (length == 1) {
@@ -114,8 +108,7 @@ public class MathUtils {
                 }
             }
         }
-        long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println(spentTime);
+
         return array;
     }
 
@@ -126,19 +119,17 @@ public class MathUtils {
      * @return array filled with prime numbers
      */
     public int[] getPrimeSeries(int length) {
-        long startTime = System.currentTimeMillis();
+
         int array[] = new int[length];
-        MathUtils math = new MathUtils();
         int number = 1;
         for (int i = 0; i < length; i++) {
-            while (!math.isPrime(number)) {//use method isPrime() for checking a prime number
+            while (!isPrime(number)) {//use method isPrime() for checking a prime number
                 number++;
             }
             array[i] = number;
             number++;
         }
-        long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println(spentTime);
+
         return array;
     }
 
