@@ -20,24 +20,25 @@ public class TextUtils {
 
 
     public String correctText(String text) {
-        long startTime = System.currentTimeMillis();
+
 
         StringBuilder sb = new StringBuilder(text);
         correctSymbols(sb);
         charactersToUpperCase(sb);
 
-        long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println(spentTime);
+
         return sb.toString();
     }
 
     public void charactersToUpperCase(StringBuilder sb) {
+
         if (!Character.isUpperCase(sb.charAt(0))) {
             sb.replace(0, 1, String.valueOf(sb.charAt(0)).toUpperCase());
         }
         for (int i = 0; i < sb.length() - 2; i++) {
 
             if (sb.charAt(i) == '.' && !Character.isUpperCase(sb.charAt(i + 2))) {
+
                 sb.replace(i + 2, i + 3, String.valueOf(sb.charAt(i + 2)).toUpperCase());
 
             }
@@ -45,6 +46,7 @@ public class TextUtils {
     }
 
     public void correctSymbols(StringBuilder sb) {
+
         for (int i = 0; i < sb.length(); i++) {
 
             if ((sb.charAt(i) == '.' || sb.charAt(i) == ',') && (i < sb.length() - 1 && sb.charAt(i + 1) != ' ')) {
