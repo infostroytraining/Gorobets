@@ -24,5 +24,6 @@ public enum EnumTaskType {
             }
         }
         throw new IllegalArgumentException("No such value");
+
     }
 }

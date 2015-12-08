@@ -14,7 +14,7 @@ public class AppRunner {
         TextAnalyzer ta = new TextAnalyzer();
         JCommander jc = new JCommander(ta);
 
-        args = new String[]{"-i", "/home/invincible_g_d/Programs/IDEA/Gorobets/Task1/Input.txt", "-t", "duplicates"};//запустить с командной строки
+//        args = new String[]{"-i", "/home/invincible_g_d/Programs/IDEA/Gorobets/Task1/Input.txt", "-t", "frequency"};//запустить с командной строки
         jc.parse(args);
         if (ta.isHelp()) {
             jc.usage();

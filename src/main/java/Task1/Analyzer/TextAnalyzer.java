@@ -1,13 +1,8 @@
 package Task1.Analyzer;
 
-import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
-import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by Gorobets Dmitriy on 12/5/15.
@@ -89,20 +84,28 @@ public class TextAnalyzer implements ITextAnalyzer {
     }
 
 
-    public void executeMethods() throws IllegalArgumentException{
+    public void executeMethods() throws IllegalArgumentException {
+
+        StringBuilder sb = getStringFromFile();
+        ITasksMethodsFrequen it = new Frequency(sb);
+
+        Length leng = new Length();
+
         if (getEnumTaskType().equals(EnumTaskType.FREQUENCY)) {
-            StringBuilder sb = getStringFromFile();
-            Frequency fre = new Frequency(sb);
-            fre.run();
+            it.findResultWords();
+//            fre.run();
+
         }
         if (getEnumTaskType().equals(EnumTaskType.LENGTH)) {
+
+            leng.findResultWords(it.textValidator());
 
         }
         if (getEnumTaskType().equals(EnumTaskType.DUPLICATES)) {
 
-        }else {
-            throw new IllegalArgumentException("No such argument!");
         }
+
+
     }
 
     public StringBuilder getStringFromFile() {

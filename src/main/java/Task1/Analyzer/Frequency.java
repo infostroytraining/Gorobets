@@ -1,6 +1,5 @@
 package Task1.Analyzer;
 
-import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import java.util.*;
@@ -9,7 +8,7 @@ import java.util.*;
  * Created by Gorobets Dmitriy on 12/5/15.
  */
 @Parameters(commandNames = {"frequency"})
-public class Frequency implements Runnable {
+public class Frequency implements  ITasksMethodsFrequen {
 
     private StringBuilder text;
 
@@ -21,7 +20,7 @@ public class Frequency implements Runnable {
      *
      * @return
      */
-    public List<String> findTwoFrequentWords() {
+    public List<String> findResultWords() {
         List<String> resultWords = new ArrayList<>() ;
 
         Map<String, Integer> words = countWordsOfText();
@@ -53,13 +52,6 @@ public class Frequency implements Runnable {
         return resultWords;
     }
 
-    /**
-     *
-     */
-    @Override
-    public void run() {
-         findTwoFrequentWords();
-    }
 
     /**
      *
