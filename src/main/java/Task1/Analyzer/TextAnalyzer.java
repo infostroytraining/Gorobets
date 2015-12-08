@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Gorobets Dmitriy on 12/5/15.
  */
 //@Parameters()   ?????????????????????????
-public class TextAnalyzer {
+public class TextAnalyzer implements ITextAnalyzer{
     /*   The goal is to implement a ‘text-analyzer’. It must be a shell application so one can run it once and perform one task by another.
 
        Step-by-step
@@ -66,11 +66,7 @@ public class TextAnalyzer {
     private boolean help;
 
 
-    public static void main(String[] args) {
-        TextAnalyzer ta = new TextAnalyzer();
-        JCommander jc = new JCommander(ta);
-        jc.parse(args);
-    }
+
 
     public List<Enum> getEnumTaskType() throws IllegalArgumentException {
 
@@ -87,27 +83,29 @@ public class TextAnalyzer {
     public StringBuilder getStringFromFile() {
 
         StringBuilder sb = new StringBuilder();
-        File file;
-        BufferedReader buff;
+        BufferedReader buff = null;
+
         try {
             buff = new BufferedReader(new FileReader(pathToFile));
+            String fileContent = buff.readLine();
+            while (fileContent != null) {
+                sb.append(buff.readLine()).append("\n");
+            }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            e.getMessage();
         } finally {
-
+            closeStream(buff);
         }
-        //pathToFile --/home/invincible_g_d/Programs/IDEA/Gorobets/Task1/Input.txt
-// использую стримы reader с ксв файла ,запишу текст с файла в  стрингбилдер
+        System.out.println(sb.toString());
         return sb;
     }
 
-    private void closeStream(Closeable stream) {//метод закрытия потока вывода,если он существет
+    private void closeStream(Closeable stream) {
         if (stream != null) {
             try {
                 stream.close();
-            } catch (IOException e) {//ловит исключения ,если поток не закрывается и выдает причину и сообщение об этом
-                e.getCause();
+            } catch (IOException e) {
                 e.getMessage();
             }
 
