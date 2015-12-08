@@ -1,4 +1,4 @@
-package Task1.Analyzer;
+package Task1.Analyzer.Implementations;
 
 import Task1.Analyzer.Inrefaces.IFrequency;
 import com.beust.jcommander.Parameters;

@@ -1,4 +1,4 @@
-package Task1.Analyzer;
+package Task1.Analyzer.Implementations;
 
 /**
  * Created by invincible_g_d on 12/7/15.

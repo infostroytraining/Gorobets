@@ -1,4 +1,4 @@
-package Task1.Analyzer;
+package Task1.Analyzer.Implementations;
 
 import java.util.List;
 import java.util.Map;
