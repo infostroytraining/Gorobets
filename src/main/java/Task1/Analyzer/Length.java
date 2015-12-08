@@ -1,9 +1,17 @@
 package Task1.Analyzer;
 
+import com.beust.jcommander.Parameters;
+
 /**
  * Created by Gorobets Dmitriy on 12/5/15.
  */
-public class Length {
-    ITextAnalyzer textA = new TextAnalyzer();
-    StringBuilder text = textA.getStringFromFile();
+@Parameters(commandNames = {"length"})
+
+public class Length implements Runnable {
+
+
+    @Override
+    public void run() {
+
+    }
 }

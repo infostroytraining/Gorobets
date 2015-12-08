@@ -1,9 +1,15 @@
 package Task1.Analyzer;
 
+import com.beust.jcommander.Parameters;
+
 /**
  * Created by Gorobets Dmitriy on 12/5/15.
  */
-public class Duplicates {
-    ITextAnalyzer textA = new TextAnalyzer();
-    StringBuilder text = textA.getStringFromFile();
+@Parameters(commandNames = {"duplicates"})
+public class Duplicates implements Runnable{
+
+    @Override
+    public void run() {
+        
+    }
 }
