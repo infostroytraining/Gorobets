@@ -8,24 +8,12 @@ import java.util.*;
  * Created by Gorobets Dmitriy on 12/5/15.
  */
 @Parameters(commandNames = {"length"})
-
 public class Length  {
-
-    private StringBuilder text;
-
-
-    Frequency fre = new Frequency(text);
-
-
 
     public Map<String,Integer> countWordsOfText(StringBuilder text) {
 
         Map<String,Integer> wordsMap = new HashMap<>();
-
-
-
         String[] textStr = text.toString().split(" ");
-
 
         for (int j = 0; j < textStr.length; j++) {
 
@@ -40,17 +28,15 @@ public class Length  {
         return wordsMap;
     }
 
-
     public List<String> findResultWords(StringBuilder text) {
-        List<String> resultWords = new ArrayList<>();
 
+        List<String> resultWords = new ArrayList<>();
         Map<String,Integer> wordsMap = countWordsOfText(text);
 
         Collection<Integer> words = wordsMap.values();
         List<Integer> list = new ArrayList<>(words);
         Collections.sort(list);
         Collections.reverse(list);
-
 
 
         Collection<String> keyWords = wordsMap.keySet();
