@@ -1,7 +1,7 @@
 package Task1.Analyzer;
 
 /**
- * Created by invincible_g_d on 12/7/15.
+ * Created by Gorobets Dmitriy on 12/5/15.
  */
-public class Frequency {
+public class Frequency extends TextAnalyzer{
 }

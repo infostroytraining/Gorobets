@@ -4,7 +4,6 @@
 .project
 /bin/
 *.[oa]
-*.txt
 *.log
 target/
 *.classpath
