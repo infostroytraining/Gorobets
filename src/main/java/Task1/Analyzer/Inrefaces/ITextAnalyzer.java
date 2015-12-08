@@ -1,4 +1,4 @@
-package Task1.Analyzer;
+package Task1.Analyzer.Inrefaces;
 
 import java.io.IOException;
 

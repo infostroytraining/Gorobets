@@ -56,7 +56,7 @@ public class Length  {
 
 
 
-        System.out.println("Three longest wordsMap are:");
+        System.out.println("Three longest words are:");
         System.out.println(resultWords.get(0) + "->" + list.get(0));
         System.out.println(resultWords.get(1) + "->" + list.get(1));
         System.out.println(resultWords.get(2) + "->" + list.get(2));

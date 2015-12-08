@@ -1,5 +1,6 @@
 package Task1.Analyzer;
 
+import Task1.Analyzer.Inrefaces.IFrequency;
 import com.beust.jcommander.Parameters;
 
 import java.util.*;
@@ -8,7 +9,7 @@ import java.util.*;
  * Created by Gorobets Dmitriy on 12/5/15.
  */
 @Parameters(commandNames = {"frequency"})
-public class Frequency implements  ITasksMethodsFrequen {
+public class Frequency implements IFrequency {
 
     private StringBuilder text;
 

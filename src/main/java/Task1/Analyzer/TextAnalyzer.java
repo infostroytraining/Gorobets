@@ -1,5 +1,7 @@
 package Task1.Analyzer;
 
+import Task1.Analyzer.Inrefaces.IFrequency;
+import Task1.Analyzer.Inrefaces.ITextAnalyzer;
 import com.beust.jcommander.Parameter;
 
 import java.io.*;
@@ -85,16 +87,17 @@ public class TextAnalyzer implements ITextAnalyzer {
 
 
     public void executeMethods() throws IllegalArgumentException {
+        long startTume = System.currentTimeMillis();
 
         StringBuilder sb = getStringFromFile();
-        ITasksMethodsFrequen it = new Frequency(sb);
+        IFrequency it = new Frequency(sb);
+        Duplicates du = new Duplicates();
 
         Length leng = new Length();
 
         if (getEnumTaskType().equals(EnumTaskType.FREQUENCY)) {
-            it.findResultWords();
-//            fre.run();
 
+            it.findResultWords();
         }
         if (getEnumTaskType().equals(EnumTaskType.LENGTH)) {
 
@@ -103,9 +106,11 @@ public class TextAnalyzer implements ITextAnalyzer {
         }
         if (getEnumTaskType().equals(EnumTaskType.DUPLICATES)) {
 
+            du.findResultWords(it.textValidator());
+
         }
-
-
+        long spentTime = System.currentTimeMillis() - startTume;
+        System.out.println(spentTime);
     }
 
     public StringBuilder getStringFromFile() {
@@ -130,7 +135,7 @@ public class TextAnalyzer implements ITextAnalyzer {
         } finally {
             closeStream(buff);
         }
-//        System.out.println(sb.toString());
+
         return sb;
     }
 
