@@ -11,11 +11,6 @@ import java.util.*;
 @Parameters(commandNames = {"frequency"})
 public class Frequency implements IFrequency {
 
-//    private StringBuilder text;
-//
-//    public Frequency(StringBuilder text) {
-//        this.text = text;
-//    }
 
     /**
      * @return
