@@ -1,8 +1,5 @@
 package Task1.Analyzer.Implementations;
 
-import Task1.Analyzer.Inrefaces.IEnumType;
-import Task1.Analyzer.Inrefaces.ITextAnalyzer;
-
 /**
  * Created by invincible_g_d on 12/7/15.
  */
