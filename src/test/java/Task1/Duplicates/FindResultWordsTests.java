@@ -1,5 +1,4 @@
-package Task1.Frequency;
-
+package Task1.Duplicates;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,7 +12,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by invincible_g_d on 12/9/15.
  */
-public class FindResultWordsTest {
+public class FindResultWordsTests {
     Map<String, Integer> map;
     List<String> resultWords;
     List<String> expResultWords;
@@ -91,5 +90,4 @@ public class FindResultWordsTest {
         list = null;
         expextedList = null;
     }
-
 }

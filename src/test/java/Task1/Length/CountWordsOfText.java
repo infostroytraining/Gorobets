@@ -1,16 +1,17 @@
-package Task1.Frequency;
+package Task1.Length;
 
 import Task1.Analyzer.Implementations.Frequency;
+import Task1.Analyzer.Implementations.Length;
 import Task1.Analyzer.Implementations.TextAnalyzer;
 import com.beust.jcommander.JCommander;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -19,18 +20,19 @@ import static org.junit.Assert.assertNotNull;
 public class CountWordsOfText {
     TextAnalyzer textA;
     Map<String, Integer> map;
-    Frequency fre;
+    Length leng;
     StringBuilder sb;
-    String textExm = "Katherine took took Katherine took Katherine took Katherine took";
+    String textExm = "Katherine took took Katherine took Katherine took Katherine took the";
 
     @Before
     public void setUpBeforeTest() {
         map = new HashMap<>();
-        map.put("Katherine", 4);
-        map.put("took", 5);
+        map.put("the", 3);
+        map.put("took", 4);
+        map.put("Katherine", 9);
+
         sb = new StringBuilder(textExm);
-        sb.append("\n");
-        fre = new Frequency();
+        leng = new Length();
         textA = new TextAnalyzer();
         new JCommander(textA, "-i", " /home/invincible_g_d/Programs/IDEA/Gorobets/Task1/Test.txt", "-t", "frequency");
 
@@ -39,22 +41,23 @@ public class CountWordsOfText {
     @Test
     public void tstEqualMaps() {
 
-        assertEquals(fre.countWordsOfText(sb), map);
+        assertEquals(leng.countWordsOfText(sb), map);
 
     }
 
     @Test
     public void tstEqualMapElemets() {
 
-        assertEquals(fre.countWordsOfText(sb).get(0), map.get(0));
-        assertEquals(fre.countWordsOfText(sb).get(1), map.get(1));
+        assertEquals(leng.countWordsOfText(sb).get(0), map.get(0));
+        assertEquals(leng.countWordsOfText(sb).get(1), map.get(1));
+        assertEquals(leng.countWordsOfText(sb).get(2), map.get(2));
 
     }
 
     @Test
     public void tstNotNullText() {
 
-        assertNotNull(fre.countWordsOfText(sb));
+        assertNotNull(leng.countWordsOfText(sb));
 
     }
 
@@ -64,8 +67,7 @@ public class CountWordsOfText {
         textA = null;
         sb = null;
         map = null;
-        fre = null;
+        leng= null;
         textExm = null;
     }
-
 }

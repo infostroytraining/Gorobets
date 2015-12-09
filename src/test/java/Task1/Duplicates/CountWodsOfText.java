@@ -1,4 +1,4 @@
-package Task1.Frequency;
+package Task1.Duplicates;
 
 import Task1.Analyzer.Implementations.Frequency;
 import Task1.Analyzer.Implementations.TextAnalyzer;
@@ -7,16 +7,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-
 import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by invincible_g_d on 12/9/15.
  */
-public class CountWordsOfText {
+public class CountWodsOfText {
     TextAnalyzer textA;
     Map<String, Integer> map;
     Frequency fre;
@@ -67,5 +67,4 @@ public class CountWordsOfText {
         fre = null;
         textExm = null;
     }
-
 }
