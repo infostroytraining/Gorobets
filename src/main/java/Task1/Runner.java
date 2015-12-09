@@ -7,7 +7,7 @@ import javafx.scene.shape.TriangleMesh;
 /**
  * Created by Gorobets Dmitriy on 12/5/15.
  */
-public class App 
+public class Runner
 {
     public static void main( String[] args ) {
 //        String string = "hi.my name is Dima.i want to be a Java developer,but i need more slills to have.that's why " +
