@@ -11,6 +11,7 @@ import java.io.*;
 
 public class TextAnalyzer implements ITextAnalyzer {
 
+
     @Parameter(names = {"-t", "--task"}, description = "Task to execute", arity = 1, required = true)
     private String tasks;
 

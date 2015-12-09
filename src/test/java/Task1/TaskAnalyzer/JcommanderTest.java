@@ -22,49 +22,35 @@ public class JcommanderTest {
     String textExm = "Katherine Mansfield took a great interest in Russian literature, particularly in the works of Chekhov.\n";
 
     @Before
-    public void setUpBeforeTestJcommander() {
-        sb = new StringBuilder(textExm);
-        buff = null;
+    public void setUpBeforeTest() {
+
         textA = new TextAnalyzer();
         new JCommander(textA, "-i", " /home/invincible_g_d/Programs/IDEA/Gorobets/Task1/Test.txt", "-t", "frequency");
 
     }
 
     @Test
-    public void tst_SetTasksJcommander() {
+    public void tstSetTasksJcommander() {
+        assertNotNull(textA.getStringFromFile());
         assertEquals(textA.getTasks(), "frequency");
     }
 
     @Test
-    public void tst_SetPathToFileJcommander() {
+    public void tstSetPathToFileJcommander() {
+        assertNotNull(textA.getPathToFile());
         assertEquals(textA.getPathToFile(), "/home/invincible_g_d/Programs/IDEA/Gorobets/Task1/Test.txt");
     }
 
     @Test
-    public void tst_SetHelpJcommander() {
+    public void tstSetHelpJcommander() {
+        assertNotNull(textA.isHelp());
         assertEquals(textA.isHelp(), false);
     }
 
-    @Test
-    public void tst_GetEnum() {
-        assertTrue(textA.getEnumTaskType() != null);
-        assertTrue(textA.getEnumTaskType() instanceof Enum);
-    }
+      @After
 
-    @Test
-    public void tst_CheckGetStringFromFile() throws IOException {
-
-        assertFalse(textA.getStringFromFile().length()==0);
-    }
-
-
-
-    @After
-
-    public void setUpAfterTestJcommander() {
+    public void setUpAfterTest() {
         textA = null;
-        sb = null;
-        buff = null;
 
     }
 }

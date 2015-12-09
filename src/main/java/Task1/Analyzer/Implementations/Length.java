@@ -40,21 +40,18 @@ public class Length implements ILength {
         Collections.sort(list);
         Collections.reverse(list);
 
-
-        Collection<String> keyWords = wordsMap.keySet();
+        Set<Map.Entry<String, Integer>> entrySet = wordsMap.entrySet();
         for (int i = 0; i < 4; i++) {
             Integer value = list.get(i);
-            for (String key : keyWords) {
-                Integer val = wordsMap.get(key);
-                if (key != null) {
-                    if (value.equals(val) && resultWords.size() < 3) {
-
-                        resultWords.add(key);
-
+            for (Map.Entry<String, Integer> pair : entrySet) {
+                if (pair != null) {
+                    if (value.equals(pair.getValue()) && resultWords.size() < 3) {
+                        resultWords.add(pair.getKey());
                     }
                 }
             }
         }
+
 
 
         System.out.println("Three longest words are:");

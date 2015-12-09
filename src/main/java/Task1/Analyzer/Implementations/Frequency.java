@@ -18,47 +18,41 @@ public class Frequency implements IFrequency {
 //    }
 
     /**
-     *
      * @return
      */
-    public void findResultWords( StringBuilder text) {
+    public void findResultWords(StringBuilder text) {
 
-        List<String> resultWords = new ArrayList<>() ;
+        List<String> resultWords = new ArrayList<>();
         Map<String, Integer> words = countWordsOfText(text);
         Collection<Integer> tr = words.values();
         List<Integer> list = new ArrayList<>(tr);
         Collections.sort(list);
 
 
-        Collection<String> keyWords = words.keySet();
-        for (int i = list.size()-1; i >list.size()-3 ; i--) {
-            Integer value =list.get(i) ;
-            for (String key : keyWords) {
-                Integer val = words.get(key);
-                if (key != null) {
-                    if (value.equals(val)) {
-
-                            resultWords.add(key);
-
+        Set<Map.Entry<String, Integer>> entrySet = words.entrySet();
+        for (int i = list.size() - 1; i > list.size() - 3; i--) {
+            Integer value = list.get(i);
+            for (Map.Entry<String, Integer> pair : entrySet) {
+                if (pair != null) {
+                    if (value.equals(pair.getValue())) {
+                        resultWords.add(pair.getKey());
                     }
                 }
             }
         }
+
         Collections.reverse(resultWords);
         System.out.println("Two most frequent words are:");
-        System.out.println(resultWords.get(0)+"->"+ words.get(resultWords.get(0)));
-        System.out.println(resultWords.get(1)+"->"+ words.get(resultWords.get(1)));
-
+        System.out.println(resultWords.get(0) + "->" + words.get(resultWords.get(0)));
+        System.out.println(resultWords.get(1) + "->" + words.get(resultWords.get(1)));
 
 
     }
 
-
     /**
-     *
      * @return
      */
-    public Map<String, Integer> countWordsOfText( StringBuilder t) {
+    public Map<String, Integer> countWordsOfText(StringBuilder t) {
 
         Map<String, Integer> words = new HashMap<>();
         StringBuilder text = textValidator(t);
@@ -84,10 +78,9 @@ public class Frequency implements IFrequency {
     }
 
     /**
-     *
      * @return
      */
-    public StringBuilder textValidator( StringBuilder text) {
+    public StringBuilder textValidator(StringBuilder text) {
 
         for (int i = 0; i < text.length() - 1; i++) {
             if (text.charAt(i) == '.' || text.charAt(i) == ',' || text.charAt(i) == '!'
