@@ -1,7 +1,6 @@
 package Task1.Analyzer.Implementations;
 
-import Task1.Analyzer.Inrefaces.IFrequency;
-import Task1.Analyzer.Inrefaces.ITextAnalyzer;
+import Task1.Analyzer.Inrefaces.*;
 import com.beust.jcommander.Parameter;
 
 import java.io.*;
@@ -78,39 +77,39 @@ public class TextAnalyzer implements ITextAnalyzer {
         return help;
     }
 
+
+
     public Enum getEnumTaskType() throws IllegalArgumentException {
 
         EnumTaskType tt = EnumTaskType.fromString(tasks);
-        System.out.println(tt);
         return tt;
     }
 
 
     public void executeMethods() throws IllegalArgumentException {
-        long startTume = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
-        StringBuilder sb = getStringFromFile();
-        IFrequency it = new Frequency(sb);
-        Duplicates du = new Duplicates();
-
-        Length leng = new Length();
+        IFrequency it = new Frequency();
+        IDuplicates du = new Duplicates();
+        ILength leng = new Length();
+        StringBuilder text = it.textValidator(getStringFromFile());
 
         if (getEnumTaskType().equals(EnumTaskType.FREQUENCY)) {
 
-            it.findResultWords();
+            it.findResultWords(text);
         }
         if (getEnumTaskType().equals(EnumTaskType.LENGTH)) {
 
-            leng.findResultWords(it.textValidator());
+            leng.findResultWords(text);
 
         }
         if (getEnumTaskType().equals(EnumTaskType.DUPLICATES)) {
 
-            du.findResultWords(it.textValidator());
+            du.findResultWords(text);
 
         }
-        long spentTime = System.currentTimeMillis() - startTume;
-        System.out.println(spentTime);
+        long spentTime = System.currentTimeMillis() - startTime;
+        System.out.println("elapsed time:"+spentTime+" millis");
     }
 
     public StringBuilder getStringFromFile() {

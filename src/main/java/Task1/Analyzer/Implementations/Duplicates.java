@@ -1,5 +1,6 @@
 package Task1.Analyzer.Implementations;
 
+import Task1.Analyzer.Inrefaces.IDuplicates;
 import com.beust.jcommander.Parameters;
 
 import java.util.*;
@@ -8,7 +9,7 @@ import java.util.*;
  * Created by Gorobets Dmitriy on 12/5/15.
  */
 @Parameters(commandNames = {"duplicates"})
-public class Duplicates {
+public class Duplicates implements IDuplicates{
 
 
     public Map<Integer, String> countWordsOfText(StringBuilder text) {

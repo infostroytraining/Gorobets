@@ -8,9 +8,9 @@ import java.util.Map;
  */
 public interface IFrequency {
 
-    StringBuilder textValidator();
+    StringBuilder textValidator( StringBuilder text);
 
-    Map<String, Integer> countWordsOfText();
+    Map<String, Integer> countWordsOfText( StringBuilder text);
 
-    List<String> findResultWords();
+    void findResultWords( StringBuilder text);
 }

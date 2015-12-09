@@ -1,6 +1,8 @@
 package Task1.Analyzer;
 
+import Task1.Analyzer.Implementations.Length;
 import Task1.Analyzer.Implementations.TextAnalyzer;
+import Task1.Analyzer.Implementations.Validator;
 import com.beust.jcommander.JCommander;
 
 /**
@@ -21,8 +23,7 @@ public class AppRunner {
         ta.executeMethods();
 
 
-
-
-
     }
+
 }
+

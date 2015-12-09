@@ -11,20 +11,20 @@ import java.util.*;
 @Parameters(commandNames = {"frequency"})
 public class Frequency implements IFrequency {
 
-    private StringBuilder text;
-
-    public Frequency(StringBuilder text) {
-        this.text = text;
-    }
+//    private StringBuilder text;
+//
+//    public Frequency(StringBuilder text) {
+//        this.text = text;
+//    }
 
     /**
      *
      * @return
      */
-    public List<String> findResultWords() {
-        List<String> resultWords = new ArrayList<>() ;
+    public void findResultWords( StringBuilder text) {
 
-        Map<String, Integer> words = countWordsOfText();
+        List<String> resultWords = new ArrayList<>() ;
+        Map<String, Integer> words = countWordsOfText(text);
         Collection<Integer> tr = words.values();
         List<Integer> list = new ArrayList<>(tr);
         Collections.sort(list);
@@ -50,7 +50,7 @@ public class Frequency implements IFrequency {
         System.out.println(resultWords.get(1)+"->"+ words.get(resultWords.get(1)));
 
 
-        return resultWords;
+
     }
 
 
@@ -58,10 +58,10 @@ public class Frequency implements IFrequency {
      *
      * @return
      */
-    public Map<String, Integer> countWordsOfText() {
+    public Map<String, Integer> countWordsOfText( StringBuilder t) {
 
         Map<String, Integer> words = new HashMap<>();
-        StringBuilder text = textValidator();
+        StringBuilder text = textValidator(t);
 
 
         String[] textStr = text.toString().split(" ");
@@ -87,7 +87,7 @@ public class Frequency implements IFrequency {
      *
      * @return
      */
-    public StringBuilder textValidator() {
+    public StringBuilder textValidator( StringBuilder text) {
 
         for (int i = 0; i < text.length() - 1; i++) {
             if (text.charAt(i) == '.' || text.charAt(i) == ',' || text.charAt(i) == '!'
