@@ -8,21 +8,20 @@ import com.beust.jcommander.Parameters;
 /**
  * Created by invincible_g_d on 12/10/15.
  */
-@Parameters(commandNames = {"duplicates"})
+@Parameters(commandNames = {"duplicates"}, commandDescription = "Find words by their length and display them")
 public class DuplicatesCommand implements Command {
 
     IDuplicates iDup;
-    ITextAnalyzer iText;
+    TextAnalyzer iText;
 
-    public DuplicatesCommand(IDuplicates iDup) {
+    public DuplicatesCommand(IDuplicates iDup, TextAnalyzer iText) {
         this.iDup = iDup;
+        this.iText = iText;
     }
 
     @Override
     public void executeCommand() {
 
-        iDup = new Duplicates();
-        iText = new TextAnalyzer();
 
         iDup.findResultWords(iText.textValidator());
 

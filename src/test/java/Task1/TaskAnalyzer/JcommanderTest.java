@@ -32,7 +32,7 @@ public class JcommanderTest {
     @Test
     public void tstSetTasksJcommander() {
         assertNotNull(textA.getStringFromFile());
-        assertEquals(textA.getTasks(), "frequency");
+
     }
 
     @Test

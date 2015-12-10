@@ -18,6 +18,7 @@ public class Frequency implements IFrequency {
      * @return
      */
     public void findResultWords(StringBuilder text) {
+        long startTime = System.currentTimeMillis();
 
         List<String> resultWords = new ArrayList<>();
         Map<String, Integer> words = countWordsOfText(text);
@@ -43,7 +44,8 @@ public class Frequency implements IFrequency {
         System.out.println(resultWords.get(0) + "->" + words.get(resultWords.get(0)));
         System.out.println(resultWords.get(1) + "->" + words.get(resultWords.get(1)));
 
-
+        long spentTime = System.currentTimeMillis() - startTime;
+        System.out.println("elapsed time:"+spentTime+" millis");
     }
 
     /**

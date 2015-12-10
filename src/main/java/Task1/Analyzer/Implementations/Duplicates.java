@@ -38,7 +38,7 @@ public class Duplicates implements IDuplicates{
     }
 
     public void findResultWords(StringBuilder text) {
-
+        long startTime = System.currentTimeMillis();
 
         Map<Integer, String> wordsMap = countWordsOfText(text);
         Collection<Integer> keyWords = wordsMap.keySet();
@@ -51,6 +51,7 @@ public class Duplicates implements IDuplicates{
         System.out.println(wordsMap.get(list.get(1)));
         System.out.println(wordsMap.get(list.get(2)));
 
-
+        long spentTime = System.currentTimeMillis() - startTime;
+        System.out.println("elapsed time:"+spentTime+" millis");
     }
 }

@@ -34,6 +34,7 @@ public class Length implements ILength {
     }
 
     public void findResultWords(StringBuilder text) {
+        long startTime = System.currentTimeMillis();
 
         List<String> resultWords = new ArrayList<>();
         Map<String, Integer> wordsMap = countWordsOfText(text);
@@ -62,7 +63,8 @@ public class Length implements ILength {
         System.out.println(resultWords.get(1) + "->" + list.get(1));
         System.out.println(resultWords.get(2) + "->" + list.get(2));
 
-
+        long spentTime = System.currentTimeMillis() - startTime;
+        System.out.println("elapsed time:"+spentTime+" millis");
     }
 
 }

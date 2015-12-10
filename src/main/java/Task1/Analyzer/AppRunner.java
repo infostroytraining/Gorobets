@@ -1,10 +1,7 @@
 package Task1.Analyzer;
 
 import Task1.Analyzer.Implementations.*;
-import Task1.Analyzer.Inrefaces.Command;
-import Task1.Analyzer.Inrefaces.IDuplicates;
-import Task1.Analyzer.Inrefaces.IFrequency;
-import Task1.Analyzer.Inrefaces.ILength;
+import Task1.Analyzer.Inrefaces.*;
 import com.beust.jcommander.JCommander;
 
 import java.util.HashMap;
@@ -19,44 +16,37 @@ public class AppRunner {
         TextAnalyzer ta = new TextAnalyzer();
         JCommander jc = new JCommander(ta);
 
-//       args = new String[]{"-i", "/home/invincible_g_d/Programs/IDEA/Gorobets/Task1/Input.txt", "-t", "frequency"};//запустить с командной строки
-//        jc.parse(args);
         if (ta.isHelp()) {
             jc.usage();
         }
 
         IFrequency iFre = new Frequency();
         IDuplicates iDup = new Duplicates();
-        ILength iLen  = new Length();
+        ILength iLen = new Length();
 
-        Command switchFreq = new FrequencyCommand(iFre);
-        Command switchDuplic = new DuplicatesCommand(iDup);
-        Command switchLength = new LengthCommand(iLen);
+        Command frequencyCommand = new FrequencyCommand(iFre, ta);
+        Command duplicatesCommand = new DuplicatesCommand(iDup, ta);
+        Command lengthCommand = new LengthCommand(iLen, ta);
 
-//        CommandSwitcher switcher = new CommandSwitcher(switchFreq,switchLength,switchDuplic);
-//
-//        switcher.duplicatesDo();
-//        switcher.frequencyDo();
-//        switcher.lengthDo();
-//        ta.executeMethods();
- /* Создается карта имя-команда */
+
+
+        /* Создается карта имя-команда */
         Map<String, Command> map = new HashMap<>();
-        map.put("frequency", switchFreq);
-        map.put("duplicates", switchDuplic);
-        map.put("length", switchLength);
+        map.put("frequency", frequencyCommand);
+        map.put("duplicates", duplicatesCommand);
+        map.put("length", lengthCommand);
 
         /* Разбираются аргументы запуска */
 
-        jc.addCommand(switchFreq);
-        jc.addCommand(switchDuplic);
-        jc.addCommand(switchLength);
+        jc.addCommand(frequencyCommand);
+        jc.addCommand(duplicatesCommand);
+        jc.addCommand(lengthCommand);
 
         jc.parse(args);
 
         /* Выполняется указанная в аргументах команда */
         String taskName = jc.getParsedCommand();
-        System.out.println(taskName);
-        map.get("frequency").executeCommand();
+        map.get(taskName).executeCommand();
 
     }
 

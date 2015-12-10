@@ -9,20 +9,20 @@ import com.beust.jcommander.Parameters;
 /**
  * Created by invincible_g_d on 12/10/15.
  */
-@Parameters(commandNames = {"length"})
+@Parameters(commandNames = {"length"}, commandDescription = "Find words by their length and display them")
 public class LengthCommand implements Command {
 
     ILength iLen;
-    ITextAnalyzer iText;
+    TextAnalyzer iText;
 
-    public LengthCommand(ILength iLen) {
+
+    public LengthCommand(ILength iLen, TextAnalyzer iText ) {
+        this.iText = iText;
         this.iLen = iLen;
     }
 
     @Override
     public void executeCommand() {
-        iLen = new Length();
-        iText = new TextAnalyzer();
 
         iLen.findResultWords(iText.textValidator());
 
