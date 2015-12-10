@@ -17,9 +17,9 @@ public enum EnumTaskType {
     public static EnumTaskType fromString(String value) {
 
         if (value != null) {
-            for (EnumTaskType pt : EnumTaskType.values()) {
-                if (value.equalsIgnoreCase(pt.value)) {
-                    return pt;
+            for (EnumTaskType etp : EnumTaskType.values()) {
+                if (value.equalsIgnoreCase(etp.value)) {
+                    return etp;
                 }
             }
         }

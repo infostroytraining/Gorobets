@@ -8,9 +8,11 @@ import java.util.*;
 /**
  * Created by Gorobets Dmitriy on 12/5/15.
  */
-@Parameters(commandNames = {"frequency"})
+
 public class Frequency implements IFrequency {
 
+    public Frequency() {
+    }
 
     /**
      * @return
@@ -47,10 +49,10 @@ public class Frequency implements IFrequency {
     /**
      * @return
      */
-    public Map<String, Integer> countWordsOfText(StringBuilder t) {
+    public Map<String, Integer> countWordsOfText(StringBuilder text) {
 
         Map<String, Integer> words = new HashMap<>();
-        StringBuilder text = textValidator(t);
+//        StringBuilder text = textValidator(t);
 
 
         String[] textStr = text.toString().split(" ");
@@ -75,26 +77,26 @@ public class Frequency implements IFrequency {
     /**
      * @return
      */
-    public StringBuilder textValidator(StringBuilder text) {
-
-        for (int i = 0; i < text.length() - 1; i++) {
-            if (text.charAt(i) == '.' || text.charAt(i) == ',' || text.charAt(i) == '!'
-                    || text.charAt(i) == '?' || text.charAt(i) == '—'
-                    || text.charAt(i) == '(' || text.charAt(i) == ')' || text.charAt(i) == '"'
-                    || text.charAt(i) == ';' || text.charAt(i) == ':') {
-                text.deleteCharAt(i);
-            }
-            if (text.charAt(i) == '\"' || text.charAt(i) == '\"') {
-                text.deleteCharAt(i);
-            }
-        }
-
-        if (text.charAt(text.length() - 1) == '.') {
-            text.deleteCharAt(text.length() - 1);
-        }
-
-        return text;
-    }
+//    public StringBuilder textValidator(StringBuilder text) {
+//
+//        for (int i = 0; i < text.length() - 1; i++) {
+//            if (text.charAt(i) == '.' || text.charAt(i) == ',' || text.charAt(i) == '!'
+//                    || text.charAt(i) == '?' || text.charAt(i) == '—'
+//                    || text.charAt(i) == '(' || text.charAt(i) == ')' || text.charAt(i) == '"'
+//                    || text.charAt(i) == ';' || text.charAt(i) == ':') {
+//                text.deleteCharAt(i);
+//            }
+//            if (text.charAt(i) == '\"' || text.charAt(i) == '\"') {
+//                text.deleteCharAt(i);
+//            }
+//        }
+//
+//        if (text.charAt(text.length() - 1) == '.') {
+//            text.deleteCharAt(text.length() - 1);
+//        }
+//
+//        return text;
+//    }
 }
 
 

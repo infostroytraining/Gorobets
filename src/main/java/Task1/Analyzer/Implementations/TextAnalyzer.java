@@ -12,16 +12,16 @@ import java.io.*;
 public class TextAnalyzer implements ITextAnalyzer {
 
 
-    @Parameter(names = {"-t", "--task"}, description = "Task to execute", arity = 1, required = true)
-    private String tasks;
+    @Parameter(names = {"-t", "--task"}, description = "Task to execute", arity = 1, required = true, converter = TaskTypeConverter.class)
+    EnumTaskType tasks;
 
     @Parameter(names = {"-i", "--input"}, description = "Path to the input file", required = true)
-    private String pathToFile;
+    String pathToFile;
 
     @Parameter(names = {"-h", "--help"}, description = "A detailed information of how to use this app", help = true)
-    private boolean help;
+    boolean help;
 
-    public String getTasks() {
+    public EnumTaskType getTasks() {
         return tasks;
     }
 
@@ -34,38 +34,63 @@ public class TextAnalyzer implements ITextAnalyzer {
     }
 
 
+//    public Enum getEnumTaskType() throws IllegalArgumentException {
+//
+//        EnumTaskType taskType = EnumTaskType.fromString(tasks);
+//        return taskType;
+//    }
 
-    public Enum getEnumTaskType() throws IllegalArgumentException {
 
-        EnumTaskType tt = EnumTaskType.fromString(tasks);
-        return tt;
-    }
+//    public void executeMethods() throws IllegalArgumentException {
+//        long startTime = System.currentTimeMillis();
+//
+//        IFrequency it = new Frequency();
+//        IDuplicates du = new Duplicates();
+//        ILength leng = new Length();
+//        StringBuilder text = it.textValidator(getStringFromFile());
+//
+//        if (getEnumTaskType().equals(EnumTaskType.FREQUENCY)) {
+//
+//            it.findResultWords(text);
+//        }
+//        if (getEnumTaskType().equals(EnumTaskType.LENGTH)) {
+//
+//            leng.findResultWords(text);
+//
+//        }
+//        if (getEnumTaskType().equals(EnumTaskType.DUPLICATES)) {
+//
+//            du.findResultWords(text);
+//
+//        }
+//        long spentTime = System.currentTimeMillis() - startTime;
+//        System.out.println("elapsed time:"+spentTime+" millis");
+//    }
 
+    public StringBuilder textValidator() {
+        System.out.println(pathToFile);
+        System.out.println(tasks);
+        System.out.println(help);
 
-    public void executeMethods() throws IllegalArgumentException {
-        long startTime = System.currentTimeMillis();
+        StringBuilder text = getStringFromFile();
 
-        IFrequency it = new Frequency();
-        IDuplicates du = new Duplicates();
-        ILength leng = new Length();
-        StringBuilder text = it.textValidator(getStringFromFile());
-
-        if (getEnumTaskType().equals(EnumTaskType.FREQUENCY)) {
-
-            it.findResultWords(text);
+        for (int i = 0; i < text.length() - 1; i++) {
+            if (text.charAt(i) == '.' || text.charAt(i) == ',' || text.charAt(i) == '!'
+                    || text.charAt(i) == '?' || text.charAt(i) == '—'
+                    || text.charAt(i) == '(' || text.charAt(i) == ')' || text.charAt(i) == '"'
+                    || text.charAt(i) == ';' || text.charAt(i) == ':') {
+                text.deleteCharAt(i);
+            }
+            if (text.charAt(i) == '\"' || text.charAt(i) == '\"') {
+                text.deleteCharAt(i);
+            }
         }
-        if (getEnumTaskType().equals(EnumTaskType.LENGTH)) {
 
-            leng.findResultWords(text);
-
+        if (text.charAt(text.length() - 1) == '.') {
+            text.deleteCharAt(text.length() - 1);
         }
-        if (getEnumTaskType().equals(EnumTaskType.DUPLICATES)) {
 
-            du.findResultWords(text);
-
-        }
-        long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println("elapsed time:"+spentTime+" millis");
+        return text;
     }
 
     public StringBuilder getStringFromFile() {

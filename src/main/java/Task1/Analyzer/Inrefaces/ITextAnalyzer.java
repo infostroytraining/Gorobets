@@ -51,4 +51,6 @@ public interface ITextAnalyzer {
            2. Do not forget to add input.txt file to your repo as well. */
 
     StringBuilder getStringFromFile();
+
+    StringBuilder textValidator();
 }

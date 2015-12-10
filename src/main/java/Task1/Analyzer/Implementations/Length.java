@@ -8,8 +8,11 @@ import java.util.*;
 /**
  * Created by Gorobets Dmitriy on 12/5/15.
  */
-@Parameters(commandNames = {"length"})
+
 public class Length implements ILength {
+
+    public Length() {
+    }
 
     public Map<String, Integer> countWordsOfText(StringBuilder text) {
 

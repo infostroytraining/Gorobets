@@ -8,9 +8,12 @@ import java.util.*;
 /**
  * Created by Gorobets Dmitriy on 12/5/15.
  */
-@Parameters(commandNames = {"duplicates"})
+
 public class Duplicates implements IDuplicates{
 
+
+    public Duplicates() {
+    }
 
     public Map<Integer, String> countWordsOfText(StringBuilder text) {
 
