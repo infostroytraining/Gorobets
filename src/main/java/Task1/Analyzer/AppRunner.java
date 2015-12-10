@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by invincible_g_d on 12/8/15.
+ * Created by Gorobets Dmitriy on 12/5/15.
  */
 public class AppRunner {
     public static void main(String[] args) {

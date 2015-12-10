@@ -3,7 +3,7 @@ package Task1.Analyzer.Inrefaces;
 import java.util.Map;
 
 /**
- * Created by invincible_g_d on 12/8/15.
+ * Created by Gorobets Dmitriy on 12/5/15.
  */
 public interface IDuplicates {
 

@@ -1,30 +1,29 @@
 package Task1.Analyzer.Implementations;
 
 import Task1.Analyzer.Inrefaces.Command;
-import Task1.Analyzer.Inrefaces.IDuplicates;
 import Task1.Analyzer.Inrefaces.ILength;
-import Task1.Analyzer.Inrefaces.ITextAnalyzer;
 import com.beust.jcommander.Parameters;
 
 /**
- * Created by invincible_g_d on 12/10/15.
+ * Created by Gorobets Dmitriy on 12/5/15.
  */
-@Parameters(commandNames = {"length"}, commandDescription = "Find words by their length and display them")
+@Parameters(commandNames = {"length"}, commandDescription = "Find first three longest words and print this words along " +
+        "with the their length sorted them in a descend order by the total number of letters each word contains")
 public class LengthCommand implements Command {
 
     ILength iLen;
-    TextAnalyzer iText;
+    TextAnalyzer textA;
 
 
-    public LengthCommand(ILength iLen, TextAnalyzer iText ) {
-        this.iText = iText;
+    public LengthCommand(ILength iLen, TextAnalyzer textA) {
+        this.textA = textA;
         this.iLen = iLen;
     }
 
     @Override
     public void executeCommand() {
 
-        iLen.findResultWords(iText.textValidator());
+        iLen.findResultWords(textA.textValidator());
 
     }
 }

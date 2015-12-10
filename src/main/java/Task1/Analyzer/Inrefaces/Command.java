@@ -1,7 +1,7 @@
 package Task1.Analyzer.Inrefaces;
 
 /**
- * Created by invincible_g_d on 12/10/15.
+ * Created by Gorobets Dmitriy on 12/5/15.
  */
 public interface Command {
 

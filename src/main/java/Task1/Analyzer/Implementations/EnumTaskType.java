@@ -1,7 +1,7 @@
 package Task1.Analyzer.Implementations;
 
 /**
- * Created by invincible_g_d on 12/7/15.
+ * Created by Gorobets Dmitriy on 12/5/15.
  */
 public enum EnumTaskType {
     FREQUENCY("frequency"),
@@ -14,6 +14,10 @@ public enum EnumTaskType {
         this.value = value;
     }
 
+    /**
+     * @param value
+     * @return
+     */
     public static EnumTaskType fromString(String value) {
 
         if (value != null) {

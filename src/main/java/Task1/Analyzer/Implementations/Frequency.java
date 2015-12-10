@@ -15,7 +15,10 @@ public class Frequency implements IFrequency {
     }
 
     /**
-     * @return
+     * This method find result most frequency words using a Map
+     * which it get from a "countWordOfText" method.
+     * There is this Map sorts and get necessary words
+     * @param text -it's validated
      */
     public void findResultWords(StringBuilder text) {
         long startTime = System.currentTimeMillis();
@@ -25,7 +28,6 @@ public class Frequency implements IFrequency {
         Collection<Integer> tr = words.values();
         List<Integer> list = new ArrayList<>(tr);
         Collections.sort(list);
-
 
         Set<Map.Entry<String, Integer>> entrySet = words.entrySet();
         for (int i = list.size() - 1; i > list.size() - 3; i--) {
@@ -45,7 +47,7 @@ public class Frequency implements IFrequency {
         System.out.println(resultWords.get(1) + "->" + words.get(resultWords.get(1)));
 
         long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println("elapsed time:"+spentTime+" millis");
+        System.out.println("elapsed time:" + spentTime + " millis");
     }
 
     /**
@@ -54,17 +56,13 @@ public class Frequency implements IFrequency {
     public Map<String, Integer> countWordsOfText(StringBuilder text) {
 
         Map<String, Integer> words = new HashMap<>();
-//        StringBuilder text = textValidator(t);
-
 
         String[] textStr = text.toString().split(" ");
-
 
         for (int j = 0; j < textStr.length; j++) {
 
             String word = textStr[j];
             Integer value = words.get(word);
-
 
             if (value == null) {
                 words.put(word, 1);
@@ -76,29 +74,6 @@ public class Frequency implements IFrequency {
         return words;
     }
 
-    /**
-     * @return
-     */
-//    public StringBuilder textValidator(StringBuilder text) {
-//
-//        for (int i = 0; i < text.length() - 1; i++) {
-//            if (text.charAt(i) == '.' || text.charAt(i) == ',' || text.charAt(i) == '!'
-//                    || text.charAt(i) == '?' || text.charAt(i) == '—'
-//                    || text.charAt(i) == '(' || text.charAt(i) == ')' || text.charAt(i) == '"'
-//                    || text.charAt(i) == ';' || text.charAt(i) == ':') {
-//                text.deleteCharAt(i);
-//            }
-//            if (text.charAt(i) == '\"' || text.charAt(i) == '\"') {
-//                text.deleteCharAt(i);
-//            }
-//        }
-//
-//        if (text.charAt(text.length() - 1) == '.') {
-//            text.deleteCharAt(text.length() - 1);
-//        }
-//
-//        return text;
-//    }
 }
 
 

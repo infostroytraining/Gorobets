@@ -4,7 +4,7 @@ import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.ParameterException;
 
 /**
- * Created by invincible_g_d on 12/10/15.
+ * Created by Gorobets Dmitriy on 12/5/15.
  */
 public class TaskTypeConverter implements IStringConverter<EnumTaskType> {
 

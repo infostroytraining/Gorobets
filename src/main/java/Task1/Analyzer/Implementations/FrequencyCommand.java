@@ -2,27 +2,27 @@ package Task1.Analyzer.Implementations;
 
 import Task1.Analyzer.Inrefaces.Command;
 import Task1.Analyzer.Inrefaces.IFrequency;
-import Task1.Analyzer.Inrefaces.ITextAnalyzer;
 import com.beust.jcommander.Parameters;
 
 /**
- * Created by invincible_g_d on 12/10/15.
+ * Created by Gorobets Dmitriy on 12/5/15.
  */
-@Parameters(commandNames = {"frequency"}, commandDescription = "Find words by their length and display them")
+@Parameters(commandNames = {"frequency"}, commandDescription = "Find the most two frequent words and print them out " +
+        "sorted alphabetically in a reversed order")
 public class FrequencyCommand implements Command{
 
     IFrequency iFre;
-    TextAnalyzer iText;
+    TextAnalyzer textA;
 
-    public FrequencyCommand(IFrequency iFre, TextAnalyzer iText) {
+    public FrequencyCommand(IFrequency iFre, TextAnalyzer textA) {
         this.iFre = iFre;
-        this.iText = iText;
+        this.textA = textA;
     }
 
     @Override
     public void executeCommand() {
 
-        iFre.findResultWords(iText.textValidator());
+        iFre.findResultWords(textA.textValidator());
 
     }
 }
