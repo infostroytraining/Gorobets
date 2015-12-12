@@ -22,7 +22,7 @@ public class MemoryUserDAO implements UserDAO {
 	@Override
 	public User get(int id) {
 
-		return null;
+		return storage.getById(id);
 	}
 
 	@Override
@@ -32,8 +32,9 @@ public class MemoryUserDAO implements UserDAO {
 	}
 
 	@Override
-	public void remove(int id) {
+	public boolean remove(int id) {
 
+	return 	storage.removeById(id);
 		
 	}
 
@@ -43,14 +44,11 @@ public class MemoryUserDAO implements UserDAO {
 	}
 
 
-	@Override
-	public User getUserByUserName(String userName) {
-		return null;
-	}
+
 
 	@Override
-	public User getUserByUserSurName(String userName) {
-		return null;
+	public User getUserByUserSurName(String userSurname) {
+		return storage.getUserBySurname(userSurname);
 	}
 
 	@Override
@@ -58,8 +56,5 @@ public class MemoryUserDAO implements UserDAO {
 		return null;
 	}
 
-	@Override
-	public List<User> getUsersByCity(String language) {
-		return null;
-	}
+
 }

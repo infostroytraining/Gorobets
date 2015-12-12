@@ -51,8 +51,7 @@ public class Captchas {
         this.secret   = secret;
         this.alphabet = alphabet;
         this.letters  = letters;
-        this.width    = width;
-        this.height   = height;
+
     }
     // additional alphabet, letters, width, height
     public Captchas(HttpSession httpSess,

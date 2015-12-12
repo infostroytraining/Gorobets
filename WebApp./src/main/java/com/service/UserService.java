@@ -31,11 +31,11 @@ public class UserService {
 	}
 
 	/**
-	 * This method returns a map with programming language name as a key and
-	 * count of answers for this language as a value.
+	 * This method returns a map with users emails as a key and
+	 * user surname as a value.
 	 */
-	public Map<String, Integer> getStatisticForEachAnswer() {
-		Map<String, Integer> statisticMap = new HashMap<>();
+	public Map<String, String> getEmailForEachUser() {
+		Map<String, String> mapEmailUser = new HashMap<>();
 		Set<String> emails = new HashSet<>();
 
 		for (User user : getAll()) {
@@ -45,16 +45,16 @@ public class UserService {
 		}
 
 		for (String email : emails) {
-			int answersCount = 0;
+
 			if (email != null) {
 				for (User user : getAll()) {
 					if (user != null && email.equals(user.getEmail())) {
-						answersCount += 1;
+                        mapEmailUser.put(email, user.getSurname());
 					}
-					statisticMap.put(email, answersCount);
+
 				}
 			}
 		}
-		return statisticMap;
+		return mapEmailUser;
 	}
 }

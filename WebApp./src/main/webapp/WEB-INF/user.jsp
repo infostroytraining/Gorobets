@@ -6,16 +6,16 @@
 <title>Thank you</title>
 </head>
 <body>
-${name} , thanks for login!
+${surname} , thanks for login!
 
 <p>
-	The most popular programming languages:
+	User email:
 </p>
 
 <table>
 	<tr>
-		<th>Language</th>
-		<th>Popularity</th>
+		<th>Email</th>
+		<th>User Surname</th>
 	</tr>
 	
 	<c:forEach var="entry" items="${statisticMap}">

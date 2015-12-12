@@ -1,6 +1,5 @@
 package com.web.servlet;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +40,7 @@ public class MainServlet extends HttpServlet {
 			req.getRequestDispatcher("home.jsp").forward(req, resp);
 		} else {
 			userService.add(new User(email,password,name,surname));
-			req.setAttribute("statisticMap", userService.getStatisticForEachAnswer());
+			req.setAttribute("statisticMap", userService.getEmailForEachUser());
 			req.setAttribute("name", name);
 			req.getRequestDispatcher("user.jsp").forward(req, resp);
 		}

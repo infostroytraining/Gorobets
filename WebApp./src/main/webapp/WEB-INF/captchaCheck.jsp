@@ -1,8 +1,3 @@
-<%--
- % Example for using the free http://captchas.net Webservice
- % Documentation see http://captchas.net/sample/jsp/
- --%>
-
 <%@ page language="java" import="com.captcha.Captchas" %>
 <%@ page import="com.captcha.Captchas" %>
 

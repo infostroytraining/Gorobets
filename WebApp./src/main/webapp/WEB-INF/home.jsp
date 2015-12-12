@@ -28,7 +28,7 @@
 			<input type="text" id="surname" name="surname" value="${user.surname}"/>
 		</p>
 		<p>
-			<label for="avatar">Language</label>
+			<label for="avatar">Avatar</label>
 			<input type="image" id="avatar" name="avatar" value="${user.avatar}"/>
 		</p>
 
