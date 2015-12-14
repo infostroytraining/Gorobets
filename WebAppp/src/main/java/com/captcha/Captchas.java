@@ -234,7 +234,7 @@ public class Captchas {
             return 'w';
         } else {
             // invalidate used captcha random
-            httpSess.setAttribute("captchasDotNetRandom", "used");
+            httpSess.setAttribute("captchaRandom", "used");
             // 't'rue
             return 't';
         }

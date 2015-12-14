@@ -16,26 +16,26 @@ public class UserStorage {
     private AtomicInteger id = new AtomicInteger();
 
     public UserStorage() {
-//        storage  = new HashMap<>();
+        storage  = new HashMap<>();
     }
 
-    public Map<Integer,User> creareUsers(){
-        for (int i = 0; i <5 ; i++) {
-            storage.put(i,new User("userEmail"+i+"@mail.ru",""+i+"","userName"+i,"userSurname"+i));
-        }
-        return storage;
-    }
+//    public Map<Integer,User> creareUsers(){
+//        for (int i = 0; i <5 ; i++) {
+//            storage.put(i,new User("userEmail"+i+"@mail.ru",""+i+"","userName"+i,"userSurname"+i));
+//        }
+//        return storage;
+//    }
 
     public User add(User user) {
         int id = generateId();
         user.setId(id);
-       creareUsers().put(id, user);
+       storage.put(id, user);
         return user;
     }
 
     public List<User> all() {
 
-        return new ArrayList<>(creareUsers().values());
+        return new ArrayList<>(storage.values());
     }
 
     private int generateId() {
@@ -73,7 +73,7 @@ public class UserStorage {
                 resultUser = map.getValue();
 
             } else {
-//                LOGGER.info("User doesn't exist for  surname " + surname);
+                LOGGER.info("User doesn't exist for  surname " + surname);
 
             }
 

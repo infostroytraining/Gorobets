@@ -49,7 +49,7 @@
   <table>
     <tr>
       <td>
-        Your message:</td><td><input name="message" size="60" />
+        Your message:</td><td> <input type="text" id="message" name="message" size="16" value=""/>
     </td>
     </tr>
     <tr>
@@ -57,7 +57,7 @@
         The CAPTCHA password:
       </td>
       <td>
-        <input name="password" size="16" />
+        <input name="password" type="text" id="password" size="16"  value=""/>
       </td>
     </tr>
     <tr>

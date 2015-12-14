@@ -21,22 +21,13 @@ public class UserServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//       String email ="email";
-//        String password = "password";
-//        String name = "name";
-//        String surname = "surname";
-//
-//        try {
-//            // Set the attribute and Forward to hello.jsp
-//            request.setAttribute("email", email);
-//            request.setAttribute("password", password);
-//            request.setAttri bute("name", name);
-//            request.setAttribute("surname", surname);
-            request.getRequestDispatcher(
-                    "user.jsp").forward(request, response);
-//        } catch (Exception ex) {
-//            ex.printStackTrace ();
-//        }
+        try {
+
+            request.getRequestDispatcher("userErrors.jsp").forward(request, response);
+
+        } catch (Exception ex) {
+            ex.printStackTrace ();
+        }
 
     }
 
@@ -45,17 +36,17 @@ public class UserServlet extends HttpServlet {
 //        UserStorage userStorage = new UserStorage();
 //        UserDAO userDAO = new MemoryUserDAO(userStorage);
 //        MemoryUserService memoryUserService = new MemoryUserService(userDAO);
-                // MemoryUserService memoryUserService = (MemoryUserService) request.getServletContext().getAttribute("memoryUserService");
-
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-//		Image avatar = request.getParameter("avatar");// find out how to hand in a image????
-        UserDTO user = new UserDTO(email, password, name, surname);
-
-
-        //errors
+//        MemoryUserService memoryUserService = (MemoryUserService) request.getServletContext().getAttribute("memoryUserService");
+//
+//        String email = request.getParameter("email");
+//        String password = request.getParameter("password");
+//        String name = request.getParameter("name");
+//        String surname = request.getParameter("surname");
+////		Image avatar = request.getParameter("avatar");// find out how to hand in a image????
+//        UserDTO userDTO = new UserDTO(email, password, name, surname);
+//
+//
+////        errors
 //        List<String> errors = validateForm(userDTO);
 //        if (!errors.isEmpty()) {
 //            request.setAttribute("userDTO", userDTO);
@@ -65,34 +56,34 @@ public class UserServlet extends HttpServlet {
 //            User user =new User(email, password, name, surname);
 //            memoryUserService.add(user);
 //            request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());
-            request.setAttribute("user",user);
+//            request.setAttribute("userDTO",userDTO);
 //            request.setAttribute("email", email);
 //            request.setAttribute("password", password);
 //            request.setAttribute("name", name);
 //            request.setAttribute("surname", surname);
-
-            request.getRequestDispatcher("userErrors.jsp").forward(request, response);
+//
+//            request.getRequestDispatcher("answerToUser.jsp").forward(request, response);
 //        }
-    }
-
-//    private List<String> validateForm(UserDTO user) {
+//    }
+//
+//    private List<String> validateForm(UserDTO userDTO) {
 //        List<String> errors = new ArrayList<>();
 //
-//        if (user.getEmail() == null || user.getEmail().isEmpty()) {
+//        if (userDTO.getEmail() == null || userDTO.getEmail().isEmpty()) {
 //            errors.add("Please, input your email");
 //        }
-//        if (user.getPassword() == null || user.getPassword().isEmpty()) {
+//        if (userDTO.getPassword() == null || userDTO.getPassword().isEmpty()) {
 //            errors.add("Please, input your password");
 //        }
-//        if (user.getName() == null || user.getName().isEmpty()) {
+//        if (userDTO.getName() == null || userDTO.getName().isEmpty()) {
 //            errors.add("Please, input your name");
 //        }
 //
-//        if (user.getSurname() == null || user.getSurname().isEmpty()) {
+//        if (userDTO.getSurname() == null || userDTO.getSurname().isEmpty()) {
 //            errors.add("Please, input your surname");
 //        }
 //        return errors;
-//    }
+    }
 
 
 }
