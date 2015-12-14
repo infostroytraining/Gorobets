@@ -9,11 +9,11 @@ import java.util.Set;
 import com.dao.UserDAO;
 import com.entity.User;
 
-public class UserService {
+public class MemoryUserService implements UserServices{
 
 	private UserDAO userDAO;
 
-	public UserService(UserDAO userDAO) {
+	public MemoryUserService(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
 

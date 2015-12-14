@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
 
-  <display-name>Archetype Created Web Application</display-name>
-    <welcome-file-list>
-        <welcome-file>user.jsp</welcome-file>
-        <welcome-file>home.jsp</welcome-file>
-        <welcome-file>captchaCheck.jsp</welcome-file>
-        <welcome-file>captchaQuery.jsp</welcome-file>
-    </welcome-file-list>
+    <display-name>Archetype Created Web Application</display-name>
+
+
     <servlet>
-        <servlet-name>Main</servlet-name>
-        <servlet-class>com.web.servlet.MainServlet</servlet-class>
+        <servlet-name>User</servlet-name>
+        <servlet-class>com.web.servlet.UserServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Main</servlet-name>
+        <servlet-name>User</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>UserErr</servlet-name>
+        <jsp-file>/WEB-INF/users/userErrors.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserErr</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserLogIn</servlet-name>
+        <jsp-file>/WEB-INF/users/user.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserLogIn</servlet-name>
+        <url-pattern>/logIn</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserAnswer</servlet-name>
+        <jsp-file>/WEB-INF/users/answerToUser.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserAnswer</servlet-name>
+        <url-pattern>/answer</url-pattern>
+    </servlet-mapping>
+
+
 
     <listener>
         <listener-class>com.web.listener.ContextListener</listener-class>
     </listener>
+    <welcome-file-list>
+        <welcome-file>user.jsp</welcome-file>
+    </welcome-file-list>
 
 </web-app>

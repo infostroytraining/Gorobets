@@ -8,26 +8,34 @@ import org.apache.log4j.Logger;
 
 public class UserStorage {
 
-//    private static final Logger LOGGER = Logger.getLogger(UserStorage.class);
+    private static final Logger LOGGER = Logger.getLogger(UserStorage.class);
 
 
 
-    private Map<Integer, User> storage;
+    private Map<Integer, User> storage = new HashMap<>();
     private AtomicInteger id = new AtomicInteger();
 
     public UserStorage() {
-        storage = new HashMap<>();
+//        storage = new HashMap<>();
+    }
+
+    public Map<Integer,User> creareUsers(){
+        for (int i = 0; i <5 ; i++) {
+            storage.put(i,new User("userEmail"+i+"@mail.ru",""+i+"","userName"+i,"userSurname"+i));
+        }
+        return storage;
     }
 
     public User add(User user) {
         int id = generateId();
         user.setId(id);
-        storage.put(id, user);
+       creareUsers().put(id, user);
         return user;
     }
 
     public List<User> all() {
-        return new ArrayList<>(storage.values());
+
+        return new ArrayList<>(creareUsers().values());
     }
 
     private int generateId() {
@@ -71,5 +79,11 @@ public class UserStorage {
 
         }
         return  resultUser;
+    }
+
+    public static void main(String[] args) {
+UserStorage str = new UserStorage();
+        System.out.println(str.all().get(1).getName());
+
     }
 }

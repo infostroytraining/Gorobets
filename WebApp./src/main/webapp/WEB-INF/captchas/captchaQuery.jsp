@@ -25,27 +25,27 @@
 <h1>JSP CAPTCHA Query</h1>
 <%
 // Construct the captchas object (Default Values)
-//  Captchas captchas = new captchas.Captchas(
-//          request.getSession(true),     // Ensure session
-//          "demo",                       // client
-//          "secret"                      // secret
-//  );
-// Construct the captchas object (Extended example)
- Captchas captchas = new Captchas(
-  request.getSession(true),     // Ensure session
-  "demo",                       // client
-  "secret",                     // secret
-  "01",                         // alphabet
-  16,                           // letters
-  500,                          // width
-  80                            // height
+  Captchas captchas = new Captchas(
+          request.getSession(true),     // Ensure session
+          "demo",                       // client
+          "secret"                      // secret
   );
+// Construct the captchas object (Extended example)
+// Captchas captchas = new Captchas(
+//  request.getSession(true),     // Ensure session
+//  "demo",                       // client
+//  "secret",                     // secret
+//  "01",                         // alphabet
+//  16,                           // letters
+//  500,                          // width
+//  80                            // height
+//  );
 %>
 <%--
  % encodeUrl produces jsessionid=xyz in case of disabled cookies
  % Please test your implementation also with disabled cookies
  --%>
-<form method="get" action="<%=response.encodeUrl("check.jsp")%>">
+<form method="get" action="<%=response.encodeUrl("captchaCheck.jsp")%>">
   <table>
     <tr>
       <td>

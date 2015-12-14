@@ -4,19 +4,19 @@ import java.awt.*;
 
 public class UserDTO {
 
-	private String name;
-	private String surname;
 	private String email;
 	private String password;
+	private String name;
+	private String surname;
+
 	private Image avatar;
 
-	public UserDTO(String name, String surname, String email, String password/*, Image avatar*/) {
-		this.name = name;
-		this.surname = surname;
+	public UserDTO(String email, String password, String name, String surname/*, Image avatar*/) {
 		this.email = email;
 		this.password = password;
+		this.name = name;
+		this.surname = surname;
 //		this.avatar = avatar;
-
 	}
 
 	public String getName() {

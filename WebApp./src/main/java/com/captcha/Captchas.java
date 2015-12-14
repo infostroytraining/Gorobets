@@ -78,9 +78,9 @@ public class Captchas {
      * Generate 8 byte hexrandom and set captchasDotNetRandom
      */
     private String randomString() {
-        Random r = new Random();
-        captchaRandom = Integer.toHexString(r.nextInt())+Integer.toHexString(r.nextInt());
-        httpSess.setAttribute("captchasDotNetRandom", captchaRandom);
+        Random random = new Random();
+        captchaRandom = Integer.toHexString(random.nextInt())+Integer.toHexString(random.nextInt());
+        httpSess.setAttribute("captchaRandom", captchaRandom);
         return captchaRandom;
     }
 
@@ -114,7 +114,7 @@ public class Captchas {
     // the same with random
     public String imageUrl(String randomString) {
         captchaRandom = randomString;
-        httpSess.setAttribute("captchasDotNetRandom", captchaRandom);
+        httpSess.setAttribute("captchaRandom", captchaRandom);
         return imageUrl();
     }
 
@@ -140,7 +140,7 @@ public class Captchas {
     // the same with random
     public String audioUrl(String randomString) {
         captchaRandom = randomString;
-        httpSess.setAttribute("captchasDotNetRandom", captchaRandom);
+        httpSess.setAttribute("captchaRandom", captchaRandom);
         return audioUrl();
     }
 
