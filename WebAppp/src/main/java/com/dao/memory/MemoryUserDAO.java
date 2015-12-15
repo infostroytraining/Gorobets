@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dao.UserDAO;
 import com.dao.storage.UserStorage;
+import com.dto.UserDTO;
 import com.entity.User;
 
 public class MemoryUserDAO implements UserDAO {
@@ -32,10 +33,8 @@ public class MemoryUserDAO implements UserDAO {
 	}
 
 	@Override
-	public boolean remove(int id) {
+	public void remove(int id) {
 
-	return 	storage.removeById(id);
-		
 	}
 
 	@Override

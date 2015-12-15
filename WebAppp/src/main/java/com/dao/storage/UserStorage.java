@@ -3,6 +3,7 @@ package com.dao.storage;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.dto.UserDTO;
 import com.entity.User;
 import org.apache.log4j.Logger;
 
@@ -27,8 +28,9 @@ public class UserStorage {
 //    }
 
     public User add(User user) {
+
         int id = generateId();
-        user.setId(id);
+
        storage.put(id, user);
         return user;
     }

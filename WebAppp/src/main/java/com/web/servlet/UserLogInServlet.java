@@ -4,6 +4,7 @@ import com.captcha.Captchas;
 import com.dto.UserDTO;
 import com.entity.User;
 import com.service.MemoryUserService;
+import com.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,16 +43,25 @@ public class UserLogInServlet extends HttpServlet {
 
 
 //        errors
-        List<String> errors = validateForm(userDTO,passwordc);
+        List<String> errors = validateForm(userDTO, passwordc);
         if (!errors.isEmpty()) {
             request.setAttribute("userDTO", userDTO);
             request.setAttribute("errors", errors);
             request.getRequestDispatcher("userErrors.jsp").forward(request, response);
         } else {
-            User user =new User(email, password, name, surname);
-            memoryUserService.add(user);
-            request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());
-            request.setAttribute("userDTO",userDTO);
+            User user = new User(email, password, name, surname);
+            try {
+                memoryUserService.add(user);
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());
+            } catch (ServiceException e) {
+                e.printStackTrace();
+            }
+            request.setAttribute("userDTO", userDTO);
             request.setAttribute("email", email);
             request.setAttribute("password", password);
             request.setAttribute("name", name);
@@ -61,7 +71,7 @@ public class UserLogInServlet extends HttpServlet {
         }
     }
 
-    private List<String> validateForm(UserDTO userDTO,String passwordc) {
+    private List<String> validateForm(UserDTO userDTO, String passwordc) {
         List<String> errors = new ArrayList<>();
 
 
@@ -84,5 +94,6 @@ public class UserLogInServlet extends HttpServlet {
         return errors;
     }
 
-    }
+
+}
 

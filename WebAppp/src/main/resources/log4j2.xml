@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" Encoding="UTF-8">
+            <PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t] %c{3} :%M:%L - %m%n}{FATAL=orange, ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}" />
+        </Console>
+        <File name="File" fileName="log4j2.log" immediateFlush="false" maxFilesize="10MB" Encoding="UTF-8" >
+            <PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t]  %c{3} :%M:%L - %m%n}{FATAL=orange, ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,16 +1,18 @@
 package com.dao;
 
+import com.dao.exception.DAOException;
+
 import java.util.List;
 
 public interface DAO<T> {
 
-	T create(T entity);
+	T create(T entity) throws DAOException;
 
-	T get(int id);// read
+	T get(int id) throws DAOException;// read
 
-	T update(T entity);
+	T update(T entity) throws DAOException;
 
-	boolean remove(int id);
+	void remove(int id) throws DAOException;
 
-	List<T> getAll();
+	List<T> getAll() throws DAOException;
 }
