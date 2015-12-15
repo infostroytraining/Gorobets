@@ -16,11 +16,11 @@ import com.service.exception.ServiceException;
 public class TransactionalUserService implements UserService {
 
 	private TransactionManager transactionManager;
-	private UserDAO answerDAO;
+	private UserDAO userDAO;
 
-	public TransactionalUserService(TransactionManager transactionManager, UserDAO answerDAO) {
+	public TransactionalUserService(TransactionManager transactionManager, UserDAO userDAO) {
 		this.transactionManager = transactionManager;
-		this.answerDAO = answerDAO;
+		this.userDAO = userDAO;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class TransactionalUserService implements UserService {
 			return transactionManager.doTask(new Transaction<User>() {
 				@Override
 				public User execute() throws DAOException {
-					return answerDAO.create(user);
+					return userDAO.create(user);
 				}
 			}, Connection.TRANSACTION_READ_COMMITTED);
 		} catch (TransactionException e) {

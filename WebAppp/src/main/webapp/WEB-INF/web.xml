@@ -17,6 +17,14 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>UserRegisrtation</servlet-name>
+        <servlet-class>com.web.servlet.UserRegistrationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserRegisrtation</servlet-name>
+        <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>UserLogin</servlet-name>
         <servlet-class>com.web.servlet.UserLogInServlet</servlet-class>
     </servlet>
@@ -59,7 +67,16 @@
         <listener-class>com.web.listener.ContextListener</listener-class>
     </listener>
     <welcome-file-list>
-        <welcome-file>userLogIn.jsp</welcome-file>
+        <welcome-file>homePage.jsp</welcome-file>
     </welcome-file-list>
 
+    <context-param>
+        <param-name>storage</param-name>
+        <param-value>db</param-value>
+    </context-param>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/errorPage.jsp</location>
+    </error-page>
 </web-app>

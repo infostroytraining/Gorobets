@@ -1,6 +1,7 @@
 package com.web.servlet;
 
-import com.captcha.Captchas;
+import com.dao.exception.DAOException;
+import com.dao.postgesql.PostgresUserDAO;
 import com.dto.UserDTO;
 import com.entity.User;
 import com.service.MemoryUserService;
@@ -11,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,78 +19,60 @@ import java.util.List;
 /**
  * Created by invincible _g_d on 12/14/15.
  */
-@WebServlet(name = "UserLogInServlet")
+@WebServlet(name = "UserRegistrationServlet")
 public class UserLogInServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
 
+            request.getRequestDispatcher("userLogInPage.jsp").forward(request, response);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        MemoryUserService memoryUserService = (MemoryUserService) request.getServletContext().getAttribute("memoryUserService");
-
+        PostgresUserDAO postgresUserDAO = (PostgresUserDAO) request.getServletContext().getAttribute("postgresUserDAO");
+        User user = null;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String passwordc = request.getParameter("passwordc");
+        try {
+            user = postgresUserDAO.getUserByUserEmail(email);
 
-//		Image avatar = request.getParameter("avatar");// find out how to hand in a image????
-
-        UserDTO userDTO = new UserDTO(email, password, name, surname);
-
-
-//        errors
-        List<String> errors = validateForm(userDTO, passwordc);
-        if (!errors.isEmpty()) {
-            request.setAttribute("userDTO", userDTO);
-            request.setAttribute("errors", errors);
-            request.getRequestDispatcher("userErrors.jsp").forward(request, response);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
+        if ((user != null) && user.getPassword().equals(password)) {
+            request.getRequestDispatcher("Hello.jsp").forward(request, response);
         } else {
-            User user = new User(email, password, name, surname);
-            try {
-                memoryUserService.add(user);
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
 
-            try {
-                request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());
-            } catch (ServiceException e) {
-                e.printStackTrace();
-            }
-            request.setAttribute("userDTO", userDTO);
-            request.setAttribute("email", email);
-            request.setAttribute("password", password);
-            request.setAttribute("name", name);
-            request.setAttribute("surname", surname);
+            List<String> errors = validateForm(user, email, password);
+            if (!errors.isEmpty()) {
+                request.setAttribute("user", user);
+                request.setAttribute("errors", errors);
+                request.getRequestDispatcher("errorLogInPage.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("Hello.jsp").forward(request, response);
 
-            request.getRequestDispatcher("answerToUser.jsp").forward(request, response);
+
+            }
         }
     }
 
-    private List<String> validateForm(UserDTO userDTO, String passwordc) {
+    private List<String> validateForm(User user,String email, String password) {
         List<String> errors = new ArrayList<>();
 
 
-        if (userDTO.getEmail() == null || userDTO.getEmail().isEmpty()) {
-            errors.add("Please, input your email");
+        if (user.getEmail() == null || user.getEmail().isEmpty()|| !user.getEmail().equals(email)) {
+            errors.add("Please, input right email");
         }
-        if (userDTO.getPassword() == null || userDTO.getPassword().isEmpty()) {
-            errors.add("Please, input your password");
-        }
-        if (userDTO.getName() == null || userDTO.getName().isEmpty()) {
-            errors.add("Please, input your name");
+        if (user.getPassword() == null || user.getPassword().isEmpty()|| !user.getPassword().equals(password)) {
+            errors.add("Please, input right password");
         }
 
-        if (userDTO.getSurname() == null || userDTO.getSurname().isEmpty()) {
-            errors.add("Please, input your surname");
-        }
-        if (passwordc == null || passwordc.isEmpty()) {
-            errors.add("Please, input right code and push submit");
-        }
         return errors;
     }
 

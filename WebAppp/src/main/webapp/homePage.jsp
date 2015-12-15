@@ -2,7 +2,7 @@
 <%@ page import="com.captcha.Captchas" %>
 <%@include file="/WEB-INF/include/main.jsp" %>
 <head>
-    <title>Users Log In</title>
+    <title>Home page</title>
 </head>
 <body>
 
@@ -10,7 +10,7 @@
 
 
 
-<form action="/login" method="post">
+<form action="/registration" method="post">
     <p>
         <label for="email">Email</label>
         <input type="text" id="email" name="email" value="${userDTO.email}"/>
@@ -91,6 +91,17 @@
         </form>
 
     <%--<input type="submit" value="Add user">--%>
+</form>
+<form action="/login" method="get">
+    <table>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="submit" value="LogIn" />
+            </td>
+        </tr>
+    </table>
 </form>
 <%--<jsp:forward page="/login"/>--%>
 </body>
