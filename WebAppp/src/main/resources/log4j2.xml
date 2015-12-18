@@ -1,44 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
-    <!--<Appenders>-->
-        <!--<Console name="Console" target="SYSTEM_OUT" >-->
-            <!--<PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t] %c{3} :%M:%L - %m%n}{FATAL=orange,-->
-             <!--ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}" />-->
-        <!--</Console>-->
-        <!--<File name="File" fileName="dao-log.txt" immediateFlush="false" >-->
-            <!--<PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t]  %c{5} :%M:%L - %m%n}{FATAL=orange,-->
-             <!--ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}"/>-->
-        <!--</File>-->
-        <!--<appender name="MyCustomAppender" class = "com.customAppender.MyCustomAppender" >-->
-            <!--<PatternLayout charset="GBK" pattern="%highlight{%d{ISO8601} %-5level [%t]  %c{5} :%M:%L - %m%n}{FATAL=orange,-->
-             <!--ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}"/>-->
-            <!--<filter class="org.apache.log4j.varia.LevelRangeFilter">-->
-                <!--<param name="LevelMin" value="INFO"/>-->
-                <!--<param name="LevelMax" value="FATAL"/>-->
-                <!--<param name="AcceptOnMatch" value="true"/>-->
-            <!--</filter>-->
-        <!--</appender>-->
-    <!--</Appenders>-->
-    <!--<Loggers>-->
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" >
+            <PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t] %c{3} :%M:%L - %m%n}{FATAL=orange,
+             ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}" />
+        </Console>
+        <File name="File" fileName="dao-log.txt" immediateFlush="false" >
+            <PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t]  %c{5} :%M:%L - %m%n}{FATAL=orange,
+             ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}"/>
+        </File>
+        <Appender name="CustomAppender" class = "com.customAppender.CustomAppender" >
+            <PatternLayout charset="GBK" pattern="%highlight{%d{ISO8601} %-5level [%t]  %c{5} :%M:%L - %m%n}{FATAL=orange,
+             ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}"/>
+            <filter class="org.apache.log4j.varia.LevelRangeFilter">
+                <param name="LevelMin" value="INFO"/>
+                <param name="LevelMax" value="FATAL"/>
+                <param name="AcceptOnMatch" value="true"/>
+            </filter>
+        </Appender>
+    </Appenders>
+    <Loggers>
 
-        <!--<logger  level="info">-->
-            <!--<AppenderRef ref="MyCustomAppender"/>-->
-        <!--</logger>-->
+        <logger  level="info">
+            <AppenderRef ref="CustomAppender"/>
+        </logger>
 
-        <!--<logger name="com.dao.*" level="info">-->
-            <!--<AppenderRef ref="File"/>-->
-        <!--</logger>-->
-        <!--<Root level="info">-->
-            <!--<AppenderRef ref="MyCustomAppender"/>-->
-            <!--&lt;!&ndash;<AppenderRef ref="Console" />&ndash;&gt;-->
-        <!--</Root>-->
-    <!--</Loggers>-->
+        <logger name="com.dao.*" level="info">
+            <AppenderRef ref="File"/>
+        </logger>
+        <Root level="info">
+
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
 </Configuration>
 
-<!--<Configuration packages="com.yourcompany.yourcustomappenderpackage">-->
-<!--<Appenders>-->
-    <!--<MyCustomAppender name="ABC" otherAttribute="...">-->
-    <!--...-->
-<!--</Appenders>-->
-<!--<Loggers><Root><AppenderRef ref="ABC" /></Root></Loggers>-->
-<!--</Configuration>-->
