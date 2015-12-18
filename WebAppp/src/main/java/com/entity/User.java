@@ -43,6 +43,7 @@ import java.awt.*;
 
         - все логи должны выводиться в консоль.
         - для уровня доступа с базой данных логи должны также записываться в файл dao-log.txt.*/
+
 /*В дополнение к домашнему заданию:
 
 Для веб-приложения регистрации пользователей реализовать log4j2 custom appender для логгирования.
@@ -60,6 +61,8 @@ post parameter value: 22:18:54.818 DEBUG com.example.web.listener.ContextListene
 1) реализовать возможность получения лог-сообщений в формате JSON, если в GET-запросе будет указан параметр format со значением pretty;
 2) реализовать выделение получаемых лог-сообщений цветом в зависимости от уровня логгирования.
 
+
+
 */
 public class User {
 
@@ -72,6 +75,8 @@ public class User {
 
     private Image avatar;
 
+    public User() {
+    }
 
     public User(String email, String password, String name, String surname/*, Image avatar*/) {
 
@@ -128,5 +133,17 @@ public class User {
 
     public void setAvatar(Image avatar) {
         this.avatar = avatar;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", avatar=" + avatar +
+                '}';
     }
 }

@@ -67,7 +67,7 @@
         <listener-class>com.web.listener.ContextListener</listener-class>
     </listener>
     <welcome-file-list>
-        <welcome-file>homePage.jsp</welcome-file>
+        <welcome-file>/homePage.jsp</welcome-file>
     </welcome-file-list>
 
     <context-param>

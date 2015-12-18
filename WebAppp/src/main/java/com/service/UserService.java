@@ -13,6 +13,7 @@ import java.util.Map;
 public interface UserService {
 
     User add(User user)throws ServiceException;
+//    User addAll(User user)throws ServiceException;
 
     Map<String, String> getEmailForEachUser()throws ServiceException, DAOException;
 }

@@ -1,11 +1,16 @@
 package com.web.servlet;
 
 import com.captcha.Captchas;
+import com.customAppender.CustomAppender;
+import com.customAppender.MyCustomAppender;
+import com.customAppender.Test;
 import com.dto.UserDTO;
 import com.entity.User;
 import com.service.MemoryUserService;
 import com.service.TransactionalUserService;
 import com.service.exception.ServiceException;
+import org.apache.log4j.Logger;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +27,9 @@ import java.util.List;
  */
 @WebServlet(name = "UserRegistrationServlet")
 public class UserRegistrationServlet extends HttpServlet {
+  org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger("test");
+    CustomAppender customAppender = new CustomAppender();
+
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,6 +38,9 @@ public class UserRegistrationServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+        logger.addAppender(customAppender);
+        logger.info("Enter to the doPost method at servlet");
         MemoryUserService memoryUserService = (MemoryUserService) request.getServletContext().getAttribute("memoryUserService");
         TransactionalUserService transactionalUserService = (TransactionalUserService)
                 request.getServletContext().getAttribute("transactionalUserService");
@@ -55,13 +66,15 @@ public class UserRegistrationServlet extends HttpServlet {
             try {
                 memoryUserService.add(user);
             } catch (ServiceException e) {
-                e.printStackTrace();
+                logger.info("Exception in servlet");
+                throw new ServletException(e);
             }
 
             try {
                 request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());
             } catch (ServiceException e) {
-                e.printStackTrace();
+                logger.info("Exception in servlet");
+                throw new ServletException(e);
             }
             request.setAttribute("userDTO", userDTO);
             request.setAttribute("email", email);
@@ -71,9 +84,11 @@ public class UserRegistrationServlet extends HttpServlet {
 
             request.getRequestDispatcher("answerToUser.jsp").forward(request, response);
         }
+        logger.info("Exit from the doPost method at servlet");
     }
 
     private List<String> validateForm(UserDTO userDTO, String passwordc) {
+        logger.info("Enter to the validForm method at servlet");
         List<String> errors = new ArrayList<>();
 
 
@@ -93,7 +108,9 @@ public class UserRegistrationServlet extends HttpServlet {
         if (passwordc == null || passwordc.isEmpty()) {
             errors.add("Please, input right code and push submit");
         }
+        logger.info("Exit from the validForm method at servlet");
         return errors;
+
     }
 
 

@@ -11,7 +11,7 @@
     <font color="red">${error}</font>
 </c:forEach>
 
-<form action="" method="POST">
+<form action="/" method="POST">
     <p>
         <label for="email">Email</label>
         <input type="text" id="email" name="email" value="${userDTO.email}"/>
@@ -51,7 +51,7 @@
      % encodeUrl produces jsessionid=xyz in case of disabled cookies
      % Please test your implementation also with disabled cookies <%=response.encodeUrl("captchaCheck.jsp")%>
      --%>
-    <form method="get" action="<%=response.encodeUrl("captchaCheck.jsp")%>">
+    <form method="get" action="<%=response.encodeUrl("/com.web-app/captchaCheck.jsp")%>">
         <table>
             <tr>
                 <td>

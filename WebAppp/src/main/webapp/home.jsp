@@ -13,7 +13,7 @@
 
 
 
-<form action="" method="POST">
+<form action="/" method="POST">
     <p>
         <label for="email">Email</label>
         <input type="text" id="email" name="email" value=""/>

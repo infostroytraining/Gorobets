@@ -29,7 +29,8 @@ public class UserLogInServlet extends HttpServlet {
             request.getRequestDispatcher("userLogInPage.jsp").forward(request, response);
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //Logger........
+            throw new ServletException(ex);
         }
     }
 
@@ -41,9 +42,11 @@ public class UserLogInServlet extends HttpServlet {
         String password = request.getParameter("password");
         try {
             user = postgresUserDAO.getUserByUserEmail(email);
-
+            String name  = user.getName();
+            request.setAttribute("name", name);
         } catch (DAOException e) {
-            e.printStackTrace();
+            //Logger........
+            throw new ServletException(e);
         }
         if ((user != null) && user.getPassword().equals(password)) {
             request.getRequestDispatcher("Hello.jsp").forward(request, response);
@@ -62,14 +65,14 @@ public class UserLogInServlet extends HttpServlet {
         }
     }
 
-    private List<String> validateForm(User user,String email, String password) {
+    private List<String> validateForm(User user, String email, String password) {
         List<String> errors = new ArrayList<>();
 
 
-        if (user.getEmail() == null || user.getEmail().isEmpty()|| !user.getEmail().equals(email)) {
+        if (user.getEmail() == null || user.getEmail().isEmpty() || !user.getEmail().equals(email)) {
             errors.add("Please, input right email");
         }
-        if (user.getPassword() == null || user.getPassword().isEmpty()|| !user.getPassword().equals(password)) {
+        if (user.getPassword() == null || user.getPassword().isEmpty() || !user.getPassword().equals(password)) {
             errors.add("Please, input right password");
         }
 

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.dao.UserDAO;
@@ -22,6 +23,7 @@ public class PostgresUserDAO implements UserDAO {
     private static final String SELECT_USER = "SELECT * FROM users WHERE user_id = ?;";
     private static final String DELETE_USER = "DELETE FROM users WHERE user_id = ?;";
     private static final String SELECT_USER_BY_EMAIL = "SELECT * FROM users WHERE email = ?;";
+    private static final String SELECT_ALL_USERS = "SELECT * FROM users;";
 
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -230,9 +232,50 @@ public class PostgresUserDAO implements UserDAO {
 
     @Override
     public List<User> getAll() throws DAOException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+
+            PreparedStatement statement = null;
+            User user;
+            List<User> list = null;
+            Connection connection = ConnectionHolder.getConnection();
+            try {
+
+                statement = connection.prepareStatement(SELECT_ALL_USERS, Statement.RETURN_GENERATED_KEYS);
+                statement.executeUpdate();
+
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                list = new ArrayList<>();
+                while (generatedKeys.next()) {
+
+                    user = new User( generatedKeys.getString(2),
+                            generatedKeys.getString(3), generatedKeys.getString(4), generatedKeys.getString(5));
+                    user.setId(generatedKeys.getInt(1));
+                    list.add(user);
+                }
+
+            } catch (SQLException ex) {
+                LOGGER.error("SQLException during user select query", ex);
+                throw new DAOException(ex);
+            } catch (NullPointerException exe) {
+                LOGGER.error("NullPointerException during user select query", exe);
+                throw new DAOException(exe);
+            } finally {
+                if (statement != null) {
+                    try {
+                        statement.close();
+
+                        connection.setAutoCommit(true);
+                    } catch (SQLException ex) {
+                        LOGGER.error("Can't close PreparedStatement for user select query" + statement + " Cause: ", ex);
+                        throw new DAOException(ex);
+                    }
+                }
+
+            }
+            LOGGER.exit(list);
+            return list;
+
+        }
+
 
 
     @Override

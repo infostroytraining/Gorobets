@@ -30,7 +30,7 @@ public class ServiceFactory {
 		if (type.equals(MEMORY)) {
 			return initMemoryService();
 		} else if (type.equals(DB)) {
-			loadPostgreDriver();
+			loadPostgresDriver();
 			return initTransactionalService();
 		} else {
 			LOGGER.fatal("Could initialize application with source type {}", type);
@@ -38,7 +38,7 @@ public class ServiceFactory {
 		}
 	}
 
-	private static void loadPostgreDriver() {
+	private static void loadPostgresDriver() {
 		try {
 			Class.forName(POSTGRES_DRIVER);
 		} catch (ClassNotFoundException e) {

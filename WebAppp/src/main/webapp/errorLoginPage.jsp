@@ -11,7 +11,7 @@
 <font color="red">${error}</font>
 </c:forEach>
 
-<form action="/login" method="post">
+<form action="//login" method="post">
   <p>
     <label for="email">Email</label>
     <input type="text" id="email" name="email" value="${user.email}"/>

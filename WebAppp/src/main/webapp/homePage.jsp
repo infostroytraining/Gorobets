@@ -7,9 +7,6 @@
 <body>
 
 
-
-
-
 <form action="/registration" method="post">
     <p>
         <label for="email">Email</label>
@@ -34,19 +31,19 @@
     </p>
 
     <%--<p>--%>
-        <%--<label for="avatar"> Avatar</label>--%>
-        <%--<input type="image" id="avatar" name="avatar" value="${userDTO.avatar}"/>--%>
+    <%--<label for="avatar"> Avatar</label>--%>
+    <%--<input type="image" id="avatar" name="avatar" value="${userDTO.avatar}"/>--%>
     <%--</p>--%>
 
-        <%
-// Construct the captchas object (Default Values)
-  Captchas captchas = new Captchas(
-          request.getSession(true),     // Ensure session
-          "demo",                       // client
-          "secret"                      // secret
-  );
+    <%
+        // Construct the captchas object (Default Values)
+        Captchas captchas = new Captchas(
+                request.getSession(true),     // Ensure session
+                "demo",                       // client
+                "secret"                      // secret
+        );
 
-%>
+    %>
     <%--
      % encodeUrl produces jsessionid=xyz in case of disabled cookies
      % Please test your implementation also with disabled cookies <%=response.encodeUrl("captchaCheck.jsp")%>
@@ -55,15 +52,10 @@
         <table>
             <tr>
                 <td>
-                    Your message:</td><td><input name="message" size="60" />
-            </td>
-            </tr>
-            <tr>
-                <td>
                     The CAPTCHA password:
                 </td>
                 <td>
-                    <input name="passwordc" size="16" />
+                    <input name="passwordc" size="16"/>
                 </td>
             </tr>
             <tr>
@@ -84,11 +76,11 @@
                 <td>
                 </td>
                 <td>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit"/>
                 </td>
             </tr>
         </table>
-        </form>
+    </form>
 
     <%--<input type="submit" value="Add user">--%>
 </form>
@@ -98,7 +90,7 @@
             <td>
             </td>
             <td>
-                <input type="submit" value="LogIn" />
+                <input type="submit" value="LogIn"/>
             </td>
         </tr>
     </table>
