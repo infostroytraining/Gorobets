@@ -1,47 +1,60 @@
 package com.web.servlet;
 
-import com.captcha.Captchas;
 import com.customAppender.CustomAppender;
-import com.customAppender.MyCustomAppender;
-import com.customAppender.Test;
 import com.dto.UserDTO;
 import com.entity.User;
 import com.service.MemoryUserService;
 import com.service.TransactionalUserService;
 import com.service.exception.ServiceException;
-import org.apache.log4j.Logger;
-
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by invincible _g_d on 12/14/15.
+ * UserRegistrationServlet class-it's a servlet that forward users to registration form
+ * It has: doGet and doPost methods for handling requests and giving responses
  */
 @WebServlet(name = "UserRegistrationServlet")
 public class UserRegistrationServlet extends HttpServlet {
-  org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger("test");
+
+    org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger("CustomAppender");
+
     CustomAppender customAppender = new CustomAppender();
 
 
-
+    /**
+     * Get method that handle request parameter and  give response
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
+    /**
+     * Post method that handle request parameter and  give response
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        LOGGER.addAppender(customAppender);
 
-        logger.addAppender(customAppender);
-        logger.info("Enter to the doPost method at servlet");
+
         MemoryUserService memoryUserService = (MemoryUserService) request.getServletContext().getAttribute("memoryUserService");
+
         TransactionalUserService transactionalUserService = (TransactionalUserService)
                 request.getServletContext().getAttribute("transactionalUserService");
         String email = request.getParameter("email");
@@ -50,12 +63,8 @@ public class UserRegistrationServlet extends HttpServlet {
         String surname = request.getParameter("surname");
         String passwordc = request.getParameter("passwordc");
 
-//		Image avatar = request.getParameter("avatar");// find out how to hand in a image????
+        UserDTO userDTO = new UserDTO(email, password, name, surname);//for saving data at jsp form!
 
-        UserDTO userDTO = new UserDTO(email, password, name, surname);
-
-
-//        errors
         List<String> errors = validateForm(userDTO, passwordc);
         if (!errors.isEmpty()) {
             request.setAttribute("userDTO", userDTO);
@@ -66,14 +75,14 @@ public class UserRegistrationServlet extends HttpServlet {
             try {
                 memoryUserService.add(user);
             } catch (ServiceException e) {
-                logger.info("Exception in servlet");
+                LOGGER.error("Exception in UserRegistrationServlet");
                 throw new ServletException(e);
             }
 
             try {
                 request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());
             } catch (ServiceException e) {
-                logger.info("Exception in servlet");
+                LOGGER.error("Exception in servlet");
                 throw new ServletException(e);
             }
             request.setAttribute("userDTO", userDTO);
@@ -84,11 +93,18 @@ public class UserRegistrationServlet extends HttpServlet {
 
             request.getRequestDispatcher("answerToUser.jsp").forward(request, response);
         }
-        logger.info("Exit from the doPost method at servlet");
+
     }
 
+    /**
+     * ValidateForm method check the data for errors like NullPointerExceptions
+     *
+     * @param userDTO
+     * @param passwordc
+     * @return
+     */
     private List<String> validateForm(UserDTO userDTO, String passwordc) {
-        logger.info("Enter to the validForm method at servlet");
+        LOGGER.info("Enter to the validForm method at UserRegistrationServlet");
         List<String> errors = new ArrayList<>();
 
 
@@ -108,7 +124,7 @@ public class UserRegistrationServlet extends HttpServlet {
         if (passwordc == null || passwordc.isEmpty()) {
             errors.add("Please, input right code and push submit");
         }
-        logger.info("Exit from the validForm method at servlet");
+        LOGGER.info("Exit from the validForm method at UserRegistrationServlet");
         return errors;
 
     }

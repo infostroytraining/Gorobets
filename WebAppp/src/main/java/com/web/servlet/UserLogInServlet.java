@@ -2,10 +2,9 @@ package com.web.servlet;
 
 import com.dao.exception.DAOException;
 import com.dao.postgesql.PostgresUserDAO;
-import com.dto.UserDTO;
 import com.entity.User;
-import com.service.MemoryUserService;
-import com.service.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,23 +16,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by invincible _g_d on 12/14/15.
+ * UserLogInServlet class-it's a servlet that forward users to logIn form in doGet method and to Hello page in doPost method
+ * It has: doGet and doPost methods for handling requests from users and giving responses
  */
-@WebServlet(name = "UserRegistrationServlet")
+@WebServlet(name = "UserLogInServlet")
 public class UserLogInServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger();
 
-
+    /**
+     * Get method that handle request parameter and  give response
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
 
             request.getRequestDispatcher("userLogInPage.jsp").forward(request, response);
 
         } catch (Exception ex) {
-            //Logger........
+            LOGGER.error("Exception in doGet method at  UserLogInServlet");
             throw new ServletException(ex);
         }
     }
 
+    /**
+     * * Post method that handle request parameter and  give response
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         PostgresUserDAO postgresUserDAO = (PostgresUserDAO) request.getServletContext().getAttribute("postgresUserDAO");
@@ -42,10 +58,10 @@ public class UserLogInServlet extends HttpServlet {
         String password = request.getParameter("password");
         try {
             user = postgresUserDAO.getUserByUserEmail(email);
-            String name  = user.getName();
+            String name = user.getName();
             request.setAttribute("name", name);
         } catch (DAOException e) {
-            //Logger........
+            LOGGER.error("Exception in doPost method at  UserLogInServlet");
             throw new ServletException(e);
         }
         if ((user != null) && user.getPassword().equals(password)) {
@@ -65,6 +81,14 @@ public class UserLogInServlet extends HttpServlet {
         }
     }
 
+    /**
+     * * ValidateForm method check the data for errors like NullPointerExceptions
+     *
+     * @param user
+     * @param email
+     * @param password
+     * @return
+     */
     private List<String> validateForm(User user, String email, String password) {
         List<String> errors = new ArrayList<>();
 

@@ -1,13 +1,13 @@
 package com.captcha;
-import java.io.*;
+
 import java.util.Random;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.*;
-/**
- * Created by Dmitriy Gorobets on 12/11/15.
- */
 
+/**
+ *
+ */
 
 public class Captchas {
     // Required Parameters
@@ -37,9 +37,10 @@ public class Captchas {
                     String client,
                     String secret) {
         this.httpSess = httpSess;
-        this.client   = client;
-        this.secret   = secret;
+        this.client = client;
+        this.secret = secret;
     }
+
     // additional alphabet, letters
     public Captchas(HttpSession httpSess,
                     String client,
@@ -47,12 +48,13 @@ public class Captchas {
                     String alphabet,
                     int letters) {
         this.httpSess = httpSess;
-        this.client   = client;
-        this.secret   = secret;
+        this.client = client;
+        this.secret = secret;
         this.alphabet = alphabet;
-        this.letters  = letters;
+        this.letters = letters;
 
     }
+
     // additional alphabet, letters, width, height
     public Captchas(HttpSession httpSess,
                     String client,
@@ -62,12 +64,12 @@ public class Captchas {
                     int width,
                     int height) {
         this.httpSess = httpSess;
-        this.client   = client;
-        this.secret   = secret;
+        this.client = client;
+        this.secret = secret;
         this.alphabet = alphabet;
-        this.letters  = letters;
-        this.width    = width;
-        this.height   = height;
+        this.letters = letters;
+        this.width = width;
+        this.height = height;
     }
 
     /**
@@ -79,7 +81,7 @@ public class Captchas {
      */
     private String randomString() {
         Random random = new Random();
-        captchaRandom = Integer.toHexString(random.nextInt())+Integer.toHexString(random.nextInt());
+        captchaRandom = Integer.toHexString(random.nextInt()) + Integer.toHexString(random.nextInt());
         httpSess.setAttribute("captchaRandom", captchaRandom);
         return captchaRandom;
     }
@@ -89,7 +91,7 @@ public class Captchas {
      */
     public String imageUrl() {
         // Check if random already exists or is used
-        if (captchaRandom=="" || captchaRandom=="used") {
+        if (captchaRandom == "" || captchaRandom == "used") {
             captchaRandom = randomString();
         }
         String url = "http://image.captchas.net/";
@@ -100,17 +102,18 @@ public class Captchas {
         if (!alphabet.equals(ALPHABET_DEFAULT)) {
             url += "&alphabet=" + alphabet;
         }
-        if (letters!=LETTERS_DEFAULT) {
+        if (letters != LETTERS_DEFAULT) {
             url += "&letters=" + letters;
         }
-        if (width!=WIDTH_DEFAULT) {
+        if (width != WIDTH_DEFAULT) {
             url += "&width=" + width;
         }
-        if (height!=HEIGHT_DEFAULT) {
+        if (height != HEIGHT_DEFAULT) {
             url += "&height=" + height;
         }
         return url;
     }
+
     // the same with random
     public String imageUrl(String randomString) {
         captchaRandom = randomString;
@@ -123,7 +126,7 @@ public class Captchas {
      * same as image url without width and height
      */
     public String audioUrl() {
-        if (captchaRandom=="" || captchaRandom=="used") {
+        if (captchaRandom == "" || captchaRandom == "used") {
             captchaRandom = randomString();
         }
         String url = "http://audio.captchas.net/";
@@ -132,12 +135,16 @@ public class Captchas {
         if (!alphabet.equals(ALPHABET_DEFAULT)) {
             url += "&alphabet=" + alphabet;
         }
-        if (letters!=LETTERS_DEFAULT) {
+        if (letters != LETTERS_DEFAULT) {
             url += "&letters=" + letters;
         }
         return url;
     }
-    // the same with random
+
+    /**
+     * Generate audio url with parameters
+     * same as image url without width and height with random
+     */
     public String audioUrl(String randomString) {
         captchaRandom = randomString;
         httpSess.setAttribute("captchaRandom", captchaRandom);
@@ -182,6 +189,10 @@ public class Captchas {
         return imageCode.toString();
     }
     // the same with random
+
+    /**
+     * Generate complete image code with javascript for fault tolerant image loading with random
+     */
     public String image(String randomString) {
         captchaRandom = randomString;
         httpSess.setAttribute("captchasDotNetRandom", captchaRandom);
@@ -211,11 +222,11 @@ public class Captchas {
 
         // Compute the correct password
         String encryptionBase = secret + captchaRandom;
-        if (!alphabet.equals(ALPHABET_DEFAULT) || letters!=LETTERS_DEFAULT) {
+        if (!alphabet.equals(ALPHABET_DEFAULT) || letters != LETTERS_DEFAULT) {
             encryptionBase += ":" + alphabet + ":" + letters;
         }
         MessageDigest md5;
-        byte[] digest = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        byte[] digest = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         try {
             md5 = MessageDigest.getInstance("MD5");
             md5.update(encryptionBase.getBytes());
@@ -224,9 +235,9 @@ public class Captchas {
         }
         String correctPassword = "";
         int index;
-        for (int i=0; i<letters; i++) {
-            index = (digest[i]+256)%256%alphabet.length();
-            correctPassword += alphabet.substring(index, index+1);
+        for (int i = 0; i < letters; i++) {
+            index = (digest[i] + 256) % 256 % alphabet.length();
+            correctPassword += alphabet.substring(index, index + 1);
         }
         // Check if password is correct
         if (!password.equals(correctPassword)) {

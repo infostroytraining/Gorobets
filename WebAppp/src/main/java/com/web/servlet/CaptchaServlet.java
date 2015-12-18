@@ -1,6 +1,8 @@
 package com.web.servlet;
 
 import com.captcha.Captchas;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,21 +12,42 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by invincible_g_d on 12/14/15.
+ * CaptchaServlet class-it's a servlet that forward users to logIn form in doGet method and verify if captcha value
+ * from user response is right.
+ * It has: doGet and doPost methods for handling requests from users and giving responses
  */
 @WebServlet(name = "СaptchaServlet")
 public class CaptchaServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    /**
+     * Post method that handle request parameter and  give response
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
+    /**
+     * Get method that handle request parameter, check captcha for right value  and give response
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Construct the captchas object
 // Use same settings as in query.jsp
-        Captchas captchas = new Captchas(////was like that ...= new captchas.Captchas(....
-                request.getSession(true),     // Ensure session
-                request.getParameter("surname"),                      // client
-                "secret"                    // secret
+        LOGGER.entry("Entry to check captcha method");
+        Captchas captchas = new Captchas(
+                request.getSession(true),  // Ensure session
+                "demo", // client
+                "secret" // secret
         );
 // Read the form values
         String message = request.getParameter("message");
@@ -51,7 +74,8 @@ public class CaptchaServlet extends HttpServlet {
                 break;
 
         }
-        request.setAttribute("body",body);
-        request.getRequestDispatcher("userLogin.jsp").forward(request,response);
+        LOGGER.exit("Exit from check captcha method");
+        request.setAttribute("body", body);
+        request.getRequestDispatcher("userLogin.jsp").forward(request, response);
     }
 }

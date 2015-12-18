@@ -17,11 +17,11 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UserRegisrtation</servlet-name>
+        <servlet-name>UserRegistration</servlet-name>
         <servlet-class>com.web.servlet.UserRegistrationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UserRegisrtation</servlet-name>
+        <servlet-name>UserRegistration</servlet-name>
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
     <servlet>
@@ -73,6 +73,10 @@
     <context-param>
         <param-name>storage</param-name>
         <param-value>db</param-value>
+    </context-param>
+    <context-param>
+        <param-name>memory</param-name>
+        <param-value>memory</param-value>
     </context-param>
 
     <error-page>

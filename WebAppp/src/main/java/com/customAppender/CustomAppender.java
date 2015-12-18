@@ -9,28 +9,24 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
-import org.apache.logging.log4j.core.LogEvent;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by invincible_g_d on 12/18/15.
+ * CustomAppender class - it's a own custom log4j appender that send a post
+ * request to the other server application with logEvents
  */
-public class CustomAppender  extends AppenderSkeleton {
+public class CustomAppender extends AppenderSkeleton {
 
-        List<String> eventsList = new ArrayList();
+    List<String> eventsList = new ArrayList();
 
 
-        public void close() {
-        }
-
-        public boolean requiresLayout() {
-            return false;
-        }
-
+    /**
+     * Append method - get loggingEvent and send it to the other server application
+     *
+     * @param loggingEvent -LoggingEvent type
+     */
     @Override
     protected void append(LoggingEvent loggingEvent) {
         eventsList.add(loggingEvent.getMessage().toString());
@@ -41,10 +37,14 @@ public class CustomAppender  extends AppenderSkeleton {
             e.printStackTrace();
         }
 
-        }
+    }
 
-
-
+    /**
+     * SendPost method - get List<String> loggingEvent and  send it to the other server application
+     *
+     * @param loggingEvent -LoggingEvent type
+     * @throws Exception
+     */
     private void sendPost(List<String> loggingEvent) throws Exception {
 
         final String USER_AGENT = "Mozilla/5.0";
@@ -58,31 +58,30 @@ public class CustomAppender  extends AppenderSkeleton {
         httppost.setHeader("User-Agent", USER_AGENT);
 
         List<NameValuePair> urlParameters = new ArrayList<>(2);
-        urlParameters.add(new BasicNameValuePair("loggingEvent", loggingEvent.toString()));
+        urlParameters.add(new BasicNameValuePair("logEvent", loggingEvent.toString()));
         httppost.setEntity(new UrlEncodedFormEntity(urlParameters, "UTF-8"));
 
-//Execute and get the response.
+        //Execute and get the response.
+
         HttpResponse response = httpclient.execute(httppost);
 
-        httppost.setEntity(new UrlEncodedFormEntity(urlParameters));
 
+    }
 
-        System.out.println("\nSending 'POST' request to URL : " + url);
-        System.out.println("Post parameters : " + httppost.getEntity());
-        System.out.println("Response Code : " +
-                response.getStatusLine().getStatusCode());
+    /**
+     *
+     */
+    @Override
+    public void close() {
 
-        BufferedReader rd = new BufferedReader(
-                new InputStreamReader(response.getEntity().getContent()));
+    }
 
-        StringBuffer result = new StringBuffer();
-        String line = "";
-        while ((line = rd.readLine()) != null) {
-            result.append(line);
-        }
-
-        System.out.println(result.toString());
-
+    /**
+     * @return
+     */
+    @Override
+    public boolean requiresLayout() {
+        return false;
     }
 }
 

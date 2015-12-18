@@ -2,6 +2,9 @@ package com.dto;
 
 import java.awt.*;
 
+/**
+ * Copy of JavaBean class for saving data at the view
+ */
 public class UserDTO {
 
     private int id;
@@ -12,12 +15,12 @@ public class UserDTO {
 
     private Image avatar;
 
-    public UserDTO(String email, String password, String name, String surname/*, Image avatar*/) {
+    public UserDTO(String email, String password, String name, String surname) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
-//		this.avatar =  avatar;
+
     }
 
     public String getName() {

@@ -64,6 +64,10 @@ post parameter value: 22:18:54.818 DEBUG com.example.web.listener.ContextListene
 
 
 */
+
+/**
+ * JavaBean class - User
+ */
 public class User {
 
     private int id;
@@ -78,13 +82,13 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String name, String surname/*, Image avatar*/) {
+    public User(String email, String password, String name, String surname) {
 
         this.email = email;
         this.password = password;
         this.name = name;
         this.surname = surname;
-        this.avatar = avatar;
+
     }
 
     public int getId() {

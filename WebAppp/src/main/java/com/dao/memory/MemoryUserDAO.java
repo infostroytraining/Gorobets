@@ -4,56 +4,99 @@ import java.util.List;
 
 import com.dao.UserDAO;
 import com.dao.storage.UserStorage;
-import com.dto.UserDTO;
 import com.entity.User;
 
 public class MemoryUserDAO implements UserDAO {
 
-	private UserStorage storage;
-	
-	public MemoryUserDAO(UserStorage storage) {
-		this.storage = storage;
-	}
-	
-	@Override
-	public User create(User user) {
-		return storage.add(user);
-	}
+    private UserStorage storage;
 
-	@Override
-	public User get(int id) {
+    /**
+     * Constructor of MemoryUserDAO class
+     *
+     * @param storage-UserStorage type
+     */
+    public MemoryUserDAO(UserStorage storage) {
+        this.storage = storage;
+    }
 
-		return storage.getById(id);
-	}
+    /**
+     * Create method - adds User to the memory storage (Map<Integer,String>)
+     *
+     * @param user - User instance
+     * @return User type
+     */
+    @Override
+    public User create(User user) {
+        return storage.add(user);
+    }
 
-	@Override
-	public User update(User entity) {
+    /**
+     * Get method - get User from the memory storage (Map<Integer,String>) by their id
+     *
+     * @param id - id of User instance with int type
+     * @return User type
+     */
+    @Override
+    public User get(int id) {
 
-		return null;
-	}
+        return storage.getById(id);
+    }
 
-	@Override
-	public void remove(int id) {
+    /**
+     * Update method - update User at the memory storage (Map<Integer,String>)
+     *
+     * @param entity - User instance
+     * @return User type
+     */
+    @Override
+    public User update(User entity) {
 
-	}
+        return null;
+    }
 
-	@Override
-	public List<User> getAll() {
-		return storage.all();
-	}
+    /**
+     * Remove method - remove User from the memory storage (Map<Integer,String>) by their id
+     *
+     * @param id - id of User instance with int type
+     */
+    @Override
+    public void remove(int id) {
+        storage.removeById(id);
+    }
+
+    /**
+     * GetAll method - get all User from the memory storage (Map<Integer,String>)
+     *
+     * @return List<T> -list with Users
+     */
+    @Override
+    public List<User> getAll() {
+        return storage.all();
+    }
 
 
+    /**
+     * This method  get a User by userSurName from the storage (Map<Integer,String>).
+     *
+     * @param userSurname -SurName of user
+     * @return User
+     */
+    @Override
+    public User getUserByUserSurName(String userSurname) {
+        return storage.getUserBySurname(userSurname);
+    }
 
+    /**
+     * This method  get a User by email from the memory storage (Map<Integer,String>).
+     *
+     * @param email -email of user
+     * @return User
+     */
+    @Override
+    public User getUserByUserEmail(String email) {
 
-	@Override
-	public User getUserByUserSurName(String userSurname) {
-		return storage.getUserBySurname(userSurname);
-	}
-
-	@Override
-	public User getUserByUserEmail(String userName) {
-		return null;
-	 }
+        return null;
+    }
 
 
 }

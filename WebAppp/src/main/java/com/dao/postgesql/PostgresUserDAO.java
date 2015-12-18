@@ -15,7 +15,9 @@ import com.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+/**
+ *
+ */
 public class PostgresUserDAO implements UserDAO {
 
     private static final String UPDATE_USER = "UPDATE users SET name = ?, surname = ?, email = ?, password = ? WHERE user_id = ?;";
@@ -28,6 +30,13 @@ public class PostgresUserDAO implements UserDAO {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * Add method - adds User to the DB storage
+     *
+     * @param user - User instance
+     * @return User type
+     * @throws DAOException
+     */
     @Override
     public User create(User user) throws DAOException {
         LOGGER.entry(user);
@@ -80,7 +89,13 @@ public class PostgresUserDAO implements UserDAO {
         return user;
     }
 
-
+    /**
+     * Get method - get User from the DB storage by their id
+     *
+     * @param id - id of User instance with int type
+     * @return User type
+     * @throws DAOException
+     */
     @Override
     public User get(int id) throws DAOException {
 
@@ -98,7 +113,7 @@ public class PostgresUserDAO implements UserDAO {
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next() && (id == generatedKeys.getInt(1))) {
 
-                user = new User( generatedKeys.getString(2),
+                user = new User(generatedKeys.getString(2),
                         generatedKeys.getString(3), generatedKeys.getString(4), generatedKeys.getString(5));
 
             }
@@ -126,6 +141,13 @@ public class PostgresUserDAO implements UserDAO {
 
     }
 
+    /**
+     * Update method - update User at the DB storage
+     *
+     * @param entity - User instance
+     * @return User type
+     * @throws DAOException
+     */
     @Override
     public User update(User entity) throws DAOException {
         LOGGER.entry(entity);
@@ -179,6 +201,12 @@ public class PostgresUserDAO implements UserDAO {
 
     }
 
+    /**
+     * Remove method - remove User from the DB storage by their id
+     *
+     * @param id - id of User instance with int type
+     * @throws DAOException
+     */
     @Override
     public void remove(int id) throws DAOException {
 
@@ -230,59 +258,78 @@ public class PostgresUserDAO implements UserDAO {
         }
     }
 
+    /**
+     * GetAll method - get all User from the DB storage
+     *
+     * @return List<T> -list with Users
+     * @throws DAOException
+     */
     @Override
     public List<User> getAll() throws DAOException {
 
-            PreparedStatement statement = null;
-            User user;
-            List<User> list = null;
-            Connection connection = ConnectionHolder.getConnection();
-            try {
+        PreparedStatement statement = null;
+        User user;
+        List<User> list = null;
+        Connection connection = ConnectionHolder.getConnection();
+        try {
 
-                statement = connection.prepareStatement(SELECT_ALL_USERS, Statement.RETURN_GENERATED_KEYS);
-                statement.executeUpdate();
+            statement = connection.prepareStatement(SELECT_ALL_USERS, Statement.RETURN_GENERATED_KEYS);
+            statement.executeUpdate();
 
-                ResultSet generatedKeys = statement.getGeneratedKeys();
-                list = new ArrayList<>();
-                while (generatedKeys.next()) {
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            list = new ArrayList<>();
+            while (generatedKeys.next()) {
 
-                    user = new User( generatedKeys.getString(2),
-                            generatedKeys.getString(3), generatedKeys.getString(4), generatedKeys.getString(5));
-                    user.setId(generatedKeys.getInt(1));
-                    list.add(user);
-                }
-
-            } catch (SQLException ex) {
-                LOGGER.error("SQLException during user select query", ex);
-                throw new DAOException(ex);
-            } catch (NullPointerException exe) {
-                LOGGER.error("NullPointerException during user select query", exe);
-                throw new DAOException(exe);
-            } finally {
-                if (statement != null) {
-                    try {
-                        statement.close();
-
-                        connection.setAutoCommit(true);
-                    } catch (SQLException ex) {
-                        LOGGER.error("Can't close PreparedStatement for user select query" + statement + " Cause: ", ex);
-                        throw new DAOException(ex);
-                    }
-                }
-
+                user = new User(generatedKeys.getString(2),
+                        generatedKeys.getString(3), generatedKeys.getString(4), generatedKeys.getString(5));
+                user.setId(generatedKeys.getInt(1));
+                list.add(user);
             }
-            LOGGER.exit(list);
-            return list;
+
+        } catch (SQLException ex) {
+            LOGGER.error("SQLException during user select query", ex);
+            throw new DAOException(ex);
+        } catch (NullPointerException exe) {
+            LOGGER.error("NullPointerException during user select query", exe);
+            throw new DAOException(exe);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+
+                    connection.setAutoCommit(true);
+                } catch (SQLException ex) {
+                    LOGGER.error("Can't close PreparedStatement for user select query" + statement + " Cause: ", ex);
+                    throw new DAOException(ex);
+                }
+            }
 
         }
+        LOGGER.exit(list);
+        return list;
 
+    }
 
-
+    /**
+     * This method  get a User by userSurName from the DB storage.
+     *
+     * @param userName
+     * @return User
+     * @throws DAOException
+     */
     @Override
     public User getUserByUserSurName(String userName) throws DAOException {
         return null;
     }
 
+    /**
+     * This method  get a User by email from the DB storage.
+     *
+     * @param email -email of user
+     * @return User
+     * @throws DAOException
+     * @returnUser
+     */
     @Override
     public User getUserByUserEmail(String email) throws DAOException {
         LOGGER.entry(email);
@@ -299,7 +346,7 @@ public class PostgresUserDAO implements UserDAO {
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
 
-                user = new User( generatedKeys.getString(2),
+                user = new User(generatedKeys.getString(2),
                         generatedKeys.getString(3), generatedKeys.getString(4), generatedKeys.getString(5));
 
             }
