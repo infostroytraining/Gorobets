@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
+
+    <display-name>Archetype Created ServerLogApp</display-name>
+
+
+    <servlet>
+        <servlet-name>UserHome</servlet-name>
+        <servlet-class>com.web.servlet.LogsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserHome</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>GetLogsServlet</servlet-name>
+        <servlet-class>com.web.servlet.GetLogsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetLogsServlet</servlet-name>
+        <url-pattern>/logs</url-pattern>
+    </servlet-mapping>
+
+    <listener>
+        <listener-class>com.web.listener.ContextListener</listener-class>
+    </listener>
+    <welcome-file-list>
+        <welcome-file>logs.jsp</welcome-file>
+    </welcome-file-list>
+
+    <context-param>
+        <param-name>storage</param-name>
+        <param-value>db</param-value>
+    </context-param>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+</web-app>

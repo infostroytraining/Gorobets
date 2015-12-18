@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t] %c{3} :%M:%L - %m%n}{FATAL=orange, ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}" />
+        </Console>
+        <File name="File" fileName="dao-log.txt" immediateFlush="false">
+            <PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t]  %c{5} :%M:%L - %m%n}{FATAL=orange, ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <logger name="com.dao.*" level="info">
+            <AppenderRef ref="File"/>
+        </logger>
+        <Root level="info">
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>
+
