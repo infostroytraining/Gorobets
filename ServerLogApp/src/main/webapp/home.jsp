@@ -6,7 +6,7 @@
 
 <form action="/home" method="POST">
     <p>
-        <label for="format">LogsFormat :</label>
+        <label for="format">Add logsFormat :</label>
         <input type="text" id="format" name="format" value="${format}"/>
     </p>
 

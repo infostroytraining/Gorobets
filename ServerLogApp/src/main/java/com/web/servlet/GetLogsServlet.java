@@ -22,7 +22,7 @@ public class GetLogsServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String logValue = request.getParameter("logValue");
+        String logValue = request.getParameter("logEvent");
         LogEvent logEvent = new LogEvent(logValue);
         LogEventService logEventService = (LogEventService) request.getServletContext().getAttribute("logEventService");
         try {
