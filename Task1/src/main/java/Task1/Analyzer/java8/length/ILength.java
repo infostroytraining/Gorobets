@@ -1,4 +1,4 @@
-package Task1.Analyzer.Inrefaces;
+package Task1.Analyzer.java8.length;
 
 import java.util.Map;
 

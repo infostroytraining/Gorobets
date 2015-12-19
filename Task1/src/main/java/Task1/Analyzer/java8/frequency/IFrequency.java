@@ -1,11 +1,11 @@
-package Task1.Analyzer.Inrefaces;
+package Task1.Analyzer.java8.frequency;
 
 import java.util.Map;
 
 /**
  *
  */
-public interface ILength {
+public interface IFrequency {
     /**
      *
      * @param text
@@ -18,5 +18,4 @@ public interface ILength {
      * @param text
      */
     void findResultWords(StringBuilder text);
-
 }

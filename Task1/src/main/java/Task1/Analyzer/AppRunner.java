@@ -1,7 +1,17 @@
 package Task1.Analyzer;
 
-import Task1.Analyzer.Implementations.*;
-import Task1.Analyzer.Inrefaces.*;
+
+import Task1.Analyzer.java8.Command;
+import Task1.Analyzer.java8.TextAnalyzer;
+import Task1.Analyzer.java8.duplicates.Duplicates;
+import Task1.Analyzer.java8.duplicates.DuplicatesCommand;
+import Task1.Analyzer.java8.duplicates.IDuplicates;
+import Task1.Analyzer.java8.frequency.Frequency;
+import Task1.Analyzer.java8.frequency.FrequencyCommand;
+import Task1.Analyzer.java8.frequency.IFrequency;
+import Task1.Analyzer.java8.length.ILength;
+import Task1.Analyzer.java8.length.Length;
+import Task1.Analyzer.java8.length.LengthCommand;
 import com.beust.jcommander.JCommander;
 
 import java.util.HashMap;

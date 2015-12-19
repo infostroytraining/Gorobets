@@ -3,7 +3,7 @@ package Task1.Analyzer.Inrefaces;
 import java.io.IOException;
 
 /**
- * Created by Gorobets Dmitriy on 12/5/15.
+ *
  */
 public interface ITextAnalyzer {
       /*   The goal is to implement a ‘text-analyzer’. It must be a shell application so one can run it once and perform one task by another.
@@ -49,8 +49,8 @@ public interface ITextAnalyzer {
            Expected:
                    1. Good working app covered with Junit tests
            2. Do not forget to add input.txt file to your repo as well. */
-
-    StringBuilder getStringFromFile();
-
-    StringBuilder textValidator();
+//
+//    StringBuilder getStringFromFile();
+//
+//    StringBuilder textValidator();
 }

@@ -1,4 +1,4 @@
-package Task1.Analyzer.Inrefaces;
+package Task1.Analyzer.java8.duplicates;
 
 import java.util.Map;
 

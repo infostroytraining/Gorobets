@@ -1,9 +1,12 @@
-package Task1.Analyzer.Implementations;
+package Task1.Analyzer.java8;
 
-import Task1.Analyzer.Inrefaces.*;
+import Task1.Analyzer.Inrefaces.ITextAnalyzer;
 import com.beust.jcommander.Parameter;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.Closeable;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Created by Gorobets Dmitriy on 12/5/15.
