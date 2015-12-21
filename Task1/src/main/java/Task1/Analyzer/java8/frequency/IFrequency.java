@@ -1,21 +1,16 @@
 package Task1.Analyzer.java8.frequency;
 
-import java.util.Map;
+
+import java.util.List;
 
 /**
  *
  */
 public interface IFrequency {
-    /**
-     *
-     * @param text
-     * @return
-     */
-    Map<String, Integer> countWordsOfText(StringBuilder text);
 
     /**
      *
      * @param text
      */
-    void findResultWords(StringBuilder text);
+    void findResultWords(List<String> text,Boolean parallel);
 }

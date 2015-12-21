@@ -27,8 +27,7 @@ public class DuplicatesCommand implements Command {
     @Override
     public void executeCommand() {
 
-
-        iDup.findResultWords(textA.textValidator());
+        iDup.findResultWords(textA.textValidator(),textA.isParallel());
 
     }
 }

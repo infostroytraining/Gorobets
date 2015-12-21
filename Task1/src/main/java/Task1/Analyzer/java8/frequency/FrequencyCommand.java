@@ -26,7 +26,7 @@ public class FrequencyCommand implements Command {
     @Override
     public void executeCommand() {
 
-        iFre.findResultWords(textA.textValidator());
+        iFre.findResultWords(textA.textValidator(), textA.isParallel());
 
     }
 }

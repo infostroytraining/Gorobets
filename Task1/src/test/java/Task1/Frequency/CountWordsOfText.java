@@ -7,11 +7,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by invincible_g_d on 12/9/15.

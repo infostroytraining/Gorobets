@@ -1,32 +1,31 @@
 package Task1.Analyzer.java8;
 
-import Task1.Analyzer.Inrefaces.ITextAnalyzer;
 import com.beust.jcommander.Parameter;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
- * Created by Gorobets Dmitriy on 12/5/15.
+ *
  */
 
-public class TextAnalyzer implements ITextAnalyzer {
-
-
-//    @Parameter(names = {"-t", "--task"}, description = "Task to execute", arity = 1, required = true, converter = TaskTypeConverter.class)
-//    EnumTaskType tasks;
+public class TextAnalyzer {
 
     @Parameter(names = {"-i", "--input"}, description = "Path to the input file", required = true)
-    String pathToFile;
+    private String pathToFile;
+
+
+    @Parameter(names = {"-p", "--parallel"}, description = "Parallel executing of tasks", required = false)
+    private boolean parallel;
 
     @Parameter(names = {"-h", "--help"}, description = "A detailed information of how to use this app", help = true)
-    boolean help;
+    private boolean help;
 
-//    public EnumTaskType getTasks() {
-//        return tasks;
-//    }
 
     public String getPathToFile() {
         return pathToFile;
@@ -36,67 +35,51 @@ public class TextAnalyzer implements ITextAnalyzer {
         return help;
     }
 
+    public boolean isParallel() {
+        return parallel;
+    }
 
 
-    public StringBuilder textValidator() {
+    public List<String> textValidator() {
 
 
         StringBuilder text = getStringFromFile();
 
-        for (int i = 0; i < text.length() - 1; i++) {
-            if (text.charAt(i) == '.' || text.charAt(i) == ',' || text.charAt(i) == '!'
-                    || text.charAt(i) == '?' || text.charAt(i) == '—'
-                    || text.charAt(i) == '(' || text.charAt(i) == ')' || text.charAt(i) == '"'
-                    || text.charAt(i) == ';' || text.charAt(i) == ':') {
-                text.deleteCharAt(i);
-            }
-            if (text.charAt(i) == '\"' || text.charAt(i) == '\"') {
-                text.deleteCharAt(i);
-            }
-        }
+        String[] textStr = text.toString().split(" ");
 
-        if (text.charAt(text.length() - 1) == '.') {
-            text.deleteCharAt(text.length() - 1);
-        }
+       List<String> wordList =  Arrays.stream(textStr).filter(word -> !Objects.equals(word, "")
+               && !Objects.equals(word, ".") && !Objects.equals(word, ",")
+               && !Objects.equals(word, ":") && !Objects.equals(word, ";")
+               && !Objects.equals(word, "?") && !Objects.equals(word, "\"")
+               && !Objects.equals(word, "!") && !Objects.equals(word, " ")
+               && !Objects.equals(word, "(") && !Objects.equals(word, ")")
+               && !Objects.equals(word, "-")).map(String::trim)
+               .map(word -> word.replace(".", "")).map(word -> word.replace(",", ""))
+               .map(word -> word.replace("!", "")).map(word -> word.replace("\\?", ""))
+               .map(word -> word.replace("\"", "")).map(word -> word.replace(" ", ""))
+               .map(word -> word.replace("-", "")).map(word -> word.replace(":", ""))
+               .map(word -> word.replace("\\)", "")).map(word -> word.replace("\\(", ""))
+               .map(word -> word.replace(";", "")).collect(Collectors.toList());
 
-        return text;
+
+
+        return wordList;
     }
 
     private StringBuilder getStringFromFile() {
 
-        StringBuilder sb = new StringBuilder();
-        BufferedReader buff = null;
+        StringBuilder stringBuilder = new StringBuilder();
 
-        try {
-
-            buff = new BufferedReader(new FileReader(pathToFile));
-
-            for (; ; ) {
-                String fileContent = buff.readLine();
-
-                if (fileContent == null) {
-                    break;
-                }
-                sb.append(fileContent).append("\n");
-            }
+        try (BufferedReader buff = new BufferedReader(new FileReader(pathToFile))) {
+            stringBuilder = buff.lines().filter(string -> string != null && !string.isEmpty())
+                    .map(StringBuilder::new).reduce(StringBuilder::append).get();
 
         } catch (IOException e) {
+            //LOGGER
             e.getMessage();
-        } finally {
-            closeStream(buff);
         }
 
-        return sb;
+        return stringBuilder;
     }
 
-    private void closeStream(Closeable stream) {
-        if (stream != null) {
-            try {
-                stream.close();
-            } catch (IOException e) {
-                e.getMessage();
-            }
-
-        }
-    }
 }

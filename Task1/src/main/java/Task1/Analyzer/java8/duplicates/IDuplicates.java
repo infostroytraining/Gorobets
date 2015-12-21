@@ -1,6 +1,7 @@
 package Task1.Analyzer.java8.duplicates;
 
-import java.util.Map;
+
+import java.util.List;
 
 /**
  *
@@ -10,12 +11,7 @@ public interface IDuplicates {
      *
      * @param text
      */
-    void findResultWords(StringBuilder text);
+    void findResultWords(List<String> text,Boolean parallel);
 
-    /**
-     *
-     * @param text
-     * @return
-     */
-    Map<Integer, String> countWordsOfText(StringBuilder text);
+
 }

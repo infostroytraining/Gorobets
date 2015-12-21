@@ -1,6 +1,5 @@
 package Task1.Analyzer.Implementations;
 
-import Task1.Analyzer.Inrefaces.*;
 import com.beust.jcommander.Parameter;
 
 import java.io.*;
@@ -9,7 +8,7 @@ import java.io.*;
  * Created by Gorobets Dmitriy on 12/5/15.
  */
 
-public class TextAnalyzer implements ITextAnalyzer {
+public class TextAnalyzer {
 
 
 //    @Parameter(names = {"-t", "--task"}, description = "Task to execute", arity = 1, required = true, converter = TaskTypeConverter.class)
@@ -59,7 +58,7 @@ public class TextAnalyzer implements ITextAnalyzer {
         return text;
     }
 
-    private StringBuilder getStringFromFile() {
+    public StringBuilder getStringFromFile() {
 
         StringBuilder sb = new StringBuilder();
         BufferedReader buff = null;

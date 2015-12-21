@@ -27,7 +27,7 @@ public class LengthCommand implements Command {
     @Override
     public void executeCommand() {
 
-        iLen.findResultWords(textA.textValidator());
+        iLen.findResultWords(textA.textValidator(),textA.isParallel());
 
     }
 }

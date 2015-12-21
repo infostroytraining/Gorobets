@@ -1,7 +1,9 @@
 package Task1.Analyzer.java8.frequency;
 
-
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 
 /**
  *
@@ -12,63 +14,53 @@ public class Frequency implements IFrequency {
     }
 
     /**
-     * This method find result most frequency words using a Map
-     * which it get from a "countWordOfText" method.
-     * There is this Map sorts and get necessary words
-     * @param text -it's validated
+     * This method find result most frequency words .
+     * There is the Map sorts and gets necessary words
+     *
+     * @param text     -it's validated text
+     * @param parallel
      */
-    public void findResultWords(StringBuilder text) {
+
+    public void findResultWords(List<String> text, Boolean parallel) {
+
         long startTime = System.currentTimeMillis();
 
-        List<String> resultWords = new ArrayList<>();
-        Map<String, Integer> words = countWordsOfText(text);
-        Collection<Integer> tr = words.values();
-        List<Integer> list = new ArrayList<>(tr);
-        Collections.sort(list);
+        Map<String, Long> words;
 
-        Set<Map.Entry<String, Integer>> entrySet = words.entrySet();
-        for (int i = list.size() - 1; i > list.size() - 3; i--) {
-            Integer value = list.get(i);
-            for (Map.Entry<String, Integer> pair : entrySet) {
-                if (pair != null) {
-                    if (value.equals(pair.getValue())) {
-                        resultWords.add(pair.getKey());
-                    }
-                }
-            }
+
+        if (parallel) {
+            text = Collections.synchronizedList(text);
+            words = text.stream().parallel().filter(word -> !word.equals(" ") & !word.equals(""))
+                    .map(String::trim).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+            Set<Map.Entry<String, Long>> set = words.entrySet();
+
+            List<Map.Entry<String, Long>> listOfMap = set.stream().parallel()
+                    .sorted(Comparator.comparing(Map.Entry::getValue))
+                    .skip(set.size() - 2).sorted(Comparator.comparing(Map.Entry::getKey))
+                    .collect(Collectors.toList());
+
+            Collections.reverse(listOfMap);
+            listOfMap.stream().parallel().forEach(el -> System.out.println(el.getKey() + " -> " + el.getValue()));
+
+        } else {
+
+            words = text.stream().filter(word -> !word.equals(" ") & !word.equals("")).map(String::trim)
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+            Set<Map.Entry<String, Long>> set = words.entrySet();
+
+            List<Map.Entry<String, Long>> listOfMap = set.stream()
+                    .sorted(Comparator.comparing(Map.Entry::getValue))
+                    .skip(set.size() - 2).sorted(Comparator.comparing(Map.Entry::getKey))
+                    .collect(Collectors.toList());
+
+            Collections.reverse(listOfMap);
+            listOfMap.stream().forEach(el -> System.out.println(el.getKey() + " -> " + el.getValue()));
+
         }
-
-        Collections.reverse(resultWords);
-        System.out.println("Two most frequent words are:");
-        System.out.println(resultWords.get(0) + "->" + words.get(resultWords.get(0)));
-        System.out.println(resultWords.get(1) + "->" + words.get(resultWords.get(1)));
-
         long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println("elapsed time:" + spentTime + " millis");
-    }
-
-    /**
-     * @return
-     */
-    public Map<String, Integer> countWordsOfText(StringBuilder text) {
-
-        Map<String, Integer> words = new HashMap<>();
-
-        String[] textStr = text.toString().split(" ");
-
-        for (int j = 0; j < textStr.length; j++) {
-
-            String word = textStr[j];
-            Integer value = words.get(word);
-
-            if (value == null) {
-                words.put(word, 1);
-            } else {
-                words.put(word, value + 1);
-            }
-        }
-
-        return words;
+        System.out.println("elapsed time: " + spentTime + " millis");
     }
 
 }

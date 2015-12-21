@@ -1,64 +1,45 @@
 package Task1.Analyzer.java8.duplicates;
 
-
 import java.util.*;
 
 /**
  *
  */
 
-public class Duplicates implements IDuplicates{
+public class Duplicates implements IDuplicates {
 
 
     public Duplicates() {
     }
 
     /**
-     *
      * @param text
      * @return
      */
-    public Map<Integer, String> countWordsOfText(StringBuilder text) {
+    public void findResultWords(List<String> text, Boolean parallel) {
 
-        Map<Integer, String> wordsMap = new HashMap<>();
-        Set<String> wordsSet = new HashSet<>();
-        String[] textStr = text.toString().split(" ");
-
-        for (int j = 0; j < textStr.length; j++) {
-
-            String word = textStr[j];
-
-            if (word != null && !word.equals(" ")) {
-                if (!wordsSet.add(word) && wordsMap.size() < 3) {
-                    StringBuilder sb = new StringBuilder(word);
-                    sb.reverse();
-                    word = sb.toString().toUpperCase();
-                    wordsMap.put(word.length(), word);
-                }
-            }
-        }
-        return wordsMap;
-    }
-
-    /**
-     *
-     * @param text
-     */
-    public void findResultWords(StringBuilder text) {
         long startTime = System.currentTimeMillis();
 
-        Map<Integer, String> wordsMap = countWordsOfText(text);
-        Collection<Integer> keyWords = wordsMap.keySet();
-        List<Integer> list = new ArrayList<>(keyWords);
-        Collections.sort(list);
+        Set<String> wordsSet = new HashSet<>();
 
 
-        System.out.println("Three first duplicates are:");
-        System.out.println(wordsMap.get(list.get(0)));
-        System.out.println(wordsMap.get(list.get(1)));
-        System.out.println(wordsMap.get(list.get(2)));
+        if (parallel) {
+            text = Collections.synchronizedList(text);
+            text.stream().parallel().filter(word -> !word.equals(" ") & !word.equals("") & !word.equals("-"))
+                    .filter(word -> !wordsSet.add(word)).map(String::trim).distinct().limit(3)
+                    .map(word -> new StringBuilder(word).reverse().toString()).map(String::toUpperCase)
+                    .sorted(Comparator.comparing(String::length)).forEach(System.out::println);
+        } else {
 
+            text.stream().filter(word -> !word.equals(" ") & !word.equals("") & !word.equals(""))
+                    .filter(word -> !wordsSet.add(word)).map(String::trim).distinct().limit(3)
+                    .map(word -> new StringBuilder(word).reverse().toString()).map(String::toUpperCase)
+                    .sorted(Comparator.comparing(String::length)).forEach(System.out::println);
+
+        }
         long spentTime = System.currentTimeMillis() - startTime;
-        System.out.println("elapsed time:"+spentTime+" millis");
+        System.out.println("elapsed time: " + spentTime + " millis");
     }
+
+
 }
