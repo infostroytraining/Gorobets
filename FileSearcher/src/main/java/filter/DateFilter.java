@@ -1,16 +1,14 @@
 package filter;
 
-
 import java.io.File;
 
 
 /**
- * Created by invincible_g_d on 12/22/15.
+ * This class compare time parameter from command line with last modifier time of file.
  */
 public class DateFilter extends Filter {
 
     private long time;
-
 
 
     public DateFilter(Filter next, long time) {

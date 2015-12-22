@@ -4,6 +4,9 @@ import java.io.File;
 
 import com.google.common.io.Files;
 
+/**
+ * This class compare a name parameter from the command line with a name of file.
+ */
 public class NameFilter extends Filter {
 
 
