@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.dao.Converter;
 import com.entity.LogEvent;
+import com.google.common.base.Strings;
 import com.service.LogEventService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,7 +44,7 @@ public class LogsServlet extends HttpServlet {
         String format = request.getParameter("format");
         List<String> logEventsString = null;
         List<String> logEventsJson;
-        if (format != null && format.equalsIgnoreCase("pretty")) {
+        if (Strings.isNullOrEmpty(format)&& format.equalsIgnoreCase("pretty")) {
             try {
                 Map<Integer, LogEvent> logEventMap = logEventService.getAll();
                 logEventsJson = Converter.toJSON(logEventMap);

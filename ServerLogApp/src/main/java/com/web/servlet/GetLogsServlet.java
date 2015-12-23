@@ -1,6 +1,7 @@
 package com.web.servlet;
 
 import com.entity.LogEvent;
+import com.google.common.base.Strings;
 import com.service.LogEventService;
 import com.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -22,10 +23,13 @@ public class GetLogsServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String logValue = request.getParameter("logEvent");
+        String logValue = request.getParameter("logValue");
         LogEvent logEvent = new LogEvent(logValue);
         LogEventService logEventService = (LogEventService) request.getServletContext().getAttribute("logEventService");
         try {
+            if(logEvent!=null){
+                logEventService.add(logEvent);
+            }
             logEventService.add(logEvent);
         } catch (ServiceException e) {
             LOGGER.error("Exception in servlet", e);
