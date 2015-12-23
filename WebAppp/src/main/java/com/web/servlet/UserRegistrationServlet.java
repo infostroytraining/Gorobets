@@ -23,6 +23,14 @@ import java.util.List;
 @WebServlet(name = "UserRegistrationServlet")
 public class UserRegistrationServlet extends HttpServlet {
 
+    private static final String NAME = "name";
+    private static final String SURNAME = "surname";
+    private static final String EMAIL = "email";
+    private static final String PASSWORD = "password";
+    private static final String USER_DTO = "userDTO";
+    private static final String ERRORS = "errors";
+    private static final String PASSWORD_C = "passwordc";
+
     org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger("CustomAppender");
 
     CustomAppender customAppender = new CustomAppender();
@@ -36,7 +44,7 @@ public class UserRegistrationServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
@@ -48,7 +56,7 @@ public class UserRegistrationServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         LOGGER.addAppender(customAppender);
 
@@ -57,39 +65,34 @@ public class UserRegistrationServlet extends HttpServlet {
 
         TransactionalUserService transactionalUserService = (TransactionalUserService)
                 request.getServletContext().getAttribute("transactionalUserService");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String passwordc = request.getParameter("passwordc");
+        String email = request.getParameter(EMAIL);
+        String password = request.getParameter(PASSWORD);
+        String name = request.getParameter(NAME);
+        String surname = request.getParameter(SURNAME);
+        String passwordc = request.getParameter(PASSWORD_C);
 
         UserDTO userDTO = new UserDTO(email, password, name, surname);//for saving data at jsp form!
 
         List<String> errors = validateForm(userDTO, passwordc);
         if (!errors.isEmpty()) {
-            request.setAttribute("userDTO", userDTO);
-            request.setAttribute("errors", errors);
+            request.setAttribute(USER_DTO, userDTO);
+            request.setAttribute(ERRORS, errors);
             request.getRequestDispatcher("userErrors.jsp").forward(request, response);
         } else {
             User user = new User(email, password, name, surname);
             try {
                 memoryUserService.add(user);
+                request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());
+
             } catch (ServiceException e) {
                 LOGGER.error("Exception in UserRegistrationServlet");
                 throw new ServletException(e);
             }
-
-            try {
-                request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());
-            } catch (ServiceException e) {
-                LOGGER.error("Exception in servlet");
-                throw new ServletException(e);
-            }
-            request.setAttribute("userDTO", userDTO);
-            request.setAttribute("email", email);
-            request.setAttribute("password", password);
-            request.setAttribute("name", name);
-            request.setAttribute("surname", surname);
+            request.setAttribute(USER_DTO, userDTO);
+            request.setAttribute(EMAIL, email);
+            request.setAttribute(PASSWORD, password);
+            request.setAttribute(NAME, name);
+            request.setAttribute(SURNAME, surname);
 
             request.getRequestDispatcher("answerToUser.jsp").forward(request, response);
         }
@@ -103,7 +106,7 @@ public class UserRegistrationServlet extends HttpServlet {
      * @param passwordc
      * @return
      */
-    private List<String> validateForm(UserDTO userDTO, String passwordc) {
+    protected List<String> validateForm(UserDTO userDTO, String passwordc) {
         LOGGER.info("Enter to the validForm method at UserRegistrationServlet");
         List<String> errors = new ArrayList<>();
 
