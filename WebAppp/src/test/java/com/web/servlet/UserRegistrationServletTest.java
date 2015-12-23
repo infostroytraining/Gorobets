@@ -8,6 +8,8 @@ import com.service.MemoryUserService;
 import com.service.TransactionalUserService;
 import com.service.exception.ServiceException;
 import org.apache.logging.log4j.util.Strings;
+
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,12 +48,12 @@ public class UserRegistrationServletTest {
 
     CustomAppender customAppender = new CustomAppender();
 
-//    UserRegistrationServlet userServlet = new UserRegistrationServlet();
+    UserRegistrationServlet userServlet = new UserRegistrationServlet();
 
     org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger("CustomAppender");
-
-    @Mock
-    UserRegistrationServlet userServlet;// =Mockito.mock(UserRegistrationServlet.class);
+//
+//    @Mock
+//    UserRegistrationServlet userServlet;// =Mockito.mock(UserRegistrationServlet.class);
 
     @Mock
     HttpServletRequest request;// = Mockito.mock(HttpServletRequest.class);

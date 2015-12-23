@@ -58,7 +58,7 @@ public class CustomAppender extends AppenderSkeleton {
         httppost.setHeader("User-Agent", USER_AGENT);
 
         List<NameValuePair> urlParameters = new ArrayList<>(2);
-        urlParameters.add(new BasicNameValuePair("logEvent", loggingEvent.toString()));
+        urlParameters.add(new BasicNameValuePair("LogValue", loggingEvent.toString()));
         httppost.setEntity(new UrlEncodedFormEntity(urlParameters, "UTF-8"));
 
         //Execute and get the response.

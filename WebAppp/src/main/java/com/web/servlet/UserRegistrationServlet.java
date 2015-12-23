@@ -53,8 +53,8 @@ public class UserRegistrationServlet extends HttpServlet {
      *
      * @param request
      * @param response
-     * @throws ServletException
-     * @throws IOException
+     * @throws  ServletException
+     * @throws  IOException
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
