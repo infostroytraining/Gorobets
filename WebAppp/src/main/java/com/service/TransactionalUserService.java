@@ -63,6 +63,11 @@ public class TransactionalUserService implements UserService {
         return null;
     }
 
+    @Override
+    public void remove(int id) throws ServiceException {
+
+    }
+
     /**
      * GetAll method -gets all users from the the storage
      *

@@ -3,10 +3,13 @@ package com.web.servlet;
 import com.customAppender.CustomAppender;
 import com.dto.UserDTO;
 import com.entity.User;
+import com.google.common.base.Strings;
+import com.google.gson.Gson;
 import com.service.MemoryUserService;
 import com.service.TransactionalUserService;
 import com.service.exception.ServiceException;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +17,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+/*1. Сделать пользовательский интерфейс приложения регистрации пользователя с использованием Bootstrap.
+2. Сделать клиентскую валидацию:
+     - все обязательные поля не должны быть пустыми.
+     - пароль должен содержать 8 символов, из них хотя бы одна маленькая буква, хотя бы одна большая буква, хотя бы одна              цифра.
+     - электронный адресс должен быть валидным.
+3. Сделать серверную валидацию без обновления страницы (с использованием Ajax). Проверить, существует ли пользователь с       введенным логином (электронным адрессом), и если да, то отобразить сообщение, что такой пользователь уже существует в       системе.
+
+*/
 
 /**
  * UserRegistrationServlet class-it's a servlet that forward users to registration form
@@ -35,17 +49,17 @@ public class UserRegistrationServlet extends HttpServlet {
 
     CustomAppender customAppender = new CustomAppender();
 
+    private MemoryUserService memoryUserService;
 
-    /**
-     * Get method that handle request parameter and  give response
-     *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
-     */
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private TransactionalUserService transactionalUserService;
 
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+        memoryUserService = (MemoryUserService) config.getServletContext().getAttribute("memoryUserService");
+
+        transactionalUserService = (TransactionalUserService) config.getServletContext().getAttribute("transactionalUserService");
     }
 
     /**
@@ -53,18 +67,18 @@ public class UserRegistrationServlet extends HttpServlet {
      *
      * @param request
      * @param response
-     * @throws  ServletException
-     * @throws  IOException
+     * @throws ServletException
+     * @throws IOException
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         LOGGER.addAppender(customAppender);
 
+//        MemoryUserService memoryUserService = (MemoryUserService) request.getServletContext().getAttribute("memoryUserService");
+//
+//        TransactionalUserService transactionalUserService = (TransactionalUserService)
+//                request.getServletContext().getAttribute("transactionalUserService");
 
-        MemoryUserService memoryUserService = (MemoryUserService) request.getServletContext().getAttribute("memoryUserService");
-
-        TransactionalUserService transactionalUserService = (TransactionalUserService)
-                request.getServletContext().getAttribute("transactionalUserService");
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
         String name = request.getParameter(NAME);
@@ -73,13 +87,20 @@ public class UserRegistrationServlet extends HttpServlet {
 
         UserDTO userDTO = new UserDTO(email, password, name, surname);//for saving data at jsp form!
 
-        List<String> errors = validateForm(userDTO, passwordc);
+        Map<String, String> errors = validateForm(userDTO, passwordc);
         if (!errors.isEmpty()) {
-            request.setAttribute(USER_DTO, userDTO);
-            request.setAttribute(ERRORS, errors);
-            request.getRequestDispatcher("userErrors.jsp").forward(request, response);
+//            request.setAttribute(USER_DTO, userDTO);
+//            request.setAttribute(ERRORS, errors);
+            response.setStatus(400);
+            response.setHeader("Content-Type", "application/json");
+            response.getWriter().write(new Gson().toJson(errors));
+//            request.getRequestDispatcher("userErrors.jsp").forward(request, response);
         } else {
             User user = new User(email, password, name, surname);
+            response.setStatus(200);
+            response.setHeader("Content-Type", "application/json");
+            response.getWriter().write(new Gson().toJson(user));
+
             try {
                 memoryUserService.add(user);
                 request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());
@@ -94,7 +115,7 @@ public class UserRegistrationServlet extends HttpServlet {
             request.setAttribute(NAME, name);
             request.setAttribute(SURNAME, surname);
 
-            request.getRequestDispatcher("answerToUser.jsp").forward(request, response);
+//            request.getRequestDispatcher("answerToUser.jsp").forward(request, response);
         }
 
     }
@@ -106,27 +127,27 @@ public class UserRegistrationServlet extends HttpServlet {
      * @param passwordc
      * @return
      */
-    protected List<String> validateForm(UserDTO userDTO, String passwordc) {
+    protected Map<String, String> validateForm(UserDTO userDTO, String passwordc) {
         LOGGER.info("Enter to the validForm method at UserRegistrationServlet");
-        List<String> errors = new ArrayList<>();
 
+        Map<String, String> errors = new HashMap<>();
 
-        if (userDTO.getEmail() == null || userDTO.getEmail().isEmpty()) {
-            errors.add("Please, input your email");
+        if (Strings.isNullOrEmpty(userDTO.getEmail())) {
+            errors.put(EMAIL, "Please, input your email");
         }
-        if (userDTO.getPassword() == null || userDTO.getPassword().isEmpty()) {
-            errors.add("Please, input your password");
+        if (Strings.isNullOrEmpty(userDTO.getPassword())) {
+            errors.put(PASSWORD, "Please, input your password");
         }
-        if (userDTO.getName() == null || userDTO.getName().isEmpty()) {
-            errors.add("Please, input your name");
+        if (Strings.isNullOrEmpty(userDTO.getName())) {
+            errors.put(NAME, "Please, input your name");
+        }
+        if (Strings.isNullOrEmpty(userDTO.getSurname())) {
+            errors.put(SURNAME, "Please, input your surname");
+        }
+        if (Strings.isNullOrEmpty(passwordc)) {
+            errors.put(PASSWORD_C, "Please, input right code and push submit");
         }
 
-        if (userDTO.getSurname() == null || userDTO.getSurname().isEmpty()) {
-            errors.add("Please, input your surname");
-        }
-        if (passwordc == null || passwordc.isEmpty()) {
-            errors.add("Please, input right code and push submit");
-        }
         LOGGER.info("Exit from the validForm method at UserRegistrationServlet");
         return errors;
 

@@ -1,30 +1,29 @@
 package com.web.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.entity.User;
 import com.service.MemoryUserService;
 import com.service.TransactionalUserService;
+import com.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.util.Integers;
 
-/**
- * UserServlet class-it's a servlet that forward users to registration form
- * It has:
- * doGet and doPost methods for handling requests and giving responses
- */
-public class UserServlet extends HttpServlet {
-    User user;
+
+public class RemoveUserServlet extends HttpServlet {
+
     private static final Logger LOGGER = LogManager.getLogger();
 
     private MemoryUserService memoryUserService;
 
     private TransactionalUserService transactionalUserService;
+
     /**
      *
      * @param config
@@ -37,7 +36,6 @@ public class UserServlet extends HttpServlet {
     }
 
     /**
-     * Get method that handle request parameter and  give response
      *
      * @param request
      * @param response
@@ -45,18 +43,18 @@ public class UserServlet extends HttpServlet {
      * @throws IOException
      */
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.entry(request, response);
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getParameter("id");
+        int id = Integers.parseInt(userId);
+        LOGGER.debug("User id to remove {}", id);
+
         try {
-            request.setAttribute("users", memoryUserService.getAll());
+            memoryUserService.remove(id);
+        } catch (ServiceException e) {
+            LOGGER.debug("Exception in RemoveUserServlet while removing user with id {}", id);
+            throw new ServletException();
 
 
-        } catch (Exception ex) {
-            LOGGER.error("Exception in doGet method at UserServlet");
-            throw new ServletException(ex);
         }
-        request.getRequestDispatcher("homePage.jsp").forward(request, response);
     }
-
-
 }

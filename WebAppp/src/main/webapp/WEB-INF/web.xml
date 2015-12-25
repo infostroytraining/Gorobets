@@ -13,7 +13,7 @@
 
     <servlet-mapping>
         <servlet-name>UserHome</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/homePage.jsp</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -22,8 +22,18 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>UserRegistration</servlet-name>
-        <url-pattern>/registration</url-pattern>
+        <url-pattern>/add</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>RemoveUser</servlet-name>
+        <servlet-class>com.web.servlet.RemoveUserServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RemoveUser</servlet-name>
+        <url-pattern>/remove</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>UserLogin</servlet-name>
         <servlet-class>com.web.servlet.UserLogInServlet</servlet-class>
@@ -32,25 +42,25 @@
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>UserErr</servlet-name>
-        <servlet-class>com.web.servlet.UserServlet</servlet-class>
-    </servlet>
+    <!--<servlet>-->
+        <!--<servlet-name>UserErr</servlet-name>-->
+        <!--<servlet-class>com.web.servlet.UserServlet</servlet-class>-->
+    <!--</servlet>-->
 
-    <servlet-mapping>
-        <servlet-name>UserErr</servlet-name>
-        <url-pattern>/error</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>UserErr</servlet-name>-->
+        <!--<url-pattern>/error</url-pattern>-->
+    <!--</servlet-mapping>-->
 
-    <servlet>
-        <servlet-name>UserAnswer</servlet-name>
-        <servlet-class>com.web.servlet.UserServlet</servlet-class>
-    </servlet>
+    <!--<servlet>-->
+        <!--<servlet-name>UserAnswer</servlet-name>-->
+        <!--<servlet-class>com.web.servlet.UserServlet</servlet-class>-->
+    <!--</servlet>-->
 
-    <servlet-mapping>
-        <servlet-name>UserAnswer</servlet-name>
-        <url-pattern>/answer</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>UserAnswer</servlet-name>-->
+        <!--<url-pattern>/answer</url-pattern>-->
+    <!--</servlet-mapping>-->
     <servlet>
         <servlet-name>Captcha</servlet-name>
         <servlet-class>com.web.servlet.CaptchaServlet</servlet-class>
@@ -61,14 +71,6 @@
         <url-pattern>/checkCaptcha</url-pattern>
     </servlet-mapping>
 
-
-
-    <listener>
-        <listener-class>com.web.listener.ContextListener</listener-class>
-    </listener>
-    <welcome-file-list>
-        <welcome-file>/homePage.jsp</welcome-file>
-    </welcome-file-list>
 
     <context-param>
         <param-name>storage</param-name>
@@ -83,4 +85,11 @@
         <error-code>500</error-code>
         <location>/errorPage.jsp</location>
     </error-page>
+
+    <listener>
+        <listener-class>com.web.listener.ContextListener</listener-class>
+    </listener>
+    <welcome-file-list>
+        <welcome-file>/homePage.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

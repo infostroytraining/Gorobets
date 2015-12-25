@@ -1,100 +1,163 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.captcha.Captchas" %>
-<%@include file="/WEB-INF/include/main.jsp" %>
+<%@include file="WEB-INF/include/main.jsp" %>
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Home page</title>
+    <title>Home Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.js"></script>
+    <script src="resources/js/addRemoveUsersAndErrors.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
+<div class="container">
+
+    <div class="row">
+        <form id="user-form" class="form-horizontal">
+
+            <div id="form-email" class="form-group">
+                <label class="col-sm-1 control-label" for="email">User name</label>
+
+                <div id="email" class="col-sm-8">
+                    <input type="text" id="email" name="email" class="form-control" value="${user.email}"
+                           placeholder="email"/>
+                </div>
+            </div>
+
+            <div id="form-password" class="form-group ">
+                <label class="col-sm-1 control-label" for="password">Password</label>
+
+                <div id="password" class="col-sm-8">
+                    <input type="text" id="password" name="password" class="form-control" value="${user.password}"
+                           placeholder="user password"/>
+                </div>
+            </div>
+
+            <div id="form-name" class="form-group ">
+                <label class="col-sm-1 control-label" for="name">Name</label>
+
+                <div id="name" class="col-sm-8">
+                    <input type="text" id="name" name="password" class="form-control" value="${user.name}"
+                           placeholder="name"/>
+                </div>
+            </div>
+
+            <div id="form-surname" class="form-group ">
+                <label class="col-sm-1 control-label" for="surname">Language</label>
+
+                <div id="surname" class="col-sm-8">
+                    <input type="text" id="surname" name="surname" class="form-control" value="${user.surname}"
+                           placeholder="surname"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-8">
+                    <input class="btn btn-primary add-user" type="button" value="Add user">
+                </div>
+            </div>
 
 
-<form action="/registration" method="post">
-    <p>
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email" value="${userDTO.email}"/>
-    </p>
+        </form>
+    </div>
 
-    <p>
-        <label for="password">Password</label>
-        <input type="text" id="password" name="password" value="${userDTO.password}"/>
-    </p>
+    <%--<div class="row">--%>
+        <%--<form action="....." id="captcha-form" class="form-horizontal">--%>
+            <%--<div class="form-group">--%>
+                    <%--<%--%>
+        <%--// Construct the captchas object (Default Values)--%>
+        <%--Captchas captchas = new Captchas(--%>
+                <%--request.getSession(true),     // Ensure session--%>
+                <%--"demo",                       // client--%>
+                <%--"secret"                      // secret--%>
+        <%--);--%>
+    <%--%>--%>
+                <%--<form method="get" action="<%=response.encodeUrl("captchaCheck.jsp")%>">--%>
 
-    <p>
+                    <%--<div id="form-captcha" class="form-group ">--%>
+                        <%--<label class="col-sm-1 control-label" for="name">The CAPTCHA password:</label>--%>
 
-    <p>
-        <label for="name">User name</label>
-        <input type="text" id="name" name="name" value="${userDTO.name}"/>
-    </p>
+                        <%--<div id="passwordc" class="col-sm-8">--%>
+                            <%--<input type="text" id="passwordc" name="passwordc" class="form-control"--%>
+                                   <%--value="${user.passwordc}"--%>
+                                   <%--placeholder="passwordc" size="16"/>--%>
+                        <%--</div>--%>
+                        <%--<table>--%>
+                            <%--<tr>--%>
+                                <%--<td>--%>
+                                    <%--&lt;%&ndash;--%>
+                                     <%--% it's possible to set a  random in captchas.image("xyz"),--%>
+                                     <%--% captchas.imageUrl("xyz") and captchas.audioUrl("xyz").--%>
+                                     <%--% This is only needed at the first request--%>
+                                     <%--&ndash;%&gt;--%>
+                                    <%--<%= captchas.image() %><br>--%>
+                                    <%--<a href="<%= captchas.audioUrl() %>">Phonetic spelling (mp3)</a>--%>
+                                <%--</td>--%>
+                            <%--</tr>--%>
+                            <%--<tr>--%>
+                                <%--<div class="form-group">--%>
+                                    <%--<div class="col-sm-offset-1 col-sm-8">--%>
+                                        <%--<input class="btn btn-primary captcha" type="button" value="Submit">--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+                            <%--</tr>--%>
+                        <%--</table>--%>
+                    <%--</div>--%>
+                <%--</form>--%>
 
-    <p>
-        <label for="surname">User surname</label>
-        <input type="text" id="surname" name="surname" value="${userDTO.surname}"/>
-    </p>
+        <%--</form>--%>
+        <%--<form action="/login" method="get">--%>
 
-    <%--<p>--%>
-    <%--<label for="avatar"> Avatar</label>--%>
-    <%--<input type="image" id="avatar" name="avatar" value="${userDTO.avatar}"/>--%>
-    <%--</p>--%>
+            <%--<div class="col-sm-offset-1 col-sm-8">--%>
+                <%--<input class="btn btn-info login-user" type="button" value="Log in">--%>
+            <%--</div>--%>
 
-    <%
-        // Construct the captchas object (Default Values)
-        Captchas captchas = new Captchas(
-                request.getSession(true),     // Ensure session
-                "demo",                       // client
-                "secret"                      // secret
-        );
+    <%--</form>--%>
 
-    %>
-    <%--
-     % encodeUrl produces jsessionid=xyz in case of disabled cookies
-     % Please test your implementation also with disabled cookies <%=response.encodeUrl("captchaCheck.jsp")%>
-     --%>
-    <form method="get" action="<%=response.encodeUrl("captchaCheck.jsp")%>">
-        <table>
-            <tr>
-                <td>
-                    The CAPTCHA password:
-                </td>
-                <td>
-                    <input name="passwordc" size="16"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <%--
-                     % it's possible to set a  random in captchas.image("xyz"),
-                     % captchas.imageUrl("xyz") and captchas.audioUrl("xyz").
-                     % This is only needed at the first request
-                     --%>
-                    <%= captchas.image() %><br>
-                    <a href="<%= captchas.audioUrl() %>">Phonetic spelling (mp3)</a>
-                </td>
-            </tr>
+<%--</div>--%>
 
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <input type="submit" value="Submit"/>
-                </td>
-            </tr>
-        </table>
-    </form>
-
-    <%--<input type="submit" value="Add user">--%>
-</form>
-<form action="/login" method="get">
-    <table>
+<div class="row">
+    <h4>All users:</h4>
+    <table id="content" class="table table-bordered">
         <tr>
-            <td>
-            </td>
-            <td>
-                <input type="submit" value="LogIn"/>
-            </td>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th></th>
         </tr>
+        <c:forEach var="user" items="${users}">
+            <tr id="${user.id}">
+                <td>${user.email}</td>
+                <td>${user.password}</td>
+                <td>${user.name}</td>
+                <td>${user.sername}</td>
+                <td><a id="${user.id}" class="remove-user">remove</a></td>
+            </tr>
+        </c:forEach>
     </table>
-</form>
-<%--<jsp:forward page="/login"/>--%>
+</div>
+</div>
+
+<!-- Uncomment to use modal window 
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Do you really want to delete this answer?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="" class="btn btn-primary remove" data-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ -->
 </body>
 </html>

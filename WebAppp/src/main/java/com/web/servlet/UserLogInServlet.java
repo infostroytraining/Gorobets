@@ -53,7 +53,7 @@ public class UserLogInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         PostgresUserDAO postgresUserDAO = (PostgresUserDAO) request.getServletContext().getAttribute("postgresUserDAO");
-        User user = null;
+        User user ;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         try {

@@ -46,6 +46,21 @@ public class MemoryUserService implements UserService {
     }
 
     /**
+     * Remove method - remove User from the memory storage (Map<Integer,String>) by their id
+     *
+     * @param id - id of User instance with int type
+     */
+    @Override
+    public void remove(int id) throws ServiceException {
+        try {
+            userDAO.remove(id);
+        } catch (DAOException e) {
+            LOGGER.error("Exception in remove method at MemoryUserService class");
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
      * GetAll method -gets all users from the the memory storage
      *
      * @return List<User> of users

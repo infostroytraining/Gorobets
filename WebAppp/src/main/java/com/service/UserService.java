@@ -35,4 +35,6 @@ public interface UserService {
      * @throws ServiceException
      */
     Map<String, String> getEmailForEachUser() throws ServiceException;
+
+    void remove(int id) throws ServiceException;
 }
