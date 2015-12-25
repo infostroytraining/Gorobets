@@ -1,4 +1,11 @@
+body{background:#efefef  url(/images/hexellence.png);margin: 0; padding: 0; font: 16px/24px Arial, Tahoma, sans-serif;}
+
+h4{
+	color: darkgreen;
+}
+
 .container{
+
 	padding-top: 20px
 }
 .form-control {
@@ -15,4 +22,7 @@ span.error {
 
 .row{
 	
+}
+.control-label{
+	color: darkgreen;
 }

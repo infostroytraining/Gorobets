@@ -3,9 +3,12 @@ package com.web.servlet;
 import com.dao.exception.DAOException;
 import com.dao.postgesql.PostgresUserDAO;
 import com.entity.User;
+import com.service.MemoryUserService;
+import com.service.TransactionalUserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +25,22 @@ import java.util.List;
 @WebServlet(name = "UserLogInServlet")
 public class UserLogInServlet extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
+
+    PostgresUserDAO postgresUserDAO;
+    private MemoryUserService memoryUserService;
+
+    private TransactionalUserService transactionalUserService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+        PostgresUserDAO postgresUserDAO = (PostgresUserDAO) config.getServletContext().getAttribute("postgresUserDAO");
+
+        memoryUserService = (MemoryUserService) config.getServletContext().getAttribute("memoryUserService");
+
+        transactionalUserService = (TransactionalUserService) config.getServletContext().getAttribute("transactionalUserService");
+    }
 
     /**
      * Get method that handle request parameter and  give response
@@ -52,7 +71,7 @@ public class UserLogInServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        PostgresUserDAO postgresUserDAO = (PostgresUserDAO) request.getServletContext().getAttribute("postgresUserDAO");
+//        PostgresUserDAO postgresUserDAO = (PostgresUserDAO) request.getSession().getServletContext().getAttribute("postgresUserDAO");
         User user ;
         String email = request.getParameter("email");
         String password = request.getParameter("password");

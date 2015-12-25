@@ -1,15 +1,16 @@
 package com.customAppender;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,51 +20,59 @@ import java.util.List;
  */
 public class CustomAppender extends AppenderSkeleton {
 
-    List<String> eventsList = new ArrayList();
+    ArrayList<LoggingEvent> eventsList = new ArrayList();
 
 
     /**
      * Append method - get loggingEvent and send it to the other server application
      *
-     * @param loggingEvent -LoggingEvent type
+     * @param logEvent -LoggingEvent type
      */
     @Override
-    protected void append(LoggingEvent loggingEvent) {
-        eventsList.add(loggingEvent.getMessage().toString());
+    protected void append(LoggingEvent logEvent) {
+        eventsList.add(logEvent);
 
-        try {
-            sendPost(eventsList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 
     /**
      * SendPost method - get List<String> loggingEvent and  send it to the other server application
      *
-     * @param loggingEvent -LoggingEvent type
-     * @throws Exception
+     *
      */
-    private void sendPost(List<String> loggingEvent) throws Exception {
+    private void sendPost()  {
+
+
+
+        ArrayList<LoggingEvent> loggingEventList = eventsList;
 
         final String USER_AGENT = "Mozilla/5.0";
 
         String url = "http://localhost:8080/logs";
 
-        HttpClient httpclient = new DefaultHttpClient();
+        HttpClient httpclient  = HttpClientBuilder.create().build();
+
+
         HttpPost httppost = new HttpPost(url);
 
         // add header
         httppost.setHeader("User-Agent", USER_AGENT);
 
-        List<NameValuePair> urlParameters = new ArrayList<>(2);
-        urlParameters.add(new BasicNameValuePair("LogValue", loggingEvent.toString()));
-        httppost.setEntity(new UrlEncodedFormEntity(urlParameters, "UTF-8"));
+        List<BasicNameValuePair> urlParameters = new ArrayList<>(2);
+        urlParameters.add(new BasicNameValuePair("LogValue", loggingEventList.toString()));
+        try {
+            httppost.setEntity(new UrlEncodedFormEntity(urlParameters, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         //Execute and get the response.
 
-        HttpResponse response = httpclient.execute(httppost);
+        try {
+            HttpResponse response = httpclient.execute(httppost);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }

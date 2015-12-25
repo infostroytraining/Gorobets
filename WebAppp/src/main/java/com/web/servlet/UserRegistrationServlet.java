@@ -56,7 +56,8 @@ public class UserRegistrationServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-
+        LOGGER.addAppender(customAppender);
+        LOGGER.info("Initialization is started ");
         memoryUserService = (MemoryUserService) config.getServletContext().getAttribute("memoryUserService");
 
         transactionalUserService = (TransactionalUserService) config.getServletContext().getAttribute("transactionalUserService");
@@ -94,13 +95,14 @@ public class UserRegistrationServlet extends HttpServlet {
             response.setStatus(400);
             response.setHeader("Content-Type", "application/json");
             response.getWriter().write(new Gson().toJson(errors));
+            LOGGER.info("Errors while add a user");
 //            request.getRequestDispatcher("userErrors.jsp").forward(request, response);
         } else {
             User user = new User(email, password, name, surname);
             response.setStatus(200);
             response.setHeader("Content-Type", "application/json");
             response.getWriter().write(new Gson().toJson(user));
-
+            LOGGER.info("user was created!");
             try {
                 memoryUserService.add(user);
                 request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());

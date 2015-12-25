@@ -17,7 +17,7 @@
         <form id="user-form" class="form-horizontal">
 
             <div id="form-email" class="form-group">
-                <label class="col-sm-1 control-label" for="email">User name</label>
+                <label class="col-sm-1 control-label" for="email">Email</label>
 
                 <div id="email" class="col-sm-8">
                     <input type="text" id="email" name="email" class="form-control" value="${user.email}"
@@ -30,7 +30,7 @@
 
                 <div id="password" class="col-sm-8">
                     <input type="text" id="password" name="password" class="form-control" value="${user.password}"
-                           placeholder="user password"/>
+                           placeholder="password"/>
                 </div>
             </div>
 
@@ -38,13 +38,13 @@
                 <label class="col-sm-1 control-label" for="name">Name</label>
 
                 <div id="name" class="col-sm-8">
-                    <input type="text" id="name" name="password" class="form-control" value="${user.name}"
+                    <input type="text" id="name" name="name" class="form-control" value="${user.name}"
                            placeholder="name"/>
                 </div>
             </div>
 
             <div id="form-surname" class="form-group ">
-                <label class="col-sm-1 control-label" for="surname">Language</label>
+                <label class="col-sm-1 control-label" for="surname">Surname</label>
 
                 <div id="surname" class="col-sm-8">
                     <input type="text" id="surname" name="surname" class="form-control" value="${user.surname}"
@@ -62,7 +62,7 @@
         </form>
     </div>
 
-    <%--<div class="row">--%>
+    <div class="row">
         <%--<form action="....." id="captcha-form" class="form-horizontal">--%>
             <%--<div class="form-group">--%>
                     <%--<%--%>
@@ -106,26 +106,26 @@
                     <%--</div>--%>
                 <%--</form>--%>
 
-        <%--</form>--%>
-        <%--<form action="/login" method="get">--%>
+            <%--</form>--%>
+            <form action="/login" method="get">
 
-            <%--<div class="col-sm-offset-1 col-sm-8">--%>
-                <%--<input class="btn btn-info login-user" type="button" value="Log in">--%>
-            <%--</div>--%>
+                <div class="col-sm-offset-1 col-sm-8">
+                    <input class="btn btn-info btn-sm login-user" type="button" value="Log in">
+                </div>
 
-    <%--</form>--%>
+            </form>
 
-<%--</div>--%>
+</div>
 
 <div class="row">
-    <h4>All users:</h4>
+    <h4><b>All users:</b></h4>
     <table id="content" class="table table-bordered">
         <tr>
             <th>Email</th>
             <th>Password</th>
             <th>Name</th>
             <th>Surname</th>
-            <th></th>
+            <th>Action</th>
         </tr>
         <c:forEach var="user" items="${users}">
             <tr id="${user.id}">
