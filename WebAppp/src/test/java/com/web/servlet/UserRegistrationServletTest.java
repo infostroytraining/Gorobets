@@ -78,14 +78,14 @@ public class UserRegistrationServletTest{
     @Mock
     RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
 
-//    @Override
-//    public void init(ServletConfig config) throws ServletException {
-//        super.init(config);
-//        userServlet = (UserRegistrationServlet) config.getServletContext().getAttribute("userServlet");
-//    }
+
+    public void init(ServletConfig config) throws ServletException {
+
+        userServlet = (UserRegistrationServlet) config.getServletContext().getAttribute("userServlet");
+    }
 
     @Before
-    public void init() {
+    public void setUp() {
         when(config.getServletContext()).thenReturn(context);
         when(request.getSession()).thenReturn(session);
         when(session.getServletContext()).thenReturn(context);
@@ -102,6 +102,7 @@ public class UserRegistrationServletTest{
 
     @Test
     public void testDoPost() throws ServletException, IOException, ServiceException {
+        userServlet.init(config);
         mockGetRequestParams(EMAIL, PASSWORD, NAME, SURNAME, PASSWORD_C);
         userServlet.doPost(request, response);
         ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);
@@ -120,11 +121,12 @@ public class UserRegistrationServletTest{
         verify(request).setAttribute(eq(EMAIL), anyString());
         verify(request).setAttribute(eq(PASSWORD), anyString());
         verify(request).setAttribute(eq(USER_DTO), anyString());
-        verify(request).getRequestDispatcher("answerToUser.jsp");
+
     }
 
     @Test(expected = ServletException.class)
     public void testDoPostWithServiceException() throws ServletException, IOException, ServiceException {
+        userServlet.init(config);
         mockGetRequestParams(EMAIL, PASSWORD, NAME, SURNAME, PASSWORD_C);
         when(serviceMemory.add(any(User.class))).thenThrow(ServiceException.class);
         userServlet.doPost(request, response);
@@ -132,6 +134,7 @@ public class UserRegistrationServletTest{
 
     @Test(expected = ServletException.class)
     public void testDoPostWithServiceExceptionOnMemoryService() throws ServletException, IOException, ServiceException {
+        userServlet.init(config);
         mockGetRequestParams(EMAIL, PASSWORD, NAME, SURNAME, PASSWORD_C);
         when(serviceMemory.getEmailForEachUser()).thenThrow(ServiceException.class);
         userServlet.doPost(request, response);
@@ -139,15 +142,21 @@ public class UserRegistrationServletTest{
 
     @Test
     public void testDoPostWithEmptyParamsFromRequest() throws ServletException, IOException {
+        userServlet.init(config);
         mockGetRequestParams(Strings.EMPTY, Strings.EMPTY, Strings.EMPTY, Strings.EMPTY, Strings.EMPTY);
         userServlet.doPost(request, response);
 //        verify(request).setAttribute(eq(USER_DTO), any(UserDTO.class));
 //        verify(request).setAttribute(eq(ERRORS), anyList());
-//        verify(request).getRequestDispatcher("userErrors.jsp");
+
     }
 
     @Test
     public void testValidateForm() {
+        try {
+            userServlet.init(config);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
         UserDTO userDTO = new UserDTO(EMAIL, PASSWORD, NAME, SURNAME);
         Map<String, String> result = userServlet.validateForm(userDTO, PASSWORD_C);
         assertTrue(result.isEmpty());
@@ -155,6 +164,11 @@ public class UserRegistrationServletTest{
 
     @Test
     public void testValidateFormWithErrors() {
+        try {
+            userServlet.init(config);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
         UserDTO userDTO = new UserDTO(null, null, null, null);
         Map<String, String> result = userServlet.validateForm(userDTO, PASSWORD_C);
         assertFalse(result.isEmpty());

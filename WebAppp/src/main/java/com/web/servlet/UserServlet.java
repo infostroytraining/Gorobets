@@ -46,15 +46,15 @@ public class UserServlet extends HttpServlet {
      */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.entry(request, response);
-        try {
-            request.setAttribute("users", memoryUserService.getAll());
-
-
-        } catch (Exception ex) {
-            LOGGER.error("Exception in doGet method at UserServlet");
-            throw new ServletException(ex);
-        }
+//        LOGGER.entry(request, response);
+//        try {
+//            request.setAttribute("users", memoryUserService.getAll());
+//
+//
+//        } catch (Exception ex) {
+//            LOGGER.error("Exception in doGet method at UserServlet");
+//            throw new ServletException(ex);
+//        }
         request.getRequestDispatcher("homePage.jsp").forward(request, response);
     }
 

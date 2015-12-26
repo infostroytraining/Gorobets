@@ -76,6 +76,6 @@ public class CaptchaServlet extends HttpServlet {
         }
         LOGGER.exit("Exit from check captcha method");
         request.setAttribute("body", body);
-        request.getRequestDispatcher("userLogin.jsp").forward(request, response);
+        request.getRequestDispatcher("homePage.jsp").forward(request, response);
     }
 }

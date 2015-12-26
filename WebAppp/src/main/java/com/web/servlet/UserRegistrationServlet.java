@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.service.MemoryUserService;
 import com.service.TransactionalUserService;
 import com.service.exception.ServiceException;
+import com.validator.Validator;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -96,7 +97,7 @@ public class UserRegistrationServlet extends HttpServlet {
             response.setHeader("Content-Type", "application/json");
             response.getWriter().write(new Gson().toJson(errors));
             LOGGER.info("Errors while add a user");
-//            request.getRequestDispatcher("userErrors.jsp").forward(request, response);
+
         } else {
             User user = new User(email, password, name, surname);
             response.setStatus(200);
@@ -111,15 +112,15 @@ public class UserRegistrationServlet extends HttpServlet {
                 LOGGER.error("Exception in UserRegistrationServlet");
                 throw new ServletException(e);
             }
-            request.setAttribute(USER_DTO, userDTO);
-            request.setAttribute(EMAIL, email);
-            request.setAttribute(PASSWORD, password);
-            request.setAttribute(NAME, name);
-            request.setAttribute(SURNAME, surname);
 
-//            request.getRequestDispatcher("answerToUser.jsp").forward(request, response);
+//            request.setAttribute(EMAIL, email);
+            request.setAttribute(PASSWORD_C, passwordc);
+//            request.setAttribute(NAME, name);
+//            request.setAttribute(SURNAME, surname);
+
+
         }
-
+        customAppender.sendPost(customAppender);
     }
 
     /**
@@ -133,6 +134,14 @@ public class UserRegistrationServlet extends HttpServlet {
         LOGGER.info("Enter to the validForm method at UserRegistrationServlet");
 
         Map<String, String> errors = new HashMap<>();
+
+        if (!Validator.validateEmailAddress(userDTO.getEmail())) {
+            errors.put(EMAIL, "Please, input a correct email");
+        }
+        if (!Validator.validatePassword(userDTO.getPassword())) {
+            errors.put(PASSWORD, "Password must contain at least one lowercase letter, " +
+                    "one uppercase letter, one number and have a length of 8 characters");
+        }
 
         if (Strings.isNullOrEmpty(userDTO.getEmail())) {
             errors.put(EMAIL, "Please, input your email");
@@ -154,6 +163,7 @@ public class UserRegistrationServlet extends HttpServlet {
         return errors;
 
     }
+
 
 
 }

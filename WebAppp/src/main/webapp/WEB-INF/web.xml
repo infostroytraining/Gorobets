@@ -13,7 +13,7 @@
 
     <servlet-mapping>
         <servlet-name>UserHome</servlet-name>
-        <url-pattern>/homePage.jsp</url-pattern>
+        <url-pattern>/welcome</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -42,25 +42,7 @@
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
-    <!--<servlet>-->
-        <!--<servlet-name>UserErr</servlet-name>-->
-        <!--<servlet-class>com.web.servlet.UserServlet</servlet-class>-->
-    <!--</servlet>-->
 
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>UserErr</servlet-name>-->
-        <!--<url-pattern>/error</url-pattern>-->
-    <!--</servlet-mapping>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>UserAnswer</servlet-name>-->
-        <!--<servlet-class>com.web.servlet.UserServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>UserAnswer</servlet-name>-->
-        <!--<url-pattern>/answer</url-pattern>-->
-    <!--</servlet-mapping>-->
     <servlet>
         <servlet-name>Captcha</servlet-name>
         <servlet-class>com.web.servlet.CaptchaServlet</servlet-class>
@@ -86,6 +68,6 @@
         <listener-class>com.web.listener.ContextListener</listener-class>
     </listener>
     <welcome-file-list>
-        <welcome-file>/homePage.jsp</welcome-file>
+        <welcome-file>welcome</welcome-file>
     </welcome-file-list>
 </web-app>

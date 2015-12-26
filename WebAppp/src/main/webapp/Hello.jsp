@@ -1,16 +1,15 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: invincible_g_d
-  Date: 12/15/15
-  Time: 3:39 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@include file="WEB-INF/include/main.jsp" %>
 <html>
 <head>
-    <title>Hello ${name} ,Thank you for visiting as! </title>
+  <title>Hello</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.js"></script>
+  <script src="resources/js/addRemoveUsersAndErrors.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css">
+  <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
-
+<h1>Hello ${name} ,Thank you for visiting as! </h1>
 </body>
 </html>

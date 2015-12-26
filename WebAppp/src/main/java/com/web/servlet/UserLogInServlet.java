@@ -3,6 +3,7 @@ package com.web.servlet;
 import com.dao.exception.DAOException;
 import com.dao.postgesql.PostgresUserDAO;
 import com.entity.User;
+import com.google.common.base.Strings;
 import com.service.MemoryUserService;
 import com.service.TransactionalUserService;
 import org.apache.logging.log4j.LogManager;
@@ -72,13 +73,14 @@ public class UserLogInServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 //        PostgresUserDAO postgresUserDAO = (PostgresUserDAO) request.getSession().getServletContext().getAttribute("postgresUserDAO");
-        User user ;
+        User user;
+        String name;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         try {
             user = postgresUserDAO.getUserByUserEmail(email);
-            String name = user.getName();
-            request.setAttribute("name", name);
+            name = user.getName();
+
         } catch (DAOException e) {
             LOGGER.error("Exception in doPost method at  UserLogInServlet");
             throw new ServletException(e);
@@ -91,8 +93,9 @@ public class UserLogInServlet extends HttpServlet {
             if (!errors.isEmpty()) {
                 request.setAttribute("user", user);
                 request.setAttribute("errors", errors);
-                request.getRequestDispatcher("errorLogInPage.jsp").forward(request, response);
+//                request.getRequestDispatcher("errorLogInPage.jsp").forward(request, response);
             } else {
+                request.setAttribute("name", name);
                 request.getRequestDispatcher("Hello.jsp").forward(request, response);
 
 
@@ -112,10 +115,10 @@ public class UserLogInServlet extends HttpServlet {
         List<String> errors = new ArrayList<>();
 
 
-        if (user.getEmail() == null || user.getEmail().isEmpty() || !user.getEmail().equals(email)) {
+        if (Strings.isNullOrEmpty(user.getEmail())|| !user.getEmail().equals(email)) {
             errors.add("Please, input right email");
         }
-        if (user.getPassword() == null || user.getPassword().isEmpty() || !user.getPassword().equals(password)) {
+        if (Strings.isNullOrEmpty(user.getPassword())|| !user.getPassword().equals(password)) {
             errors.add("Please, input right password");
         }
 
