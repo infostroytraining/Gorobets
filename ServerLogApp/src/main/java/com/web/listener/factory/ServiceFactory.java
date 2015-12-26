@@ -43,7 +43,7 @@ public class ServiceFactory {
 			Class.forName(POSTGRES_DRIVER);
 		} catch (ClassNotFoundException e) {
 			logger.fatal("Could load {} driver", POSTGRES_DRIVER);
-			throw new ServiceConfigurationError("Could load" + POSTGRES_DRIVER + "driver");
+			throw new ServiceConfigurationError("Could load " + POSTGRES_DRIVER + " driver");
 		}
 	}
 

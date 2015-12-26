@@ -13,7 +13,7 @@ import com.web.listener.factory.ServiceFactory;
 public class ContextListener implements ServletContextListener {
 
 	private static Logger LOGGER = LogManager.getLogger(ContextListener.class);
-	private static final String STORAGE_INIT_PARAMETER = "memory";
+	private static final String STORAGE_INIT_PARAMETER = "storage";
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.dao.Converter;
 import com.entity.LogEvent;
 import com.google.common.base.Strings;
+import com.google.gson.Gson;
 import com.service.LogEventService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,16 +44,16 @@ public class LogsServlet extends HttpServlet {
         LogEventService logEventService = (LogEventService) request.getServletContext().getAttribute("logEventService");
         String format = request.getParameter("format");
         List<String> logEventsString = null;
-        List<String> logEventsJson;
+        String logEventsJson;
         if (Strings.isNullOrEmpty(format)&& format.equalsIgnoreCase("pretty")) {
             try {
                 Map<Integer, LogEvent> logEventMap = logEventService.getAll();
-                logEventsJson = Converter.toJSON(logEventMap);
+                logEventsJson = new Gson().toJson(logEventMap);
             } catch (ServiceException e) {
                 LOGGER.error("Exception in servlet", e);
                 throw new ServletException(e);
             }
-            request.setAttribute("logEventsJson", logEventsJson);
+            response.getWriter().write(new Gson().toJson(logEventsJson));
 
         } else {
             try {
