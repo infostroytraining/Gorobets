@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration xmlns="http://logging.apache.org/log4j/2.0/config" packages="com.gmail.alexandrtalan.util">
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config" packages="com.customAppender">
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
@@ -10,10 +10,10 @@
             <PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t]  %c{5} :%M:%L - %m%n}{FATAL=orange,
     ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}"/>
         </File>
-        <Appender name="CustomAppender" class="com.customAppender.CustomAppender">
+        <MyCustomAppender name="MyCustomAppender" >
             <PatternLayout charset="GBK" pattern="%highlight{%d{ISO8601} %-5level [%t]  %c{5} :%M:%L - %m%n}{FATAL=orange,
     ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}"/>
-        </Appender>
+        </MyCustomAppender>
     </Appenders>
 
     <Loggers>
@@ -23,47 +23,12 @@
         </logger>
 
         <Root level="info">
-            <AppenderRef ref="CustomAppender"/>
+            <AppenderRef ref="MyCustomAppender"/>
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>
 
 
-        <!--<?xml version="1.0" encoding="UTF-8"?>-->
-        <!--<Configuration status="INFO">-->
-        <!--<Appenders>-->
-        <!--<Console name="Console" target="SYSTEM_OUT" >-->
-        <!--<PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t] %c{3} :%M:%L - %m%n}{FATAL=orange,-->
-        <!--ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}" />-->
-        <!--</Console>-->
-        <!--<File name="File" fileName="dao-log.txt" immediateFlush="false" >-->
-        <!--<PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t]  %c{5} :%M:%L - %m%n}{FATAL=orange,-->
-        <!--ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}"/>-->
-        <!--</File>-->
-        <!--&lt;!&ndash;<Appender name="CustomAppender" class = "com.customAppender.CustomAppender" >&ndash;&gt;-->
-        <!--&lt;!&ndash;<PatternLayout charset="GBK" pattern="%highlight{%d{ISO8601} %-5level [%t]  %c{5} :%M:%L - %m%n}{FATAL=orange,&ndash;&gt;-->
-        <!--&lt;!&ndash;ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<filter class="org.apache.log4j.varia.LevelRangeFilter">&ndash;&gt;-->
-        <!--&lt;!&ndash;<param name="LevelMin" value="INFO"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<param name="LevelMax" value="FATAL"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<param name="AcceptOnMatch" value="true"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;</filter>&ndash;&gt;-->
-        <!--&lt;!&ndash;</Appender>&ndash;&gt;-->
-        <!--</Appenders>-->
-        <!--<Loggers>-->
 
-        <!--&lt;!&ndash;<logger  level="info">&ndash;&gt;-->
-        <!--&lt;!&ndash;<AppenderRef ref="CustomAppender"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;</logger>&ndash;&gt;-->
-
-        <!--<logger name="com.dao.*" level="info">-->
-        <!--<AppenderRef ref="File"/>-->
-        <!--</logger>-->
-        <!--<Root level="info">-->
-
-        <!--<AppenderRef ref="Console" />-->
-        <!--</Root>-->
-        <!--</Loggers>-->
-        <!--</Configuration>-->
 

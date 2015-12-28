@@ -1,12 +1,10 @@
 package com.web.servlet;
 
-import com.dao.exception.DAOException;
-import com.dao.postgesql.PostgresUserDAO;
+
 import com.entity.User;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
-import com.service.MemoryUserService;
-import com.service.TransactionalUserService;
+
 import com.service.UserService;
 import com.service.exception.ServiceException;
 import com.validator.Validator;
@@ -20,9 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 /**

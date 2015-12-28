@@ -1,6 +1,7 @@
 package com.web.servlet;
 
-import com.customAppender.CustomAppender;
+
+
 import com.dto.UserDTO;
 import com.entity.User;
 import com.google.common.base.Strings;
@@ -12,8 +13,8 @@ import com.service.UserService;
 import com.service.exception.ServiceException;
 import com.validator.Validator;
 import org.apache.logging.log4j.LogManager;
-//import org.apache.log4j.Logger;
-//import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+
 
 /*1. Сделать пользовательский интерфейс приложения регистрации пользователя с использованием Bootstrap.
 2. Сделать клиентскую валидацию:
@@ -51,21 +52,18 @@ public class UserRegistrationServlet extends HttpServlet {
     private static final String CAPTCHA = "captcha";
     private static final String CODE = "code";
 
-    org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(UserRegistrationServlet.class);
 
-//    CustomAppender customAppender = new CustomAppender();
+private  static final Logger LOGGER = LogManager.getRootLogger();
+
 
     private UserService userService;
-private TransactionalUserService transactionalUserService;
-private MemoryUserService memoryUserService;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
 
         userService = (UserService) config.getServletContext().getAttribute("userService");
-//        memoryUserService = (MemoryUserService) config.getServletContext().getAttribute("memoryUserService");
-//        transactionalUserService = (TransactionalUserService) config.getServletContext().getAttribute("transactionalUserService");
 
     }
 
@@ -79,7 +77,7 @@ private MemoryUserService memoryUserService;
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//        LOGGER.addAppender(customAppender);
+
 
 
         String captcha = (String) request.getSession().getAttribute(CAPTCHA);
@@ -108,8 +106,7 @@ private MemoryUserService memoryUserService;
             response.getWriter().write(new Gson().toJson(user));
             LOGGER.info("user was created!");
             try {
-//                transactionalUserService.add(user);
-//                memoryUserService.add(user);
+
                 userService.add(user);
 //                request.setAttribute("statisticMap", userService.getEmailForEachUser());
 
@@ -120,7 +117,7 @@ private MemoryUserService memoryUserService;
 
         }
 
-        //        customAppender.sendPost(customAppender);
+
     }
 
 

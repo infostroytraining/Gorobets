@@ -87,30 +87,30 @@
         </form>
     </div>
 
-    <div class="row">
-        <div id="users" class=" form-group ">
-            <label class="col-sm-1 control-label" for="users"><h4><b>All users:</b></h4></label>
-        </div>
-        <table id="content" class="table table-bordered">
-            <tr>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Action</th>
-            </tr>
-            <c:forEach var="user" items="${users}">
-                <tr id="${user.id}">
-                    <td>${user.email}</td>
-                    <td>${user.password}</td>
-                    <td>${user.name}</td>
-                    <td>${user.sername}</td>
-                    <td><a id="${user.id}" class="remove-user">remove</a></td>
-                </tr>
-            </c:forEach>
-        </table>
-
+</div>
+<div class="row">
+    <div id="users" class=" form-group ">
+        <label class="col-sm-1 control-label" for="users"><h4><b>All users:</b></h4></label>
     </div>
+    <table id="content" class="table table-bordered">
+        <tr>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Action</th>
+        </tr>
+        <c:forEach var="user" items="${users}">
+            <tr id="${user.id}">
+                <td>${user.email}</td>
+                <td>${user.password}</td>
+                <td>${user.name}</td>
+                <td>${user.sername}</td>
+                <td><a id="${user.id}" class="remove-user">remove</a></td>
+            </tr>
+        </c:forEach>
+    </table>
+
 </div>
 
 <br><br>

@@ -56,7 +56,7 @@
 
     <context-param>
         <param-name>storage</param-name>
-        <param-value>db</param-value>
+        <param-value>memory</param-value>
     </context-param>
 
     <error-page>

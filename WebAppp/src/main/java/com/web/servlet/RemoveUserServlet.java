@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.service.MemoryUserService;
-import com.service.TransactionalUserService;
+import com.service.UserService;
 import com.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,10 +19,8 @@ public class RemoveUserServlet extends HttpServlet {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private MemoryUserService memoryUserService;
 
-    private TransactionalUserService transactionalUserService;
-
+    private UserService userService;
     /**
      *
      * @param config
@@ -31,8 +28,9 @@ public class RemoveUserServlet extends HttpServlet {
      */
     @Override
     public void init(ServletConfig config) throws ServletException {
-        memoryUserService = (MemoryUserService) config.getServletContext().getAttribute("memoryUserService");
-        transactionalUserService = (TransactionalUserService) config.getServletContext().getAttribute("transactionalUserService");
+        userService = (UserService) config.getServletContext().getAttribute("userService");
+
+
     }
 
     /**
@@ -49,7 +47,7 @@ public class RemoveUserServlet extends HttpServlet {
         LOGGER.debug("User id to remove {}", id);
 
         try {
-            memoryUserService.remove(id);
+            userService.remove(id);
         } catch (ServiceException e) {
             LOGGER.debug("Exception in RemoveUserServlet while removing user with id {}", id);
             throw new ServletException();
