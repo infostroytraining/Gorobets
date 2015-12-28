@@ -10,9 +10,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.web.listener.factory.ServiceFactory;
 
-public class ContextListener implements ServletContextListener {
+public class LogsContextListener implements ServletContextListener {
 
-	private static Logger LOGGER = LogManager.getLogger(ContextListener.class);
+	private static Logger LOGGER = LogManager.getLogger(LogsContextListener.class);
 	private static final String STORAGE_INIT_PARAMETER = "storage";
 
 	@Override

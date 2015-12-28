@@ -1,0 +1,38 @@
+body{background:#efefef  url(/images/hexellence.png);margin: 0; padding: 0; font: 16px/24px Arial, Tahoma, sans-serif;}
+
+h4{
+	color: darkgreen;
+}
+
+.container{
+
+	padding-top: 20px
+}
+.form-control {
+	width: 50%
+}
+
+span.error {
+	color: #a94442
+}
+
+.table{
+	width: 50%
+}
+
+.row{
+	
+}
+.control-label{
+	color: darkgreen;
+}
+.alert {
+	font-size:15px; color:red; font-weight:bolder
+}
+.log-in {
+	font-size: 16px; color: #fff;
+	background: #029db2;
+	border: 1px solid #0d4486;
+	border-radius: 3px; box-shadow: 2px 2px 7px -1px #777;
+
+	}

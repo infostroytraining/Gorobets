@@ -5,7 +5,6 @@ package com.service;
 import com.entity.LogEvent;
 import com.service.exception.ServiceException;
 
-import java.util.List;
 import java.util.Map;
 
 public interface LogEventService {

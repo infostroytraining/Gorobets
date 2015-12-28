@@ -45,15 +45,16 @@ public class LogsServlet extends HttpServlet {
         String format = request.getParameter("format");
         List<String> logEventsString = null;
         String logEventsJson;
+
         if (Strings.isNullOrEmpty(format)&& format.equalsIgnoreCase("pretty")) {
             try {
                 Map<Integer, LogEvent> logEventMap = logEventService.getAll();
                 logEventsJson = new Gson().toJson(logEventMap);
             } catch (ServiceException e) {
-                LOGGER.error("Exception in servlet", e);
+                LOGGER.error("Exception in servlet LogsServlet", e);
                 throw new ServletException(e);
             }
-            response.getWriter().write(new Gson().toJson(logEventsJson));
+            response.getWriter().write(logEventsJson);
 
         } else {
             try {
@@ -65,7 +66,7 @@ public class LogsServlet extends HttpServlet {
                     logEventsString.add(logValue);
                 }
             } catch (ServiceException e) {
-                LOGGER.error("Exception in servlet", e);
+                LOGGER.error("Exception in servlet LogsServlet", e);
                 throw new ServletException(e);
             }
 

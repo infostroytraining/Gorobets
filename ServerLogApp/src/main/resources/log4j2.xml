@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config" packages="com.customAppender">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%highlight{%d{ISO8601} %-5level [%t] %c{3} :%M:%L - %m%n}{FATAL=orange, ERROR=red, WARN=pink, INFO=blue, DEBUG=green, TRACE=yellow}" />

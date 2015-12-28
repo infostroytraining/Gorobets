@@ -3,35 +3,66 @@
     <title>Home Page</title>
 </head>
 <body>
+<div class="container">
 
-<form action="/home" method="POST">
-    <p>
-        <label for="format">Add logsFormat :</label>
-        <input type="text" id="format" name="format" value="${format}"/>
-    </p>
+    <div class="row">
+        <form id="format-form" class="form-horizontal"  action="/home" method="POST">
 
-    <p>
-    <table>
+            <div id="form-format" class="form-group">
+                <label class="col-sm-1 control-label" for="format">Add logsFormat :</label>
 
-        <tr>
-            <c:forEach var="logEvent" items="logEventsJson">
-                <td>
-                    <font color="#a52a2a"> ${logEventsJson}</font>
-                </td>
-            </c:forEach>
-        </tr>
-        <tr>
-            <c:forEach var="logEvent" items="logEventsString">
-                <td>
-                    <font color="#a52a2a"> ${logEventsString}</font>
-                </td>
-            </c:forEach>
+                <div id="format" class="col-sm-8">
+                    <input type="text" name="format" class="form-control" value="${format}"
+                           placeholder="format"/>
+                </div>
+            </div>
 
-        </tr>
 
-    </table>
-    </p>
-    <input type="submit" value="Show logEvents">
-</form>
+            <div class="row">
+                <div id="logEvents" class=" form-group ">
+                    <label class="col-sm-1 control-label" for="logEvents"><h4><b>All logs:</b></h4></label>
+                </div>
+                <table id="content" class="table table-bordered">
+                    <tr>
+                        <th>Logs</th>
+
+                    </tr>
+                    <c:forEach var="logEvent" items="${logEventsJson}">
+                        <tr>
+                            <td>${logEvent}</td>
+
+                        </tr>
+                    </c:forEach>
+                </table>
+
+            </div>
+            <div class="row">
+                <div id="logEventsSTR" class=" form-group ">
+                    <label class="col-sm-1 control-label" for="logEventsSTR"><h4><b>All logs:</b></h4></label>
+                </div>
+                <table id="contents" class="table table-bordered">
+                    <tr>
+                        <th>Logs</th>
+
+                    </tr>
+                    <c:forEach var="logEvent" items="${logEventsString}">
+                        <tr>
+                            <td>${logEvent}</td>
+
+                        </tr>
+                    </c:forEach>
+                </table>
+
+            </div>
+
+
+            <div class="col-sm-offset-1 col-sm-8">
+                <input class="btn btn-info btn-sm format" type="button" value="Push">
+            </div>
+
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

@@ -26,10 +26,10 @@
     </servlet-mapping>
 
     <listener>
-        <listener-class>com.web.listener.ContextListener</listener-class>
+        <listener-class>com.web.listener.LogsContextListener</listener-class>
     </listener>
     <welcome-file-list>
-        <welcome-file>logs.jsp</welcome-file>
+        <welcome-file>home.jsp</welcome-file>
     </welcome-file-list>
 
     <context-param>
