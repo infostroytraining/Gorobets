@@ -4,8 +4,12 @@ import com.dao.exception.DAOException;
 import com.dao.postgesql.PostgresUserDAO;
 import com.entity.User;
 import com.google.common.base.Strings;
+import com.google.gson.Gson;
 import com.service.MemoryUserService;
 import com.service.TransactionalUserService;
+import com.service.UserService;
+import com.service.exception.ServiceException;
+import com.validator.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,7 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * UserLogInServlet class-it's a servlet that forward users to logIn form in doGet method and to Hello page in doPost method
@@ -27,20 +33,18 @@ import java.util.List;
 public class UserLogInServlet extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    PostgresUserDAO postgresUserDAO;
-    private MemoryUserService memoryUserService;
+    private static final String EMAIL = "email";
+    private static final String PASSWORD = "password";
 
-    private TransactionalUserService transactionalUserService;
+    private UserService userService;
+
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
-        PostgresUserDAO postgresUserDAO = (PostgresUserDAO) config.getServletContext().getAttribute("postgresUserDAO");
+        userService = (UserService) config.getServletContext().getAttribute("userService");
 
-        memoryUserService = (MemoryUserService) config.getServletContext().getAttribute("memoryUserService");
-
-        transactionalUserService = (TransactionalUserService) config.getServletContext().getAttribute("transactionalUserService");
     }
 
     /**
@@ -74,34 +78,35 @@ public class UserLogInServlet extends HttpServlet {
 
 //        PostgresUserDAO postgresUserDAO = (PostgresUserDAO) request.getSession().getServletContext().getAttribute("postgresUserDAO");
         User user;
-        String name;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         try {
-            user = postgresUserDAO.getUserByUserEmail(email);
-            name = user.getName();
-
-        } catch (DAOException e) {
-            LOGGER.error("Exception in doPost method at  UserLogInServlet");
-            throw new ServletException(e);
-        }
-        if ((user != null) && user.getPassword().equals(password)) {
-            request.getRequestDispatcher("Hello.jsp").forward(request, response);
-        } else {
-
-            List<String> errors = validateForm(user, email, password);
+            user = userService.getUserByUserEmail(email);
+            Map<String, String> errors = validateForm(user, email, password);
             if (!errors.isEmpty()) {
-                request.setAttribute("user", user);
-                request.setAttribute("errors", errors);
-//                request.getRequestDispatcher("errorLogInPage.jsp").forward(request, response);
+                response.setStatus(400);
+                response.setHeader("Content-Type", "application/json");
+                response.getWriter().write(new Gson().toJson(errors));
+                LOGGER.info("Errors while add a user");
+
             } else {
-                request.setAttribute("name", name);
+                response.setStatus(200);
+                response.setHeader("Content-Type", "application/json");
+                response.getWriter().write(new Gson().toJson(user));
+                LOGGER.info("user was created!");
                 request.getRequestDispatcher("Hello.jsp").forward(request, response);
 
 
             }
+
+        } catch (ServiceException e) {
+            LOGGER.error("Exception in doPost method at  UserLogInServlet");
+            throw new ServletException(e);
         }
+
+
     }
+
 
     /**
      * * ValidateForm method check the data for errors like NullPointerExceptions
@@ -111,15 +116,23 @@ public class UserLogInServlet extends HttpServlet {
      * @param password
      * @return
      */
-    private List<String> validateForm(User user, String email, String password) {
-        List<String> errors = new ArrayList<>();
+    private Map<String, String> validateForm(User user, String email, String password) {
 
-
-        if (Strings.isNullOrEmpty(user.getEmail())|| !user.getEmail().equals(email)) {
-            errors.add("Please, input right email");
-        }
-        if (Strings.isNullOrEmpty(user.getPassword())|| !user.getPassword().equals(password)) {
-            errors.add("Please, input right password");
+        Map<String, String> errors = new HashMap<>();
+        if (user != null) {
+            if (!Validator.validateEmailAddress(user.getEmail())) {
+                errors.put(EMAIL, "Please, input a correct email");
+            }
+            if (!Validator.validatePassword(user.getPassword())) {
+                errors.put(PASSWORD, "Password must contain at least one lowercase letter, " +
+                        "one uppercase letter, one number and have a length of 8 characters");
+            }
+            if (Strings.isNullOrEmpty(user.getEmail()) || !user.getEmail().equals(email)) {
+                errors.put(EMAIL, "Please, enter the  email");
+            }
+            if (Strings.isNullOrEmpty(user.getPassword()) || !user.getPassword().equals(password)) {
+                errors.put(PASSWORD, "Please, enter the password");
+            }
         }
 
         return errors;

@@ -60,6 +60,11 @@ public class MemoryUserService implements UserService {
         }
     }
 
+    @Override
+    public User getUserByUserEmail(String email) throws ServiceException {
+        return null;
+    }
+
     /**
      * GetAll method -gets all users from the the memory storage
      *

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.entity.User;
 import com.service.MemoryUserService;
 import com.service.TransactionalUserService;
+import com.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,9 +23,11 @@ public class UserServlet extends HttpServlet {
     User user;
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private MemoryUserService memoryUserService;
+//    private UserService userService;
 
-    private TransactionalUserService transactionalUserService;
+//    private MemoryUserService memoryUserService;
+//
+//    private TransactionalUserService transactionalUserService;
     /**
      *
      * @param config
@@ -32,8 +35,9 @@ public class UserServlet extends HttpServlet {
      */
     @Override
     public void init(ServletConfig config) throws ServletException {
-        memoryUserService = (MemoryUserService) config.getServletContext().getAttribute("memoryUserService");
-        transactionalUserService = (TransactionalUserService) config.getServletContext().getAttribute("transactionalUserService");
+//        userService = (UserService) config.getServletContext().getAttribute("userService");
+//        memoryUserService = (MemoryUserService) config.getServletContext().getAttribute("memoryUserService");
+//        transactionalUserService = (TransactionalUserService) config.getServletContext().getAttribute("transactionalUserService");
     }
 
     /**
@@ -48,7 +52,7 @@ public class UserServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        LOGGER.entry(request, response);
 //        try {
-//            request.setAttribute("users", memoryUserService.getAll());
+//            request.setAttribute("users", userService.getAll());
 //
 //
 //        } catch (Exception ex) {

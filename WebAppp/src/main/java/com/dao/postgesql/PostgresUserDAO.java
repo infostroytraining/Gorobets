@@ -39,6 +39,7 @@ public class PostgresUserDAO implements UserDAO {
      */
     @Override
     public User create(User user) throws DAOException {
+        System.out.println(user.getName());
         LOGGER.entry(user);
         PreparedStatement statement = null;
         Connection connection = ConnectionHolder.getConnection();
@@ -78,6 +79,8 @@ public class PostgresUserDAO implements UserDAO {
                     statement.close();
 
                     connection.setAutoCommit(true);
+
+                    connection.close();
                 } catch (SQLException ex) {
                     LOGGER.error("Can't close PreparedStatement for user insert query" + statement + " Cause: ", ex);
                     throw new DAOException(ex);
@@ -129,6 +132,8 @@ public class PostgresUserDAO implements UserDAO {
                     statement.close();
 
                     connection.setAutoCommit(true);
+
+                    connection.close();
                 } catch (SQLException ex) {
                     LOGGER.error("Can't close PreparedStatement for user select query" + statement + " Cause: ", ex);
                     throw new DAOException(ex);
@@ -189,6 +194,8 @@ public class PostgresUserDAO implements UserDAO {
                     statement.close();
 
                     connection.setAutoCommit(true);
+
+                    connection.close();
                 } catch (SQLException ex) {
                     LOGGER.error("Can't close PreparedStatement for user update query" + statement + " Cause: ", ex);
                     throw new DAOException(ex);
@@ -244,6 +251,8 @@ public class PostgresUserDAO implements UserDAO {
                     statement.close();
 
                     connection.setAutoCommit(true);
+
+                    connection.close();
                 } catch (SQLException ex) {
                     LOGGER.error("Can't close PreparedStatement for user update query" + statement + " Cause: ", ex);
                     throw new DAOException(ex);
@@ -255,7 +264,9 @@ public class PostgresUserDAO implements UserDAO {
             LOGGER.exit("User was removed ");
         } else {
             LOGGER.exit("User wasn't removed ");
+
         }
+
     }
 
     /**
@@ -298,6 +309,8 @@ public class PostgresUserDAO implements UserDAO {
                     statement.close();
 
                     connection.setAutoCommit(true);
+
+                    connection.close();
                 } catch (SQLException ex) {
                     LOGGER.error("Can't close PreparedStatement for user select query" + statement + " Cause: ", ex);
                     throw new DAOException(ex);
@@ -362,6 +375,8 @@ public class PostgresUserDAO implements UserDAO {
                     statement.close();
 
                     connection.setAutoCommit(true);
+
+                    connection.close();
                 } catch (SQLException ex) {
                     LOGGER.error("Can't close PreparedStatement for user select_by_email query" + statement + " Cause: ", ex);
                     throw new DAOException(ex);

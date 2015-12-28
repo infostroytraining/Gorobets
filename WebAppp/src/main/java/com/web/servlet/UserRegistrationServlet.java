@@ -5,10 +5,15 @@ import com.dto.UserDTO;
 import com.entity.User;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
+
 import com.service.MemoryUserService;
 import com.service.TransactionalUserService;
+import com.service.UserService;
 import com.service.exception.ServiceException;
 import com.validator.Validator;
+import org.apache.logging.log4j.LogManager;
+//import org.apache.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -17,10 +22,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /*1. Сделать пользовательский интерфейс приложения регистрации пользователя с использованием Bootstrap.
 2. Сделать клиентскую валидацию:
@@ -44,24 +48,25 @@ public class UserRegistrationServlet extends HttpServlet {
     private static final String PASSWORD = "password";
     private static final String USER_DTO = "userDTO";
     private static final String ERRORS = "errors";
-    private static final String PASSWORD_C = "passwordc";
+    private static final String CAPTCHA = "captcha";
+    private static final String CODE = "code";
 
-    org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger("CustomAppender");
+    org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(UserRegistrationServlet.class);
 
-    CustomAppender customAppender = new CustomAppender();
+//    CustomAppender customAppender = new CustomAppender();
 
-    private MemoryUserService memoryUserService;
-
-    private TransactionalUserService transactionalUserService;
-
+    private UserService userService;
+private TransactionalUserService transactionalUserService;
+private MemoryUserService memoryUserService;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        LOGGER.addAppender(customAppender);
-        LOGGER.info("Initialization is started ");
-        memoryUserService = (MemoryUserService) config.getServletContext().getAttribute("memoryUserService");
 
-        transactionalUserService = (TransactionalUserService) config.getServletContext().getAttribute("transactionalUserService");
+
+        userService = (UserService) config.getServletContext().getAttribute("userService");
+//        memoryUserService = (MemoryUserService) config.getServletContext().getAttribute("memoryUserService");
+//        transactionalUserService = (TransactionalUserService) config.getServletContext().getAttribute("transactionalUserService");
+
     }
 
     /**
@@ -74,63 +79,60 @@ public class UserRegistrationServlet extends HttpServlet {
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        LOGGER.addAppender(customAppender);
+//        LOGGER.addAppender(customAppender);
 
-//        MemoryUserService memoryUserService = (MemoryUserService) request.getServletContext().getAttribute("memoryUserService");
-//
-//        TransactionalUserService transactionalUserService = (TransactionalUserService)
-//                request.getServletContext().getAttribute("transactionalUserService");
 
+        String captcha = (String) request.getSession().getAttribute(CAPTCHA);
+        String code = request.getParameter(CODE);
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
         String name = request.getParameter(NAME);
         String surname = request.getParameter(SURNAME);
-        String passwordc = request.getParameter(PASSWORD_C);
+
 
         UserDTO userDTO = new UserDTO(email, password, name, surname);//for saving data at jsp form!
 
-        Map<String, String> errors = validateForm(userDTO, passwordc);
+        Map<String, String> errors = validateForm(userDTO, captcha, code);
         if (!errors.isEmpty()) {
-//            request.setAttribute(USER_DTO, userDTO);
-//            request.setAttribute(ERRORS, errors);
+
             response.setStatus(400);
             response.setHeader("Content-Type", "application/json");
             response.getWriter().write(new Gson().toJson(errors));
             LOGGER.info("Errors while add a user");
 
         } else {
+
             User user = new User(email, password, name, surname);
             response.setStatus(200);
             response.setHeader("Content-Type", "application/json");
             response.getWriter().write(new Gson().toJson(user));
             LOGGER.info("user was created!");
             try {
-                memoryUserService.add(user);
-                request.setAttribute("statisticMap", memoryUserService.getEmailForEachUser());
+//                transactionalUserService.add(user);
+//                memoryUserService.add(user);
+                userService.add(user);
+//                request.setAttribute("statisticMap", userService.getEmailForEachUser());
 
             } catch (ServiceException e) {
                 LOGGER.error("Exception in UserRegistrationServlet");
                 throw new ServletException(e);
             }
 
-//            request.setAttribute(EMAIL, email);
-            request.setAttribute(PASSWORD_C, passwordc);
-//            request.setAttribute(NAME, name);
-//            request.setAttribute(SURNAME, surname);
-
-
         }
-        customAppender.sendPost(customAppender);
+
+        //        customAppender.sendPost(customAppender);
     }
+
 
     /**
      * ValidateForm method check the data for errors like NullPointerExceptions
      *
      * @param userDTO
-     * @param passwordc
+     * @param captcha
+     * @param code
      * @return
      */
-    protected Map<String, String> validateForm(UserDTO userDTO, String passwordc) {
+    protected Map<String, String> validateForm(UserDTO userDTO, String captcha, String code) {
         LOGGER.info("Enter to the validForm method at UserRegistrationServlet");
 
         Map<String, String> errors = new HashMap<>();
@@ -155,15 +157,15 @@ public class UserRegistrationServlet extends HttpServlet {
         if (Strings.isNullOrEmpty(userDTO.getSurname())) {
             errors.put(SURNAME, "Please, input your surname");
         }
-        if (Strings.isNullOrEmpty(passwordc)) {
-            errors.put(PASSWORD_C, "Please, input right code and push submit");
+        if (!captcha.equalsIgnoreCase(code)) {
+
+            errors.put(CODE, "Please, input right code and push submit");
         }
 
         LOGGER.info("Exit from the validForm method at UserRegistrationServlet");
         return errors;
 
     }
-
 
 
 }

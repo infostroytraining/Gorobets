@@ -27,6 +27,7 @@ public class MemoryUserDAO implements UserDAO {
      */
     @Override
     public User create(User user) {
+
         return storage.add(user);
     }
 

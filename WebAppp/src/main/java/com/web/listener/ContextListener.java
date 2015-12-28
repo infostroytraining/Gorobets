@@ -1,5 +1,6 @@
 package com.web.listener;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -7,6 +8,9 @@ import com.dao.UserDAO;
 import com.dao.memory.MemoryUserDAO;
 import com.dao.storage.UserStorage;
 import com.service.MemoryUserService;
+import com.service.TransactionalUserService;
+import com.service.UserService;
+import com.web.listener.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +20,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class ContextListener implements ServletContextListener {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final String STORAGE_INIT_PARAMETER = "storage";
 
     /**
      * ContextInitialized method initialized a MemoryUserService instance in ServletContext
@@ -24,10 +29,20 @@ public class ContextListener implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        UserStorage storage = new UserStorage();
-        UserDAO userDAO = new MemoryUserDAO(storage);
-        MemoryUserService memoryUserService = new MemoryUserService(userDAO);
-        sce.getServletContext().setAttribute("memoryUserService", memoryUserService);
+        ServletContext context = sce.getServletContext();
+        String storageMode = context.getInitParameter(STORAGE_INIT_PARAMETER);
+
+        LOGGER.debug("Try to initialize service for {} storage mode", storageMode);
+        UserService userService;
+//        TransactionalUserService transactionalUserService = (TransactionalUserService)context.getAttribute("transactionalUserService");
+//        MemoryUserService memoryUserService = (MemoryUserService)context.getAttribute("memoryUserService");
+
+        userService = ServiceFactory.getUserService(storageMode);
+        LOGGER.debug("service initialized. Service: {}", userService);
+
+        context.setAttribute("userService", userService);
+//        context.setAttribute("transactionalUserService", transactionalUserService);
+//        context.setAttribute("memoryUserService", memoryUserService);
     }
 
     /**
@@ -37,7 +52,7 @@ public class ContextListener implements ServletContextListener {
      */
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        sce.getServletContext().removeAttribute("memoryUserService");
+        sce.getServletContext().removeAttribute("userService");
         LOGGER.info("ServletContext was destroyed");
     }
 }

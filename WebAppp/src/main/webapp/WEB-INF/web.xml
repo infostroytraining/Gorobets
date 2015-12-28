@@ -50,13 +50,13 @@
 
     <servlet-mapping>
         <servlet-name>Captcha</servlet-name>
-        <url-pattern>/checkCaptcha</url-pattern>
+        <url-pattern>/captcha</url-pattern>
     </servlet-mapping>
 
 
     <context-param>
         <param-name>storage</param-name>
-        <param-value>memory</param-value>
+        <param-value>db</param-value>
     </context-param>
 
     <error-page>

@@ -32,25 +32,20 @@ public class CustomAppender extends AppenderSkeleton {
     protected void append(LoggingEvent logEvent) {
         eventsList.add(logEvent);
 
-
+//        sendPost(eventsList);
     }
 
     /**
      * SendPost method - get List<String> loggingEvent and  send it to the other server application
-     *
-     *
      */
-    public void sendPost(CustomAppender customAppender)  {
+    public void sendPost(ArrayList<LoggingEvent> eventsList) {
 
-
-
-        ArrayList<LoggingEvent> loggingEventList = customAppender.eventsList;
 
 //        final String USER_AGENT = "Mozilla/5.0";
 
-        String url = "http://localhost:8080/logs";
+        String url = "http://localhost:8081/logs";
 
-        HttpClient httpclient  = HttpClientBuilder.create().build();
+        HttpClient httpclient = HttpClientBuilder.create().build();
 
 
         HttpPost httppost = new HttpPost(url);
@@ -59,7 +54,7 @@ public class CustomAppender extends AppenderSkeleton {
 //        httppost.setHeader("User-Agent", USER_AGENT);
 
         List<BasicNameValuePair> urlParameters = new ArrayList<>(2);
-        urlParameters.add(new BasicNameValuePair("LogValue", loggingEventList.toString()));
+        urlParameters.add(new BasicNameValuePair("LogValue", eventsList.toString()));
         try {
             httppost.setEntity(new UrlEncodedFormEntity(urlParameters, "UTF-8"));
         } catch (UnsupportedEncodingException e) {

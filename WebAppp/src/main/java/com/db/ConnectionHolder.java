@@ -15,6 +15,7 @@ public class ConnectionHolder {
      * @param connection
      */
     public static void setConnection(Connection connection) {
+
         connectionHolder.set(connection);
     }
 

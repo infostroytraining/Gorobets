@@ -17,24 +17,24 @@
             <param name="ConversionPattern" value="[%-5p] %d{ISO8601} [%-25c] - %m%n"/>
         </layout>
     </appender>
-    <appender name="CustomAppender" class="com.customAppender.CustomAppender">
-        <param name="maxFileSize" value="100MB" />
-        <param name="Encoding" value="UTF-8"/>
-        <layout class="org.apache.log4j.EnhancedPatternLayout">
-            <param name="ConversionPattern" value="[%-5p] %d{ISO8601} [%-25c] - %m%n"/>
-        </layout>
-    </appender>
-    <appender name="ConsoleAppender1" class="com.customAppender.CustomAppender">
-        <param name="maxFileSize" value="100MB" />
-        <param name="Encoding" value="UTF-8"/>
-        <layout class="org.apache.log4j.EnhancedPatternLayout">
-            <param name="ConversionPattern" value="[%-5p] %d{ISO8601} [%-25c] - %m%n"/>
-        </layout>
-    </appender>
+    <!--<appender name="CustomAppender" class="com.customAppender.CustomAppender">-->
+        <!--<param name="maxFileSize" value="100MB" />-->
+        <!--<param name="Encoding" value="UTF-8"/>-->
+        <!--<layout class="org.apache.log4j.EnhancedPatternLayout">-->
+            <!--<param name="ConversionPattern" value="[%-5p] %d{ISO8601} [%-25c] - %m%n"/>-->
+        <!--</layout>-->
+    <!--</appender>-->
+    <!--<appender name="ConsoleAppender1" class="com.customAppender.CustomAppender">-->
+        <!--<param name="maxFileSize" value="100MB" />-->
+        <!--<param name="Encoding" value="UTF-8"/>-->
+        <!--<layout class="org.apache.log4j.EnhancedPatternLayout">-->
+            <!--<param name="ConversionPattern" value="[%-5p] %d{ISO8601} [%-25c] - %m%n"/>-->
+        <!--</layout>-->
+    <!--</appender>-->
     <root>
         <priority value="INFO"/>
-        <appender-ref ref="ConsoleAppender"/>
-        <appender-ref ref="ConsoleAppender1"/>
+        <!--<appender-ref ref="ConsoleAppender"/>-->
+        <!--<appender-ref ref="ConsoleAppender1"/>-->
         <appender-ref ref="FileAppender"/>
         <appender-ref ref="CustomAppender"/>
     </root>

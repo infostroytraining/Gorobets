@@ -6,7 +6,7 @@
     <title>Home Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.js"></script>
-    <script src="resources/js/addRemoveUsersAndErrors.js"></script>
+    <script src="resources/js/Login.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css">
     <link rel="stylesheet" href="resources/css/style.css">
 </head>

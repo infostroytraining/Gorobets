@@ -1,5 +1,6 @@
 package com.service;
 
+import com.dao.exception.DAOException;
 import com.entity.User;
 import com.service.exception.ServiceException;
 
@@ -36,5 +37,20 @@ public interface UserService {
      */
     Map<String, String> getEmailForEachUser() throws ServiceException;
 
+    /**
+     *
+     * @param id
+     * @throws ServiceException
+     */
     void remove(int id) throws ServiceException;
+
+    /**
+     *
+     * @param email
+     * @return
+     * @throws ServiceException
+     */
+    User getUserByUserEmail(String email) throws ServiceException;
+
+
 }

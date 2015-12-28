@@ -22,12 +22,10 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -49,7 +47,8 @@ public class UserRegistrationServletTest{
     private static final String PASSWORD = "password";
     private static final String USER_DTO = "userDTO";
     private static final String ERRORS = "errors";
-    private static final String PASSWORD_C = "passwordc";
+    private static final String CODE = "code";
+    private static final String CAPTCHA = "captcha";
 
     CustomAppender customAppender = new CustomAppender();
 
@@ -103,7 +102,7 @@ public class UserRegistrationServletTest{
     @Test
     public void testDoPost() throws ServletException, IOException, ServiceException {
         userServlet.init(config);
-        mockGetRequestParams(EMAIL, PASSWORD, NAME, SURNAME, PASSWORD_C);
+        mockGetRequestParams(EMAIL, PASSWORD, NAME, SURNAME, CODE);
         userServlet.doPost(request, response);
         ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);
         verify(serviceMemory).add(argument.capture());
@@ -127,7 +126,7 @@ public class UserRegistrationServletTest{
     @Test(expected = ServletException.class)
     public void testDoPostWithServiceException() throws ServletException, IOException, ServiceException {
         userServlet.init(config);
-        mockGetRequestParams(EMAIL, PASSWORD, NAME, SURNAME, PASSWORD_C);
+        mockGetRequestParams(EMAIL, PASSWORD, NAME, SURNAME, CODE);
         when(serviceMemory.add(any(User.class))).thenThrow(ServiceException.class);
         userServlet.doPost(request, response);
     }
@@ -135,7 +134,7 @@ public class UserRegistrationServletTest{
     @Test(expected = ServletException.class)
     public void testDoPostWithServiceExceptionOnMemoryService() throws ServletException, IOException, ServiceException {
         userServlet.init(config);
-        mockGetRequestParams(EMAIL, PASSWORD, NAME, SURNAME, PASSWORD_C);
+        mockGetRequestParams(EMAIL, PASSWORD, NAME, SURNAME, CODE);
         when(serviceMemory.getEmailForEachUser()).thenThrow(ServiceException.class);
         userServlet.doPost(request, response);
     }
@@ -158,7 +157,7 @@ public class UserRegistrationServletTest{
             e.printStackTrace();
         }
         UserDTO userDTO = new UserDTO(EMAIL, PASSWORD, NAME, SURNAME);
-        Map<String, String> result = userServlet.validateForm(userDTO, PASSWORD_C);
+        Map<String, String> result = userServlet.validateForm(userDTO, CODE,CAPTCHA);
         assertTrue(result.isEmpty());
     }
 
@@ -170,7 +169,7 @@ public class UserRegistrationServletTest{
             e.printStackTrace();
         }
         UserDTO userDTO = new UserDTO(null, null, null, null);
-        Map<String, String> result = userServlet.validateForm(userDTO, PASSWORD_C);
+        Map<String, String> result = userServlet.validateForm(userDTO, CODE,CAPTCHA);
         assertFalse(result.isEmpty());
     }
 
@@ -179,6 +178,6 @@ public class UserRegistrationServletTest{
         when(request.getParameter(PASSWORD)).thenReturn(password);
         when(request.getParameter(NAME)).thenReturn(name);
         when(request.getParameter(SURNAME)).thenReturn(surname);
-        when(request.getParameter(PASSWORD_C)).thenReturn(passwordc);
+        when(request.getParameter(CODE)).thenReturn(passwordc);
     }
 }

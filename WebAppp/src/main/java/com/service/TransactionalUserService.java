@@ -63,8 +63,41 @@ public class TransactionalUserService implements UserService {
         return null;
     }
 
+    /**
+     * @param id
+     * @throws ServiceException
+     */
     @Override
     public void remove(int id) throws ServiceException {
+        try {
+             userDAO.remove(id);
+        } catch (DAOException e) {
+            LOGGER.error("Exception in getUserByUserEmail method at TransactionalUserService class");
+            throw new ServiceException(e);
+        }
+
+    }
+
+    /**
+     * @param email
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public User getUserByUserEmail(final String email) throws ServiceException {
+        try {
+
+            return transactionManager.doTask(new Transaction<User>() {
+                @Override
+                public User execute() throws DAOException {
+                    return userDAO.getUserByUserEmail(email);
+                }
+            }, Connection.TRANSACTION_READ_COMMITTED);
+
+        } catch (TransactionException e) {
+            LOGGER.error("Exception in getUserByUserEmail method at TransactionalUserService class");
+            throw new ServiceException(e);
+        }
 
     }
 
