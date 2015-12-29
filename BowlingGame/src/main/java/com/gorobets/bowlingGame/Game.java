@@ -6,6 +6,7 @@ public class Game {
     private int currentRoll = 0;
 
     public void roll(int pins) {
+
         rolls[currentRoll++] = pins;
     }
 
